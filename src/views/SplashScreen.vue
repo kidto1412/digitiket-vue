@@ -1,5 +1,5 @@
 <template>
-  <div class="image-container">
+  <div class="image-container" v-if="show">
     <v-img
       class="logo"
       src="../../public/img/logo-digitiket.png"
@@ -10,6 +10,21 @@
 <script>
 export default {
   name: 'Splashscreen',
+  data() {
+    return {
+      show: true,
+    }
+  },
+  mounted() {
+    this.showToggle()
+  },
+  methods: {
+    showToggle() {
+      setTimeout(() => {
+        this.show = false
+      }, 2000)
+    },
+  },
 }
 </script>
 
@@ -18,6 +33,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
 }
 </style>

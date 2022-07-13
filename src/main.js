@@ -7,6 +7,7 @@ import axios from './plugins/axios'
 import VueAxios from 'vue-axios'
 import vuetify from './plugins/vuetify'
 import './plugins/helper'
+import './assets/style.css'
 
 Vue.config.productionTip = false
 
