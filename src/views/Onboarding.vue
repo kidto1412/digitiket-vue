@@ -1,7 +1,11 @@
 <template>
   <div>
     <splash-screen />
+    <a href="/home" class="btn-skip mx-5 mt-5">
+      Skip
+    </a>
     <v-img src="../../public/img/onboarding.png"></v-img>
+
     <v-container>
       <v-img src="../../public/img/logo2.png" width="130" class="my-5"></v-img>
       <p class="mb-15">
@@ -10,10 +14,15 @@
         wisata virtual indonesia.
       </p>
       <div class="d-flex justify-space-between">
-        <v-btn class="btn-purple" color="white--text" style="z-index: 1;">
+        <v-btn
+          class="btn-purple"
+          color="white--text"
+          style="z-index: 1;"
+          to="/masuk"
+        >
           Masuk
         </v-btn>
-        <v-btn class="outlined-purple" outlined>Daftar</v-btn>
+        <v-btn class="outlined-purple" outlined to="/daftar">Daftar</v-btn>
       </div>
     </v-container>
     <v-img
@@ -33,6 +42,13 @@ export default {
 </script>
 
 <style scoped>
+.btn-skip {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  color: white;
+  text-decoration: none;
+}
 .pink-circle {
   position: absolute;
   bottom: 0;
