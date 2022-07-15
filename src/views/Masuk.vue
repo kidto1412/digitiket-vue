@@ -11,30 +11,11 @@
       style="position: absolute; right: 0; top: 0;"
     ></v-img>
     <v-container ref="form" class="mb-8" lazy-validation>
-      <h3 class="text-purple ml-2 mt-8">Buat Akun</h3>
+      <h3 class="text-purple text-center mt-6 mb-3">
+        Selamat datang kembali !
+      </h3>
       <v-form v-model="valid">
         <v-container>
-          <v-row>
-            <v-col cols="6" md="4">
-              <label for="" class="label">Nama Depan</label>
-              <v-text-field
-                v-model="firstname"
-                :rules="nameRules"
-                label="Nama Depan"
-                required
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="6" md="4">
-              <label for="" class="label">Nama Belakang</label>
-              <v-text-field
-                v-model="lastname"
-                :rules="nameRules"
-                label="Nama Belakang"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
           <label for="" class="label">Email</label>
           <v-text-field
             v-model="email"
@@ -42,12 +23,7 @@
             label="Email"
             required
           ></v-text-field>
-          <label for="" class="label">Nomor Handphone</label>
-          <v-text-field
-            v-model="phoneNumber"
-            label="Nomor Handphone"
-            required
-          ></v-text-field>
+
           <label for="" class="label">Kata Sandi</label>
           <v-text-field
             v-model="password"
@@ -58,19 +34,14 @@
             @click:append="showPassword = !showPassword"
             :type="showPassword ? 'text' : 'password'"
           ></v-text-field>
-          <label for="" class="label">Konfirmasi Kata Sandi</label>
-          <v-text-field
-            v-model="confirmpassword"
-            :rules="passwordRules"
-            label="Konfirmasi Kata Sandi"
-            required
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="showConfirmPassword = !showConfirmPassword"
-            :type="showConfirmPassword ? 'text' : 'password'"
-          ></v-text-field>
+
+          <v-row justify="end" class="mt-2 mb-5">
+            <a>Lupa kata sandi?</a>
+          </v-row>
+
           <v-card-actions class="justify-center">
             <v-btn class="btn-purple" color="white--text">
-              Daftar
+              Masuk
             </v-btn>
           </v-card-actions>
           <div class="separator">Atau</div>
@@ -94,25 +65,16 @@
 </template>
 <script>
 export default {
-  name: 'Daftar',
+  name: 'Masuk',
   data: () => ({
     valid: false,
-    firstname: '',
-    lastname: '',
-    nameRules: [
-      (v) => !!v || 'Name is required',
-      (v) => v.length <= 10 || 'Name must be less than 10 characters',
-    ],
     email: '',
     emailRules: [
       (v) => !!v || 'E-mail is required',
       (v) => /.+@.+/.test(v) || 'E-mail must be valid',
     ],
-    phoneNumber: '',
     showPassword: false,
-    showConfirmPassword: false,
     password: '',
-    confirmpassword: '',
     passwordRules: [
       (v) => !!v || 'Password is required',
       (v) => (v && v.length >= 6) || 'Min 6 Characters',
@@ -126,15 +88,12 @@ export default {
   },
 }
 </script>
-
 <style scoped>
-.label {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 12px;
+a {
+  text-decoration: none;
   color: #4e2e8a;
+  text-align: right;
+  display: inline-block;
 }
 .separator {
   display: flex;
