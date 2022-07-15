@@ -7,6 +7,15 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'Onboarding',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Onboarding.vue'),
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home,
   },
@@ -24,7 +33,25 @@ const routes = [
     name: "Detail Promo",
     component: () =>
       import('../views/DetailPromo.vue'),
-  }
+  },
+  {
+    path: '/daftar',
+    name: 'Daftar',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Daftar.vue'),
+  },
+  {
+    path: '/masuk',
+    name: 'Masuk',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Masuk.vue'),
+  },
 ]
 
 const router = new VueRouter({
