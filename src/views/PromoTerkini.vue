@@ -1,5 +1,4 @@
 <template>
-  <v-card style="height: 100vh;">
     <v-row class="vrow">
         <v-col
         v-for="n in 2"
@@ -26,7 +25,6 @@
         </v-img>
         </v-col>
     </v-row>
-  </v-card>
 </template>
 
 <style scoped>
@@ -40,6 +38,7 @@
     }
     .img{
         border-radius: 10px;
+        object-fit: cover;
     }
 </style>
 
