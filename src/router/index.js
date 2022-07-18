@@ -44,7 +44,7 @@ const routes = [
     path: "/notification",
     name: "Notification",
     component: () =>
-      import('../views/Notification.vue'),
+      import('../components/Notification.vue'),
   },
   {
     path: '/terkini',
