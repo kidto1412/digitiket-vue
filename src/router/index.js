@@ -41,6 +41,12 @@ const routes = [
       import('../views/DetailPromo.vue'),
   },
   {
+    path: "/notification",
+    name: "Notification",
+    component: () =>
+      import('../views/Notification.vue'),
+  },
+  {
     path: '/terkini',
     name: 'Promo Terkini',
     // route level code-splitting
