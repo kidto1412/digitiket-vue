@@ -1,5 +1,5 @@
 <template>
-  <v-card class="card-shadow card-radius" style="max-width: 20rem;">
+  <v-card class="card-shadow card-radius" style="width: 15rem;">
     <v-img
       :src="url_gambar"
       :img-alt="judul"
@@ -9,27 +9,28 @@
 
     <v-card-title>{{ judul }}</v-card-title>
 
-    <v-card-text>
-      <div class="d-flex align-content-center">
-        <v-icon>mdi-map-marker</v-icon>
+    <!-- <v-card-text> -->
+    <div class="d-flex ml-2">
+      <v-icon>mdi-map-marker</v-icon>
+      <div class="text-subtitle-1">
         {{ lokasi }}
       </div>
+    </div>
 
-      <div class="d-flex justify-space-between align-center">
-        <div class="my-4 text-subtitle-1 purple--text">
-          IDR {{ converter(harga) }}
-        </div>
-
-        <v-rating
-          :value="score"
-          color="amber"
-          dense
-          half-increments
-          readonly
-          size="14"
-        ></v-rating>
+    <div class="d-flex justify-space-between align-center mx-4">
+      <div class="my-4 text-subtitle-1 price purple--text">
+        IDR {{ converter(harga) }}
       </div>
-    </v-card-text>
+
+      <v-rating
+        :value="score"
+        color="amber"
+        dense
+        half-increments
+        readonly
+        size="14"
+      ></v-rating>
+    </div>
   </v-card>
 </template>
 <script>
@@ -59,7 +60,7 @@ export default {
 
 <style scoped>
 .card-radius {
-  border-radius: 18px;
+  border-radius: 10px;
 }
 /* .v-image {
   background-repeat: no-repeat;
@@ -73,7 +74,17 @@ export default {
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
 }
+
+.price {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+}
+
 .card-img,
 .card-img-top {
   border-top-left-radius: 18px !important;
@@ -81,6 +92,6 @@ export default {
   object-fit: cover !important;
 }
 .card-shadow {
-  box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 </style>

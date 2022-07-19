@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation :value="value" color="purple">
+  <v-bottom-navigation :value="value" class="text-purple">
     <v-btn>
       <span>Beranda</span>
 

@@ -4,10 +4,10 @@
     <a href="/home" class="btn-skip mx-5 mt-5">
       Skip
     </a>
-    <v-img src="../../public/img/onboarding.png"></v-img>
+    <v-img src="../assets/img/onboarding.png"></v-img>
 
     <v-container>
-      <v-img src="../../public/img/logo2.png" width="130" class="my-5"></v-img>
+      <v-img src="../assets/img/logo2.png" width="130" class="my-5"></v-img>
       <p class="mb-15">
         Cari dan pesan tiket wahana rekreasi, Booking promo tiket wahana
         rekreasi lebih praktis hanya di DigiTiket , virtual tour indonesia,
@@ -26,7 +26,7 @@
       </div>
     </v-container>
     <v-img
-      src="../../public/img/circle-pink.svg"
+      src="../assets/img/circle-pink.svg"
       class="pink-circle"
       width="100"
     ></v-img>
