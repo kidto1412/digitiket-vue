@@ -2,7 +2,7 @@
   <div class="image-container" v-if="show">
     <v-img
       class="logo"
-      src="../../public/img/logo-digitiket.png"
+      src="../assets/img/logo-digitiket.png"
       style="max-width: 150px;"
     ></v-img>
   </div>

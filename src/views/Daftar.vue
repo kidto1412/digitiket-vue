@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-img
-      src="../../public/img/logo2.png"
+      src="../assets/img/logo2.png"
       width="162"
       class="mx-auto mt-5"
     ></v-img>
     <v-img
-      src="../../public/img/circle-purple.svg"
+      src="../assets/img/circle-purple.svg"
       width="50"
       style="position: absolute; right: 0; top: 0;"
     ></v-img>
@@ -86,7 +86,7 @@
       </v-form>
     </v-container>
     <v-img
-      src="../../public/img/circle-pink.svg"
+      src="../assets/img/circle-pink.svg"
       style="position: absolute; bottom: 0;"
       width="70"
     ></v-img>
