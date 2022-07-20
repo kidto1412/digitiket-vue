@@ -9,7 +9,7 @@
       <v-btn icon @click="setDialogComponent('search')">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon @click="setDialogComponent('Notification')">
         <v-badge color="pink" overlap>
           <template v-slot:badge v-if="countCart > 0">
             <span class="white--text">{{ countCart }}</span>
@@ -184,6 +184,10 @@ export default {
 
     Search: () =>
       import(/* webpackChunkName: "search" */ '@/components/Search.vue'),
+    Notification: () =>
+      import(
+        /* webpackChunkName: "Notification" */ '@/components/Notification.vue'
+      ),
   },
   computed: {
     ...mapGetters({
