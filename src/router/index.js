@@ -31,20 +31,17 @@ const routes = [
   {
     path: '/ulasan',
     name: 'Masukkan Ulasan',
-    component: () =>
-      import('../views/MasukkanUlasan.vue'),
+    component: () => import('../views/MasukkanUlasan.vue'),
   },
   {
-    path: "/promo",
-    name: "Detail Promo",
-    component: () =>
-      import('../views/DetailPromo.vue'),
+    path: '/promo',
+    name: 'Detail Promo',
+    component: () => import('../views/DetailPromo.vue'),
   },
   {
-    path: "/notification",
-    name: "Notification",
-    component: () =>
-      import('../components/Notification.vue'),
+    path: '/notification',
+    name: 'Notification',
+    component: () => import('../components/Notification.vue'),
   },
   {
     path: '/terkini',
@@ -72,6 +69,15 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Masuk.vue'),
+  },
+  {
+    path: '/akun',
+    name: 'Akun',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Akun.vue'),
   },
 ]
 
