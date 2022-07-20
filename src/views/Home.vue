@@ -6,7 +6,7 @@
         style="width: 10px;"
       ></v-img>
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon @click="setDialogComponent('search')">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-btn icon>
@@ -18,6 +18,17 @@
         </v-badge>
       </v-btn>
     </v-app-bar>
+    <keep-alive>
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialogbottom-transition"
+      >
+        <component :is="currentComponent" @closed="setDialogStatus"></component>
+        <!-- <search @closed="closeDialog" /> -->
+      </v-dialog>
+    </keep-alive>
     <section class="hero pt-5">
       <v-container>
         <div class="d-flex align-center mt-15 mb-4">
@@ -160,13 +171,43 @@
 <script>
 import BottomNavigation from '../components/BottomNavigation.vue'
 import CardItem from '../components/CardItem.vue'
+import { mapActions, mapGetters } from 'vuex'
 // import Kategori from '../components/Kategori.vue'
 
 // import CardItem from '../components/CardItem.vue'
 
 export default {
   name: 'Home',
-  components: { CardItem, BottomNavigation },
+  components: {
+    CardItem,
+    BottomNavigation,
+
+    Search: () =>
+      import(/* webpackChunkName: "search" */ '@/components/Search.vue'),
+  },
+  computed: {
+    ...mapGetters({
+      dialogStatus: 'dialog/status',
+      currentComponent: 'dialog/component',
+    }),
+    dialog: {
+      set(value) {
+        return this.setDialogStatus(value)
+      },
+      get() {
+        return this.dialogStatus
+      },
+    },
+  },
+  methods: {
+    ...mapActions({
+      setDialogStatus: 'dialog/setStatus',
+      setDialogComponent: 'dialog/setComponent',
+    }),
+    closeDialog(value) {
+      this.dialog = value
+    },
+  },
 }
 </script>
 CardItem
