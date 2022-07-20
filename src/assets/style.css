@@ -10,6 +10,9 @@
   text-decoration: none;
 }
 
+.d-purple {
+  color: #4e2e8a !important;
+}
 .d-bg-purple {
   background-color: #4e2e8a !important;
 }
