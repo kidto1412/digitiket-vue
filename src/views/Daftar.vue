@@ -128,14 +128,6 @@ export default {
 </script>
 
 <style scoped>
-.label {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 12px;
-  color: #4e2e8a;
-}
 .separator {
   display: flex;
   align-items: center;
