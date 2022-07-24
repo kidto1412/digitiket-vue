@@ -78,7 +78,7 @@
         </v-list-item>
       </v-list>
     </v-card>
-    <v-card style="margin-bottom: 22%;">
+    <v-card>
       <v-list>
         <v-container>
           <h5>Tiket Masuk Anak Rinjani Waterpak</h5>
@@ -110,7 +110,7 @@
         </v-list-item>
       </v-list>
     </v-card>
-
+    <div style="margin-bottom: 23%;"></div>
     <div class="footer">
       <v-card>
         <div class="d-flex justify-space-between" style="line-height: 12px;">
