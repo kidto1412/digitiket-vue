@@ -141,10 +141,4 @@ export default {
 .v-date-picker-header {
   display: none !important;
 }
-.footer {
-  box-shadow: 2px -5px 18px rgba(0, 0, 0, 0.1) !important;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
 </style>
