@@ -127,9 +127,3 @@ export default {
   }),
 }
 </script>
-<style>
-/* .v-image__image {
-  width: 100% !important;
-  object-fit: unset;
-} */
-</style>
