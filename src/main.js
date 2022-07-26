@@ -8,6 +8,7 @@ import VueAxios from 'vue-axios'
 import vuetify from './plugins/vuetify'
 import './plugins/helper'
 import './assets/style.css'
+import 'leaflet/dist/leaflet.css'
 
 Vue.config.productionTip = false
 
@@ -17,5 +18,6 @@ new Vue({
   axios,
   VueAxios,
   vuetify,
+
   render: (h) => h(App),
 }).$mount('#app')
