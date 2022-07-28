@@ -163,6 +163,7 @@
         </v-slide-group>
       </div>
     </v-container>
+    <list-view></list-view>
     <div class="mt-15"></div>
     <bottom-navigation />
   </div>
@@ -172,6 +173,7 @@
 import BottomNavigation from '../components/BottomNavigation.vue'
 import CardItem from '../components/CardItem.vue'
 import { mapActions, mapGetters } from 'vuex'
+import ListView from '../components/ListView.vue'
 // import Kategori from '../components/Kategori.vue'
 
 // import CardItem from '../components/CardItem.vue'
@@ -188,6 +190,7 @@ export default {
       import(
         /* webpackChunkName: "Notification" */ '@/components/Notification.vue'
       ),
+    ListView,
   },
   computed: {
     ...mapGetters({
