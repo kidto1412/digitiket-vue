@@ -1,21 +1,21 @@
 <template>
   <div>
     <v-card
-      class="overflow-hidden d-flex justify-space-between"
+      class="overflow-hidden d-flex justify-space-between card-radius"
       style="max-width: 540px;"
     >
       <v-row align="center" no-gutters>
-        <v-col cols="6">
+        <v-col cols="7">
           <v-img
             src="https://picsum.photos/400/400/?image=20"
             class="card-img"
           ></v-img>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="5">
           <v-card-title class="text-title" :title="title">
             {{ title }}
           </v-card-title>
-          <v-card-subtitle class="text-desc mt-2" :desc="desc">
+          <v-card-subtitle class="text-desc mt-1" :desc="desc">
             {{ desc }}
           </v-card-subtitle>
           <v-card-subtitle class="text-price" :price="price">
@@ -23,6 +23,7 @@
           </v-card-subtitle>
           <div class="d-flex align-center ml-2">
             <v-rating
+              style="position: relative; top: -10px;"
               class="rating-icon"
               color="orange "
               background-color="orange"
@@ -31,7 +32,7 @@
               v-model="rating"
               :rating="rating"
             ></v-rating>
-            <div class="text-ulasan ml-2" :ulasan="ulasan">
+            <div class="text-ulasan ml-2 mt-1" :ulasan="ulasan">
               {{ ulasan + ' ' + 'Ulasan' }}
             </div>
           </div>
@@ -89,8 +90,8 @@ export default {
   border-radius: 20px 20px 20px 20px;
   padding: 10px 0px 10px 10px;
   margin: 10px;
-  width: 175px;
-  /* height: 140px; */
+  width: 210px;
+  height: 130px;
 }
 .text-title {
   font-family: 'Lato';
@@ -107,8 +108,9 @@ export default {
   font-weight: 600;
   font-size: 10px;
   line-height: 12px;
-
   color: #c4c4c4;
+  position: relative;
+  top: -10px;
 }
 
 .text-price {
@@ -116,9 +118,10 @@ export default {
   font-style: normal;
   font-weight: 600;
   font-size: 10px;
-  line-height: 12px;
+  line-height: 1px;
   /* identical to box height */
-
+  position: relative;
+  top: -10px;
   /* purple */
 
   color: #4e2e8a;
@@ -127,9 +130,15 @@ export default {
   font-style: normal;
   font-weight: 600;
   font-size: 8px;
-  line-height: 10px;
+  line-height: 1px;
   /* identical to box height */
   color: #c4c4c4;
   white-space: nowrap;
+  position: relative;
+  top: -10px;
+}
+
+.card-radius {
+  border-radius: 10px;
 }
 </style>
