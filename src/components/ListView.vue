@@ -12,14 +12,14 @@
           ></v-img>
         </v-col>
         <v-col cols="6">
-          <v-card-title class="text-title">
-            SRIBOGA UKM CLASS 2
+          <v-card-title class="text-title" :title="title">
+            {{ title }}
           </v-card-title>
-          <v-card-subtitle class="text-desc mt-2">
-            Ciptakan Kemasan yang mampu menjual
+          <v-card-subtitle class="text-desc mt-2" :desc="desc">
+            {{ desc }}
           </v-card-subtitle>
-          <v-card-subtitle class="text-price">
-            IDR 35.000
+          <v-card-subtitle class="text-price" :price="price">
+            IDR {{ converter(price) }}
           </v-card-subtitle>
           <div class="d-flex align-center ml-2">
             <v-rating
@@ -28,8 +28,12 @@
               background-color="orange"
               size="14"
               dense
+              v-model="rating"
+              :rating="rating"
             ></v-rating>
-            <div class="text-ulasan ml-2">17 Ulasan</div>
+            <div class="text-ulasan ml-2" :ulasan="ulasan">
+              {{ ulasan + ' ' + 'Ulasan' }}
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -63,6 +67,17 @@
 <script>
 export default {
   name: 'ListView',
+  props: ['title', 'desc', 'price', 'rating', 'ulasan'],
+  methods: {
+    converter(nominal) {
+      const currency = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+      })
+      return currency.format(nominal).slice(3)
+    },
+  },
 }
 </script>
 
@@ -73,9 +88,9 @@ export default {
   /* left: 5%; */
   border-radius: 20px 20px 20px 20px;
   padding: 10px 0px 10px 10px;
-  /* margin: 10px; */
-  width: 200px;
-  height: 162px;
+  margin: 10px;
+  width: 175px;
+  /* height: 140px; */
 }
 .text-title {
   font-family: 'Lato';

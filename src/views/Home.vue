@@ -163,7 +163,13 @@
         </v-slide-group>
       </div>
     </v-container>
-    <list-view></list-view>
+    <list-view
+      title="SRIBOGA UKM CLASS 2"
+      desc="Ciptakan Kemasan yang mampu menjual"
+      price="35000"
+      rating="4"
+      ulasan="17"
+    ></list-view>
     <div class="mt-15"></div>
     <bottom-navigation />
   </div>
