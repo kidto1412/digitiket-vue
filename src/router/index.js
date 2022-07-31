@@ -180,6 +180,24 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/Event.vue'),
   },
+  {
+    path: '/tour',
+    name: 'Tour',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/Tour.vue'),
+  },
+  {
+    path: '/virtual-tour',
+    name: 'VirtualTour',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/VirtualTour.vue'),
+  },
 ]
 
 const router = new VueRouter({
