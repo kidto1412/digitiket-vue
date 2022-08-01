@@ -40,7 +40,7 @@
 import ListView from '../components/ListView.vue'
 export default {
   components: { ListView },
-  name: 'Virtual Tour',
+  name: 'VirtualTour',
 }
 </script>
 <style scoped>
