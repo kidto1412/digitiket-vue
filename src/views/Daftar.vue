@@ -10,9 +10,9 @@
       width="50"
       style="position: absolute; right: 0; top: 0;"
     ></v-img>
-    <v-container ref="form" class="mb-8" lazy-validation>
+    <v-container class="mb-8" lazy-validation>
       <h3 class="text-purple ml-2 mt-8">Buat Akun</h3>
-      <v-form v-model="valid">
+      <v-form v-model="valid" ref="form" lazy-validation>
         <v-container>
           <v-row>
             <v-col cols="6" md="4">
@@ -60,7 +60,7 @@
           ></v-text-field>
           <label for="" class="label">Konfirmasi Kata Sandi</label>
           <v-text-field
-            v-model="confirmpassword"
+            v-model="confirmPassword"
             :rules="passwordRules"
             label="Konfirmasi Kata Sandi"
             required
@@ -69,7 +69,7 @@
             :type="showConfirmPassword ? 'text' : 'password'"
           ></v-text-field>
           <v-card-actions class="justify-center">
-            <v-btn class="btn-purple" color="white--text">
+            <v-btn class="btn-purple" color="white--text" @click="submit">
               Daftar
             </v-btn>
           </v-card-actions>
@@ -93,10 +93,11 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Daftar',
   data: () => ({
-    valid: false,
+    valid: true,
     firstname: '',
     lastname: '',
     nameRules: [
@@ -112,14 +113,65 @@ export default {
     showPassword: false,
     showConfirmPassword: false,
     password: '',
-    confirmpassword: '',
+    confirmPassword: '',
     passwordRules: [
       (v) => !!v || 'Password is required',
       (v) => (v && v.length >= 6) || 'Min 6 Characters',
     ],
   }),
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+    }),
+  },
   methods: {
-    submit() {},
+    ...mapActions({
+      setAlert: 'alert/set',
+      setAuth: 'auth/set',
+    }),
+    submit() {
+      if (this.$refs.form.validate()) {
+        let formData = new FormData()
+        formData.set('firstname', this.firstname)
+        formData.set('lastname', this.lastname)
+        formData.set('email', this.email)
+        formData.set('password', this.password)
+        formData.set('cellphone', this.phoneNumber)
+        formData.set('password', this.password)
+        // formData.set('confirmPassword', this.confirmPassword)
+        if (this.password == this.confirmPassword) {
+          this.axios
+            .post('https://digitiket.id/registration', formData)
+            .then((response) => {
+              let { data } = response.data
+              this.setAuth(data)
+              this.setAlert({
+                status: true,
+                color: 'success',
+                text: 'Register success',
+              })
+              this.loading = false
+              // this.close()
+              this.$router.push({ name: 'Home' })
+            })
+            .catch((error) => {
+              let { data } = error.response.data
+              this.loading = false
+              this.setAlert({
+                status: true,
+                color: 'error',
+                text: data.message,
+              })
+            })
+        } else {
+          this.setAlert({
+            status: true,
+            color: 'error',
+            text: 'Katasandi yang dimasukan tidak sama',
+          })
+        }
+      }
+    },
     clear() {
       this.$refs.form.reset()
     },
