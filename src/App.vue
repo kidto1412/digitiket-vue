@@ -32,7 +32,7 @@
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar> -->
-
+    <alert />
     <v-main>
       <router-view />
     </v-main>
@@ -42,7 +42,7 @@
 <script>
 export default {
   name: 'App',
-
+  Alert: () => import('@/components/Alert.vue'),
   data: () => ({
     //
   }),

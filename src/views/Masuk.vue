@@ -14,7 +14,7 @@
       <h3 class="text-purple text-center mt-6 mb-3">
         Selamat datang kembali !
       </h3>
-      <v-form v-model="valid">
+      <v-form v-model="valid" ref="form" lazy-validation>
         <v-container>
           <label for="" class="label">Email</label>
           <v-text-field
@@ -40,7 +40,7 @@
           </v-row>
 
           <v-card-actions class="justify-center">
-            <v-btn class="btn-purple" color="white--text">
+            <v-btn class="btn-purple" color="white--text" @click="submit">
               Masuk
             </v-btn>
           </v-card-actions>
@@ -81,7 +81,47 @@ export default {
     ],
   }),
   methods: {
-    submit() {},
+    submit() {
+      if (this.$refs.form.validate()) {
+        let formData = {
+          email: this.email,
+          password: this.password,
+        }
+        this.axios
+          .post('https://digitiket.id/login', formData)
+          .then((response) => {
+            let { data } = response.data
+            this.setAuth(data)
+            if (this.user.id > 0) {
+              this.setAlert({
+                status: true,
+                color: 'success',
+                text: 'Login success',
+              })
+              this.loading = false
+              // if (this.prevUrl.length > 0) this.$router.push(this.prevUrl)
+              this.$router.push({ name: 'Home' })
+              this.close()
+            } else {
+              this.setAlert({
+                status: true,
+                color: 'error',
+                text: 'Login failed',
+              })
+              this.loading = false
+            }
+          })
+          .catch((error) => {
+            this.loading = false
+            let responses = error.response
+            this.setAlert({
+              status: true,
+              text: responses.data.message,
+              color: 'error',
+            })
+          })
+      }
+    },
     clear() {
       this.$refs.form.reset()
     },
