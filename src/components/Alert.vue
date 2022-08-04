@@ -9,7 +9,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'alert',
+  name: 'Alert',
   computed: {
     ...mapGetters({
       status: 'alert/status',

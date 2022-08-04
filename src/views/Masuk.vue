@@ -10,7 +10,7 @@
       width="50"
       style="position: absolute; right: 0; top: 0;"
     ></v-img>
-    <v-container ref="form" class="mb-8" lazy-validation>
+    <v-container class="mb-8">
       <h3 class="text-purple text-center mt-6 mb-3">
         Selamat datang kembali !
       </h3>
@@ -64,10 +64,11 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Masuk',
   data: () => ({
-    valid: false,
+    valid: true,
     email: '',
     emailRules: [
       (v) => !!v || 'E-mail is required',
@@ -80,7 +81,16 @@ export default {
       (v) => (v && v.length >= 6) || 'Min 6 Characters',
     ],
   }),
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+    }),
+  },
   methods: {
+    ...mapActions({
+      setAlert: 'alert/set',
+      setAuth: 'auth/set',
+    }),
     submit() {
       if (this.$refs.form.validate()) {
         let formData = {

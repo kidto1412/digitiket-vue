@@ -33,6 +33,17 @@
       </v-btn>
     </v-app-bar> -->
     <alert />
+    <!-- <keep-alive>
+      <v-dialog
+        v-model="dialog"
+        fullscreen
+        hide-overlay
+        transition="dialogbottom-transition"
+      >
+        <component :is="currentComponent" @closed="setDialogStatus"></component>
+        <cart @closed="closeDialog" />
+      </v-dialog>
+    </keep-alive> -->
     <v-main>
       <router-view />
     </v-main>
@@ -40,11 +51,39 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'App',
-  Alert: () => import('@/components/Alert.vue'),
+  components: {
+    Alert: () => import('@/components/Alert.vue'),
+  },
   data: () => ({
     //
   }),
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      prevUrl: 'prevUrl',
+      dialogStatus: 'dialog/status',
+      currentComponent: 'dialog/component',
+    }),
+    dialog: {
+      get() {
+        return this.dialogStatus
+      },
+      set(value) {
+        return this.setDialogStatus(value)
+      },
+    },
+  },
+  ...mapActions({
+    setDialogStatus: 'dialog/setStatus',
+    setDialogComponent: 'dialog/setComponent',
+    setAlert: 'alert/set',
+    setAuth: 'auth/set',
+  }),
+  closeDialog(value) {
+    this.dialog = value
+  },
 }
 </script>

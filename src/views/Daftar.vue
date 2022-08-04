@@ -10,7 +10,7 @@
       width="50"
       style="position: absolute; right: 0; top: 0;"
     ></v-img>
-    <v-container class="mb-8" lazy-validation>
+    <v-container class="mb-8">
       <h3 class="text-purple ml-2 mt-8">Buat Akun</h3>
       <v-form v-model="valid" ref="form" lazy-validation>
         <v-container>
@@ -94,6 +94,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'Daftar',
   data: () => ({
@@ -138,7 +139,7 @@ export default {
         formData.set('password', this.password)
         formData.set('cellphone', this.phoneNumber)
         formData.set('password', this.password)
-        // formData.set('confirmPassword', this.confirmPassword)
+
         if (this.password == this.confirmPassword) {
           this.axios
             .post('https://digitiket.id/registration', formData)
@@ -150,13 +151,11 @@ export default {
                 color: 'success',
                 text: 'Register success',
               })
-              this.loading = false
               // this.close()
               this.$router.push({ name: 'Home' })
             })
             .catch((error) => {
               let { data } = error.response.data
-              this.loading = false
               this.setAlert({
                 status: true,
                 color: 'error',
@@ -167,7 +166,7 @@ export default {
           this.setAlert({
             status: true,
             color: 'error',
-            text: 'Katasandi yang dimasukan tidak sama',
+            text: 'Kata Sandi Tidak Sama',
           })
         }
       }
