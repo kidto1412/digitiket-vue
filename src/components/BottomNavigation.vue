@@ -1,22 +1,21 @@
 <template>
   <v-bottom-navigation :value="value" class="text-purple">
-    <v-btn>
+    <v-btn to="/home">
       <span>Beranda</span>
-
       <v-icon>mdi-home</v-icon>
     </v-btn>
 
-    <v-btn>
+    <v-btn to="/lokasi">
       <span>Lokasi</span>
       <v-icon>mdi-map-marker</v-icon>
     </v-btn>
 
-    <v-btn>
+    <v-btn to="">
       <span>Tiket</span>
       <v-icon>mdi-ticket-confirmation</v-icon>
     </v-btn>
 
-    <v-btn>
+    <v-btn to="/akun">
       <span>Akun</span>
 
       <v-icon>mdi-account</v-icon>

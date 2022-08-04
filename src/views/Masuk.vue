@@ -10,11 +10,11 @@
       width="50"
       style="position: absolute; right: 0; top: 0;"
     ></v-img>
-    <v-container ref="form" class="mb-8" lazy-validation>
+    <v-container class="mb-8">
       <h3 class="text-purple text-center mt-6 mb-3">
         Selamat datang kembali !
       </h3>
-      <v-form v-model="valid">
+      <v-form v-model="valid" ref="form" lazy-validation>
         <v-container>
           <label for="" class="label">Email</label>
           <v-text-field
@@ -40,7 +40,7 @@
           </v-row>
 
           <v-card-actions class="justify-center">
-            <v-btn class="btn-purple" color="white--text">
+            <v-btn class="btn-purple" color="white--text" @click="submit">
               Masuk
             </v-btn>
           </v-card-actions>
@@ -64,10 +64,11 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Masuk',
   data: () => ({
-    valid: false,
+    valid: true,
     email: '',
     emailRules: [
       (v) => !!v || 'E-mail is required',
@@ -80,8 +81,56 @@ export default {
       (v) => (v && v.length >= 6) || 'Min 6 Characters',
     ],
   }),
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+    }),
+  },
   methods: {
-    submit() {},
+    ...mapActions({
+      setAlert: 'alert/set',
+      setAuth: 'auth/set',
+    }),
+    submit() {
+      if (this.$refs.form.validate()) {
+        let formData = {
+          email: this.email,
+          password: this.password,
+        }
+        this.axios
+          .post('https://digitiket.id/login', formData)
+          .then((response) => {
+            let { data } = response.data
+            console.log(response.data)
+            this.setAuth(data)
+            if (this.user.id > 0) {
+              this.setAlert({
+                status: true,
+                color: 'success',
+                text: 'Login success',
+              })
+
+              // if (this.prevUrl.length > 0) this.$router.push(this.prevUrl)
+              this.$router.push({ name: 'Home' })
+              this.close()
+            } else {
+              this.setAlert({
+                status: true,
+                color: 'error',
+                text: 'Login failed',
+              })
+            }
+          })
+          .catch((error) => {
+            let responses = error.response
+            this.setAlert({
+              status: true,
+              text: responses.data.message,
+              color: 'error',
+            })
+          })
+      }
+    },
     clear() {
       this.$refs.form.reset()
     },
