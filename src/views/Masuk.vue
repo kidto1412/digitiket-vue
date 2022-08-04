@@ -101,6 +101,7 @@ export default {
           .post('https://digitiket.id/login', formData)
           .then((response) => {
             let { data } = response.data
+            console.log(response.data)
             this.setAuth(data)
             if (this.user.id > 0) {
               this.setAlert({
@@ -108,7 +109,7 @@ export default {
                 color: 'success',
                 text: 'Login success',
               })
-              this.loading = false
+
               // if (this.prevUrl.length > 0) this.$router.push(this.prevUrl)
               this.$router.push({ name: 'Home' })
               this.close()
@@ -118,11 +119,9 @@ export default {
                 color: 'error',
                 text: 'Login failed',
               })
-              this.loading = false
             }
           })
           .catch((error) => {
-            this.loading = false
             let responses = error.response
             this.setAlert({
               status: true,

@@ -145,6 +145,7 @@ export default {
             .post('https://digitiket.id/registration', formData)
             .then((response) => {
               let { data } = response.data
+              console.log(response.data)
               this.setAuth(data)
               this.setAlert({
                 status: true,

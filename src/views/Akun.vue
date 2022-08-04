@@ -79,7 +79,7 @@
       </v-list>
     </v-card>
     <v-divider></v-divider>
-    <v-card class="mb-14">
+    <v-card>
       <v-container>
         <h4>Umum</h4>
       </v-container>
@@ -96,6 +96,23 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+    </v-card>
+    <v-card class="mb-13">
+      <v-list-item-group v-model="selectedItem" class="d-purple">
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon class="d-purple">
+              mdi-logout
+            </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>
+              Keluar
+            </v-list-item-title>
+          </v-list-item-content>
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-list-item>
+      </v-list-item-group>
     </v-card>
     <bottom-navigation />
   </div>
