@@ -32,8 +32,11 @@
     <section class="hero pt-5">
       <v-container>
         <div class="d-flex align-center mt-15 mb-4" v-if="!guest">
-          <v-avatar color="primary" size="36">
+          <v-avatar color="primary" size="36" v-if="user.image_ext != null">
             <v-img src=""></v-img>
+          </v-avatar>
+          <v-avatar color="grey" size="36" v-else>
+            <v-icon dark>mdi-account</v-icon>
           </v-avatar>
           <p class="ms-2 mt-4 white--text">
             {{ user.firstname + ' ' + user.lastname }}
@@ -56,7 +59,8 @@
                 src="../assets/icons/icon-money.svg"
                 style="width: 20px; height: 20px;"
               ></v-img>
-              <v-card-text>100 Poins</v-card-text>
+              <v-card-text v-if="!guest">{{ point }}</v-card-text>
+              <v-card-text v-else>0</v-card-text>
             </div>
           </v-card>
           <v-card
@@ -69,8 +73,11 @@
                 src="../assets/icons/icon-credit-card.svg"
                 style="width: 20px; height: 20px;"
               ></v-img>
-              <v-card-text>
-                15.000 Kredits
+              <v-card-text v-if="!guest">
+                {{ credit }}
+              </v-card-text>
+              <v-card-text v-else>
+                0
               </v-card-text>
             </div>
           </v-card>
@@ -201,6 +208,12 @@ export default {
         /* webpackChunkName: "Notification" */ '@/components/Notification.vue'
       ),
   },
+  data() {
+    return {
+      credit: null,
+      point: null,
+    }
+  },
   computed: {
     ...mapGetters({
       dialogStatus: 'dialog/status',
@@ -217,6 +230,27 @@ export default {
       },
     },
   },
+  created() {
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + this.user.jwt_token,
+      },
+    }
+    this.axios
+      .get('https://digitiket.id/api/v1/get/point', config)
+      .then((response) => {
+        let { data } = response.data
+        this.point = data.content
+      })
+
+    this.axios
+      .get('https://digitiket.id/api/v1/get/credit', config)
+      .then((response) => {
+        let { data } = response.data
+        this.credit = data.content
+      })
+  },
+
   methods: {
     ...mapActions({
       setDialogStatus: 'dialog/setStatus',
