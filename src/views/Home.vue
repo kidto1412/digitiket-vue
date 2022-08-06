@@ -31,9 +31,19 @@
     </keep-alive>
     <section class="hero pt-5">
       <v-container>
-        <div class="d-flex align-center mt-15 mb-4">
-          <v-avatar color="primary" size="36"></v-avatar>
-          <p class="ms-2 mt-4 white--text">Hi, Natasya Joan!</p>
+        <div class="d-flex align-center mt-15 mb-4" v-if="!guest">
+          <v-avatar color="primary" size="36">
+            <v-img src=""></v-img>
+          </v-avatar>
+          <p class="ms-2 mt-4 white--text">
+            {{ user.firstname + ' ' + user.lastname }}
+          </p>
+        </div>
+        <div class="d-flex align-center mt-15 mb-4" v-else>
+          <v-avatar color="grey" size="36">
+            <v-icon dark>mdi-account</v-icon>
+          </v-avatar>
+          <p class="ms-2 mt-4 white--text">Hi, Welcome</p>
         </div>
         <v-row no-gutters class="my-3 font-weight-bold">
           <v-card
@@ -195,6 +205,8 @@ export default {
     ...mapGetters({
       dialogStatus: 'dialog/status',
       currentComponent: 'dialog/component',
+      guest: 'auth/guest',
+      user: 'auth/user',
     }),
     dialog: {
       set(value) {
@@ -209,6 +221,7 @@ export default {
     ...mapActions({
       setDialogStatus: 'dialog/setStatus',
       setDialogComponent: 'dialog/setComponent',
+      setAuth: 'auth/set',
     }),
     closeDialog(value) {
       this.dialog = value

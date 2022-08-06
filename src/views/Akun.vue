@@ -99,7 +99,7 @@
     </v-card>
     <v-card class="mb-13">
       <v-list-item-group v-model="selectedItem" class="d-purple">
-        <v-list-item>
+        <v-list-item @click="logout">
           <v-list-item-icon>
             <v-icon class="d-purple">
               mdi-logout
@@ -119,8 +119,12 @@
 </template>
 <script>
 import BottomNavigation from '../components/BottomNavigation.vue'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  components: { BottomNavigation },
+  components: {
+    BottomNavigation,
+  },
+
   name: 'Akun',
   data: () => ({
     // selectedItem: 0,
@@ -135,6 +139,70 @@ export default {
       { text: 'Berita Rating Aplikasi', icon: 'mdi-star-settings' },
     ],
   }),
+  computed: {
+    ...mapGetters({
+      countCart: 'cart/count',
+      guest: 'auth/guest',
+      user: 'auth/user',
+      dialogStatus: 'dialog/status',
+      currentComponent: 'dialog/component',
+    }),
+    isHome() {
+      return this.$route.path === '/'
+    },
+    isLogin() {
+      return this.$route.path === '/login'
+    },
+    isRegister() {
+      return this.$route.path === '/register'
+    },
+    dialog: {
+      get() {
+        return this.dialogStatus
+      },
+      set(value) {
+        return this.setDialogStatus(value)
+      },
+    },
+  },
+  methods: {
+    ...mapActions({
+      setDialogStatus: 'dialog/setStatus',
+      setDialogComponent: 'dialog/setComponent',
+      setAuth: 'auth/set',
+      setAlert: 'alert/set',
+    }),
+    closeDialog(value) {
+      this.dialog = value
+    },
+
+    logout() {
+      let config = {
+        headers: {
+          Authorization: 'Bearer ' + this.user.jwt_token,
+        },
+      }
+      this.axios
+        .post('https://digitiket.id/api/v1/logout', {}, config)
+        .then(() => {
+          this.$router.push({ path: '/masuk' })
+          this.setAuth({})
+          this.setAlert({
+            status: true,
+            color: 'success',
+            text: 'Logout successfully',
+          })
+        })
+        .catch((error) => {
+          let { data } = error.response
+          this.setAlert({
+            status: true,
+            color: 'error',
+            text: data.message,
+          })
+        })
+    },
+  },
 }
 </script>
 <style scoped></style>
