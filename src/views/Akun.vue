@@ -19,43 +19,14 @@
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title class="text-h6 mb-2">
-              John Leider
+              {{ user.firstname + ' ' + user.lastname }}
             </v-list-item-title>
-            <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
-            <v-list-item-subtitle>0812 8362 9283</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ user.cellphone }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <v-container>
-          <v-row no-gutters class="my-3 font-weight-bold">
-            <v-card
-              align="center"
-              class="point-card mr-3"
-              style="border-radius: 10px;"
-            >
-              <div class="d-flex align-center pl-2">
-                <v-img
-                  src="../assets/icons/icon-money.svg"
-                  style="width: 20px; height: 20px;"
-                ></v-img>
-                <v-card-text>100 Poins</v-card-text>
-              </div>
-            </v-card>
-            <v-card
-              align="center"
-              class="point-card"
-              style="border-radius: 10px;"
-            >
-              <div class="d-flex align-center pl-2">
-                <v-img
-                  src="../assets/icons/icon-credit-card.svg"
-                  style="width: 20px; height: 20px;"
-                ></v-img>
-                <v-card-text>
-                  15.000 Kredits
-                </v-card-text>
-              </div>
-            </v-card>
-          </v-row>
+          <point-kredit />
         </v-container>
       </v-list>
     </v-card>
@@ -117,19 +88,25 @@
     <bottom-navigation />
   </div>
 </template>
+<style scoped></style>
 <script>
 import BottomNavigation from '../components/BottomNavigation.vue'
 import { mapActions, mapGetters } from 'vuex'
+import PointKredit from '../components/PointKredit.vue'
 export default {
   components: {
     BottomNavigation,
+    PointKredit,
   },
 
   name: 'Akun',
   data: () => ({
+    credit: null,
+    point: null,
+
     // selectedItem: 0,
     akun: [
-      { text: 'Ubah Profil', icon: 'mdi-account' },
+      { text: 'Ubah Profil', icon: 'mdi-account', to: '/ubah-profil' },
       { text: 'Undang Teman', icon: 'mdi-account-group' },
     ],
     umum: [
@@ -202,6 +179,26 @@ export default {
           })
         })
     },
+  },
+  created() {
+    let config = {
+      headers: {
+        Authorization: 'Bearer ' + this.user.jwt_token,
+      },
+    }
+    this.axios
+      .get('https://digitiket.id/api/v1/get/point', config)
+      .then((response) => {
+        let { data } = response.data
+        this.point = data.content
+      })
+
+    this.axios
+      .get('https://digitiket.id/api/v1/get/credit', config)
+      .then((response) => {
+        let { data } = response.data
+        this.credit = data.content
+      })
   },
 }
 </script>

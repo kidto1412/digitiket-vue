@@ -48,40 +48,7 @@
           </v-avatar>
           <p class="ms-2 mt-4 white--text">Hi, Welcome</p>
         </div>
-        <v-row no-gutters class="my-3 font-weight-bold">
-          <v-card
-            align="center"
-            class="point-card mr-3"
-            style="border-radius: 10px;"
-          >
-            <div class="d-flex align-center pl-2">
-              <v-img
-                src="../assets/icons/icon-money.svg"
-                style="width: 20px; height: 20px;"
-              ></v-img>
-              <v-card-text v-if="!guest">{{ point }}</v-card-text>
-              <v-card-text v-else>0</v-card-text>
-            </div>
-          </v-card>
-          <v-card
-            align="center"
-            class="point-card"
-            style="border-radius: 10px;"
-          >
-            <div class="d-flex align-center pl-2">
-              <v-img
-                src="../assets/icons/icon-credit-card.svg"
-                style="width: 20px; height: 20px;"
-              ></v-img>
-              <v-card-text v-if="!guest">
-                {{ credit }}
-              </v-card-text>
-              <v-card-text v-else>
-                0
-              </v-card-text>
-            </div>
-          </v-card>
-        </v-row>
+        <point-kredit />
         <!-- <v-container class="mx-auto">
           <kategori class="w-100 px-4"></kategori>
         </v-container> -->
@@ -131,8 +98,8 @@
         <a href="" class="text-purple">Lihat Semua</a>
       </div>
       <v-slide-group class="mr-2">
-        <v-slide-item v-for="n in 3" :key="n" ke>
-          <v-img src="../../public/img/banner1.png" class="banner mr-2"></v-img>
+        <v-slide-item v-for="n in 3" :key="n">
+          <v-img :src="promo" class="banner mr-2"></v-img>
         </v-slide-item>
       </v-slide-group>
     </v-container>
@@ -190,6 +157,7 @@
 import BottomNavigation from '../components/BottomNavigation.vue'
 import CardItem from '../components/CardItem.vue'
 import { mapActions, mapGetters } from 'vuex'
+import PointKredit from '../components/PointKredit.vue'
 
 // import Kategori from '../components/Kategori.vue'
 
@@ -207,11 +175,13 @@ export default {
       import(
         /* webpackChunkName: "Notification" */ '@/components/Notification.vue'
       ),
+    PointKredit,
   },
   data() {
     return {
       credit: null,
       point: null,
+      promo: '',
     }
   },
   computed: {
@@ -231,23 +201,12 @@ export default {
     },
   },
   created() {
-    let config = {
-      headers: {
-        Authorization: 'Bearer ' + this.user.jwt_token,
-      },
-    }
     this.axios
-      .get('https://digitiket.id/api/v1/get/point', config)
+      .get('https://digitiket.id/api/v1/promo/voucher')
       .then((response) => {
-        let { data } = response.data
-        this.point = data.content
-      })
-
-    this.axios
-      .get('https://digitiket.id/api/v1/get/credit', config)
-      .then((response) => {
-        let { data } = response.data
-        this.credit = data.content
+        let { data } = response.data.content.url
+        this.promo = data
+        console.log('data promo' + response.data)
       })
   },
 
@@ -269,13 +228,6 @@ CardItem
   box-shadow: none !important;
   border: none !important;
   position: fixed;
-}
-
-.v-card > *:first-child:not(.v-btn):not(.v-chip):not(.v-avatar),
-.v-card > .v-card__progress + *:not(.v-btn):not(.v-chip):not(.v-avatar) {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-  height: 36px;
 }
 
 .hero {
