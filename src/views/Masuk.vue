@@ -109,10 +109,7 @@ export default {
                 color: 'success',
                 text: 'Login success',
               })
-
-              // if (this.prevUrl.length > 0) this.$router.push(this.prevUrl)
               this.$router.push({ name: 'Home' })
-              this.close()
             } else {
               this.setAlert({
                 status: true,
