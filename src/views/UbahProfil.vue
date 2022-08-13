@@ -46,9 +46,9 @@
         <h4 class="mb-5">Data Diri</h4>
         <v-form ref="form" v-model="valid" lazy-validation>
           <label for="" class="label">Nama Depan</label>
-          <v-text-field v-model="firstName"></v-text-field>
+          <v-text-field v-model="user.firstname" value=""></v-text-field>
           <label for="" class="label">Nama Belakang</label>
-          <v-text-field v-model="lastName" required></v-text-field>
+          <v-text-field v-model="user.lastname" value=""></v-text-field>
           <label for="" class="label">Tanggal Lahir</label>
           <v-menu
             ref="menu"
@@ -79,7 +79,7 @@
             </v-date-picker>
           </v-menu>
           <label for="" class="label">Jenis Kelamin</label>
-          <v-text-field value="Laki-laki" disabled></v-text-field>
+          <v-text-field value="" disabled></v-text-field>
         </v-form>
       </v-container>
     </v-card>
@@ -89,12 +89,12 @@
         <h4 class="mb-3">Kontak</h4>
         <label for="" class="label">Email</label>
         <v-text-field
-          v-model="email"
+          v-model="user.email"
           append-icon="mdi-checkbox-marked"
         ></v-text-field>
         <label for="" class="label">Nomor Handphone</label>
         <v-text-field
-          v-model="phone"
+          v-model="user.phone"
           append-icon="mdi-checkbox-marked"
         ></v-text-field>
       </v-container>
@@ -112,14 +112,26 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
+  components: {
+    BottomNavigation: () =>
+      import(
+        /* webpackChunkName: "search" */ '@/components/BottomNavigation.vue'
+      ),
+  },
   name: 'UbahProfil',
+  // props: ['profil'],
   data() {
     return {
-      firstName: 'Fahriz',
-      lastName: 'Dimasqy',
-      email: 'fahriz@gmail.com',
-      phone: '082xxx',
+      valid: true,
+      profil: {},
+      form: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+      },
       date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
@@ -134,6 +146,51 @@ export default {
       ],
     }
   },
+  computed: {
+    ...mapGetters({
+      guest: 'auth/guest',
+      user: 'auth/user',
+      dialogStatus: 'dialog/status',
+      currentComponent: 'dialog/component',
+    }),
+  },
+  created() {},
+  methods: {
+    load() {
+      this.axios
+        .post('https://digitiket.id/api/v1/login')
+        .then((response) => {
+          let { data } = response.data
+          this.user = data
+        })
+        .catch((error) => {
+          let responses = error.response
+          console.log(responses.data.message)
+        })
+    },
+    edit(user) {
+      this.form.email = user.email
+    },
+    // go() {
+    //   let { id } = this.$route.params
+    //   let url = 'https://digitiket.id/users/id/' + id
+    //   url = url + '?page=' + this.page
+    //   url = encodeURI(url)
+    //   this.axios
+    //     .get(url)
+    //     .then((response) => {
+    //       let { data } = response.data
+    //       this.book = data
+    //       this.loading = false
+    //     })
+    //     .catch((error) => {
+    //       let { responses } = error
+    //       console.log(responses)
+    //     })
+    // },
+  },
+
+  update() {},
 }
 </script>
 
