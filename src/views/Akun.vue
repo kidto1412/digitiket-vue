@@ -37,12 +37,28 @@
       </v-container>
       <v-list nav dense>
         <v-list-item-group v-model="selectedItem" class="d-purple">
-          <v-list-item v-for="(item, i) in akun" :key="i">
+          <v-card
+            style="box-shadow: none !important;"
+            :to="'/ubah-profil/' + user.id"
+          >
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon class="d-purple">mdi-account</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Ubah Profil</v-list-item-title>
+              </v-list-item-content>
+
+              <v-icon>mdi-chevron-right</v-icon>
+            </v-list-item>
+          </v-card>
+          <v-list-item>
             <v-list-item-icon>
-              <v-icon class="d-purple" v-text="item.icon"></v-icon>
+              <v-icon class="d-purple">mdi-account-group</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title v-text="item.text"></v-list-item-title>
+              <v-list-item-title>Undang Teman</v-list-item-title>
             </v-list-item-content>
             <v-icon>mdi-chevron-right</v-icon>
           </v-list-item>
@@ -101,9 +117,6 @@ export default {
 
   name: 'Akun',
   data: () => ({
-    credit: null,
-    point: null,
-
     // selectedItem: 0,
     akun: [
       { text: 'Ubah Profil', icon: 'mdi-account', to: '/ubah-profil' },
@@ -149,6 +162,11 @@ export default {
       setAuth: 'auth/set',
       setAlert: 'alert/set',
     }),
+
+    ubahProfil(user) {
+      this.$router.push({ name: 'ubahprofil', params: { detail: user } })
+    },
+
     closeDialog(value) {
       this.dialog = value
     },

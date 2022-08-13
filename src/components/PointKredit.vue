@@ -32,8 +32,8 @@ export default {
   name: 'PointKredit',
   data() {
     return {
-      point: null,
-      credit: null,
+      point: '',
+      credit: '',
     }
   },
   computed: {

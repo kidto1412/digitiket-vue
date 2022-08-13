@@ -1,19 +1,21 @@
-<template>
+<template v-for>
   <v-card class="card-shadow card-radius" style="width: 15rem;">
     <v-img
-      :src="url_gambar"
+      :src="rekomendasi.image"
       :img-alt="judul"
       class="card-image card-image-top"
       aspect-ratio="1.7"
     ></v-img>
 
-    <v-card-title>{{ judul }}</v-card-title>
+    <v-card-title>
+      {{ rekomendasi.title }}
+    </v-card-title>
 
     <!-- <v-card-text> -->
     <div class="d-flex ml-2">
       <v-icon>mdi-map-marker</v-icon>
       <div class="text-subtitle-1">
-        {{ lokasi }}
+        {{ rekomendasi.venue }}
       </div>
     </div>
 
@@ -23,7 +25,7 @@
       </div>
 
       <v-rating
-        :value="score"
+        :value="rekomendasi.specialrate"
         color="amber"
         dense
         half-increments
@@ -36,6 +38,22 @@
 <script>
 export default {
   name: 'CardItem',
+  // ['rekomendasi', 'populer', 'baru'],
+  props: {
+    rekomendasi: {
+      type: Object,
+      default: () => [],
+    },
+    populer: {
+      type: Object,
+      default: () => [],
+    },
+
+    terbaru: {
+      type: Object,
+      default: () => [],
+    },
+  },
   data() {
     return {
       judul: 'Virtual Tour Candi Prambanan',

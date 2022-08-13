@@ -100,6 +100,10 @@
       <v-slide-group class="mr-2">
         <v-slide-item v-for="n in 3" :key="n">
           <v-img :src="promo" class="banner mr-2"></v-img>
+          <!-- <v-img
+            src="https://digitiket.id/storage/images/3.png"
+            class="banner mr-2"
+          ></v-img> -->
         </v-slide-item>
       </v-slide-group>
     </v-container>
@@ -111,8 +115,41 @@
           <a href="" class="text-purple">Lihat Semua</a>
         </div>
         <v-slide-group class="mr-2">
-          <v-slide-item v-for="n in 3" :key="n" ke>
-            <card-item class="mr-2" />
+          <v-slide-item v-for="item in rekomendasi" :key="item.id">
+            <v-card class="card-shadow card-radius mr-2" style="width: 15rem;">
+              <v-img
+                :src="item.image"
+                class="card-image card-image-top"
+                aspect-ratio="1.7"
+              ></v-img>
+
+              <v-card-title>
+                {{ item.title }}
+              </v-card-title>
+
+              <!-- <v-card-text> -->
+              <div class="d-flex ml-2">
+                <v-icon>mdi-map-marker</v-icon>
+                <div class="text-subtitle-1">
+                  {{ item.venue }}
+                </div>
+              </div>
+
+              <div class="d-flex justify-space-between align-center mx-4">
+                <div class="my-4 text-subtitle-1 price purple--text">
+                  IDR {{ converter(item.price && item.price.price_ori) }}
+                </div>
+
+                <v-rating
+                  :value="item.specialrate"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+              </div>
+            </v-card>
           </v-slide-item>
         </v-slide-group>
       </div>
@@ -126,8 +163,47 @@
         </div>
 
         <v-slide-group class="mr-2">
-          <v-slide-item v-for="n in 3" :key="n" ke>
-            <card-item class="mr-2" />
+          <v-slide-item v-for="itemPopuler in populer" :key="itemPopuler.id">
+            <v-card
+              class="card-shadow card-radius mr-2 mr-2"
+              style="width: 15rem;"
+            >
+              <v-img
+                :src="itemPopuler.image"
+                class="card-image card-image-top"
+                aspect-ratio="1.7"
+              ></v-img>
+
+              <v-card-title>
+                {{ itemPopuler.title }}
+              </v-card-title>
+
+              <!-- <v-card-text> -->
+              <div class="d-flex ml-2">
+                <v-icon>mdi-map-marker</v-icon>
+                <div class="text-subtitle-1">
+                  {{ itemPopuler.venue }}
+                </div>
+              </div>
+
+              <div class="d-flex justify-space-between align-center mx-4">
+                <div class="my-4 text-subtitle-1 price purple--text">
+                  IDR
+                  {{
+                    converter(itemPopuler.price && itemPopuler.price.price_ori)
+                  }}
+                </div>
+
+                <v-rating
+                  :value="itemPopuler.specialrate"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+              </div>
+            </v-card>
           </v-slide-item>
         </v-slide-group>
       </div>
@@ -141,8 +217,42 @@
         </div>
 
         <v-slide-group class="mr-2">
-          <v-slide-item v-for="n in 3" :key="n" ke>
-            <card-item class="mr-2" />
+          <v-slide-item v-for="itemBaru in terbaru" :key="itemBaru.id">
+            <v-card class="card-shadow card-radius mr-2" style="width: 15rem;">
+              <v-img
+                :src="itemBaru.image"
+                class="card-image card-image-top"
+                aspect-ratio="1.7"
+              ></v-img>
+
+              <v-card-title>
+                {{ itemBaru.title }}
+              </v-card-title>
+
+              <!-- <v-card-text> -->
+              <div class="d-flex ml-2">
+                <v-icon>mdi-map-marker</v-icon>
+                <div class="text-subtitle-1">
+                  {{ itemBaru.venue }}
+                </div>
+              </div>
+
+              <div class="d-flex justify-space-between align-center mx-4">
+                <div class="my-4 text-subtitle-1 price purple--text">
+                  IDR
+                  {{ converter(itemBaru.price && itemBaru.price.price_ori) }}
+                </div>
+
+                <v-rating
+                  :value="itemBaru.specialrate"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+              </div>
+            </v-card>
           </v-slide-item>
         </v-slide-group>
       </div>
@@ -155,7 +265,7 @@
 
 <script>
 import BottomNavigation from '../components/BottomNavigation.vue'
-import CardItem from '../components/CardItem.vue'
+// import CardItem from '../components/CardItem.vue'
 import { mapActions, mapGetters } from 'vuex'
 import PointKredit from '../components/PointKredit.vue'
 
@@ -166,7 +276,7 @@ import PointKredit from '../components/PointKredit.vue'
 export default {
   name: 'Home',
   components: {
-    CardItem,
+    // CardItem,
     BottomNavigation,
 
     Search: () =>
@@ -179,9 +289,10 @@ export default {
   },
   data() {
     return {
-      credit: null,
-      point: null,
       promo: '',
+      rekomendasi: [],
+      populer: [],
+      terbaru: [],
     }
   },
   computed: {
@@ -202,15 +313,44 @@ export default {
   },
   created() {
     this.axios
-      .get('https://digitiket.id/api/v1/promo/voucher')
+      .get(
+        'http://digitiket.id/api/v1/promo/voucher?X-Requested-With=XMLHttpRequest&direction=h',
+      )
       .then((response) => {
-        let { data } = response.data.content.url
+        let { data } = response.data.content.image_url
+        // console.log(response.data.content.image_url)
         this.promo = data
-        console.log('data promo' + response.data)
+        // console.log('data promo' + response.data)
+      })
+    this.axios
+      .get('https://digitiket.id/api/v1/cardInfo/new/20')
+      .then((response) => {
+        let { data } = response.data
+        this.rekomendasi = data
+      })
+    this.axios
+      .get('https://digitiket.id/api/v1/cardInfo/new/20')
+      .then((response) => {
+        let { data } = response.data
+        this.populer = data
+      })
+    this.axios
+      .get('https://digitiket.id/api/v1/cardInfo/new/20')
+      .then((response) => {
+        let { data } = response.data
+        this.terbaru = data
       })
   },
 
   methods: {
+    converter(nominal) {
+      const currency = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+      })
+      return currency.format(nominal).slice(3)
+    },
     ...mapActions({
       setDialogStatus: 'dialog/setStatus',
       setDialogComponent: 'dialog/setComponent',
@@ -222,7 +362,7 @@ export default {
   },
 }
 </script>
-CardItem
+
 <style scoped>
 .v-sheet.v-app-bar.v-toolbar:not(.v-sheet--outlined) {
   box-shadow: none !important;
@@ -252,6 +392,42 @@ CardItem
 
 .banner {
   border-radius: 10px;
+}
+
+.card-radius {
+  border-radius: 10px;
+}
+/* .v-image {
+  background-repeat: no-repeat;
+  height: 200px !important;
+  border-top-left-radius: 18px !important;
+  border-top-right-radius: 18px !important;
+  object-fit: cover !important;
+  background-size: cover !important;
+} */
+.v-card__title {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.price {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.card-img,
+.card-img-top {
+  border-top-left-radius: 18px !important;
+  border-top-right-radius: 18px !important;
+  object-fit: cover !important;
+}
+.card-shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 360px) {
