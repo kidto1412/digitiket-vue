@@ -10,7 +10,7 @@
       <v-icon>mdi-map-marker</v-icon>
     </v-btn>
 
-    <v-btn to="">
+    <v-btn to="/tickets">
       <span>Tiket</span>
       <v-icon>mdi-ticket-confirmation</v-icon>
     </v-btn>

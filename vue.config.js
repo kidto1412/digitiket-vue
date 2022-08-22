@@ -1,6 +1,8 @@
 module.exports = {
   transpileDependencies: ['vuetify'],
   devServer: {
-    host: '0.0.0.0',
+    // proxy: 'https://digitiket.id/',
+    // proxy: 'http://localhost:4000/',
+    proxy: 'http://172.16.1.157:8002',
   },
 }
