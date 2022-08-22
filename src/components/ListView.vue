@@ -5,21 +5,18 @@
       style="max-width: 540px;"
     >
       <v-row align="center" no-gutters>
-        <v-col cols="7">
-          <v-img
-            src="https://picsum.photos/400/400/?image=20"
-            class="card-img"
-          ></v-img>
+        <v-col cols="6">
+          <v-img :src="ticket.image" class="card-img"></v-img>
         </v-col>
-        <v-col cols="5">
-          <v-card-title class="text-title" :title="title">
-            {{ title }}
+        <v-col cols="5" class="ml-1">
+          <v-card-title class="text-title">
+            {{ ticket.title }}
           </v-card-title>
-          <v-card-subtitle class="text-desc mt-1" :desc="desc">
-            {{ desc }}
+          <v-card-subtitle class="text-desc mt-1" style="">
+            {{ ticket.cityprov }}
           </v-card-subtitle>
-          <v-card-subtitle class="text-price" :price="price">
-            IDR {{ converter(price) }}
+          <v-card-subtitle class="text-price">
+            IDR {{ converter(ticket.price && ticket.price.price_ori) }}
           </v-card-subtitle>
           <div class="d-flex align-center ml-2">
             <v-rating
@@ -29,11 +26,10 @@
               background-color="orange"
               size="14"
               dense
-              v-model="rating"
-              :rating="rating"
+              v-model="ticket.rate.avarage"
             ></v-rating>
-            <div class="text-ulasan ml-2 mt-1" :ulasan="ulasan">
-              {{ ulasan + ' ' + 'Ulasan' }}
+            <div class="text-ulasan ml-2 mt-1">
+              {{ ticket.rate && ticket.rate.user + ' ' + 'Ulasan' }}
             </div>
           </div>
         </v-col>
@@ -68,7 +64,10 @@
 <script>
 export default {
   name: 'ListView',
-  props: ['title', 'desc', 'price', 'rating', 'ulasan'],
+  props: ['ticket'],
+  data: () => {
+    return {}
+  },
   methods: {
     converter(nominal) {
       const currency = new Intl.NumberFormat('id-ID', {
