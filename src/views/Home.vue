@@ -11,8 +11,11 @@
       </v-btn>
       <v-btn icon @click="setDialogComponent('Notification')">
         <v-badge color="pink" overlap>
-          <template v-slot:badge v-if="countCart > 0">
+          <!-- <template v-slot:badge v-if="countCart > 0">
             <span class="white--text">{{ countCart }}</span>
+          </template> -->
+          <template v-slot:badge>
+            <span class="white--text"></span>
           </template>
           <v-icon>mdi-bell</v-icon>
         </v-badge>
@@ -98,12 +101,9 @@
         <a href="" class="text-purple">Lihat Semua</a>
       </div>
       <v-slide-group class="mr-2">
-        <v-slide-item v-for="n in 3" :key="n">
-          <v-img :src="promo" class="banner mr-2"></v-img>
-          <!-- <v-img
-            src="https://digitiket.id/storage/images/3.png"
-            class="banner mr-2"
-          ></v-img> -->
+        <v-slide-item v-for="itempromo in promo" :key="itempromo">
+          <v-img :src="itempromo.image_url" class="banner mr-2"></v-img>
+          <!-- <v-imgp -->
         </v-slide-item>
       </v-slide-group>
     </v-container>
@@ -116,7 +116,11 @@
         </div>
         <v-slide-group class="mr-2">
           <v-slide-item v-for="item in rekomendasi" :key="item.id">
-            <v-card class="card-shadow card-radius mr-2" style="width: 15rem;">
+            <v-card
+              class="card-shadow card-radius mr-2 mb-2"
+              style="width: 15rem;"
+              to="/detail-wisata"
+            >
               <v-img
                 :src="item.image"
                 class="card-image card-image-top"
@@ -165,7 +169,7 @@
         <v-slide-group class="mr-2">
           <v-slide-item v-for="itemPopuler in populer" :key="itemPopuler.id">
             <v-card
-              class="card-shadow card-radius mr-2 mr-2"
+              class="card-shadow card-radius mr-2 mb-2"
               style="width: 15rem;"
             >
               <v-img
@@ -218,7 +222,10 @@
 
         <v-slide-group class="mr-2">
           <v-slide-item v-for="itemBaru in terbaru" :key="itemBaru.id">
-            <v-card class="card-shadow card-radius mr-2" style="width: 15rem;">
+            <v-card
+              class="card-shadow card-radius mr-2 mb-2"
+              style="width: 15rem;"
+            >
               <v-img
                 :src="itemBaru.image"
                 class="card-image card-image-top"
@@ -313,29 +320,26 @@ export default {
   },
   created() {
     this.axios
-      .get(
-        'https://digitiket.id/api/v1/promo/voucher?X-Requested-With=XMLHttpRequest&direction=h',
-      )
+      .get('https://digitiket.id/api/v1/banner')
       .then((response) => {
-        let { data } = response.data.content.image_url
-        // console.log(response.data.content.image_url)
+        let { data } = response.data
+        // let { image_url } = data
         this.promo = data
         // console.log('data promo' + response.data)
       })
-    this.axios
-      .get('https://digitiket.id/api/v1/cardInfo/new/20')
+      .get('https://digitiket.id/api/v1/cardInfo?status=selling=10')
       .then((response) => {
         let { data } = response.data
         this.rekomendasi = data
       })
     this.axios
-      .get('https://digitiket.id/api/v1/cardInfo/new/20')
+      .get('https://digitiket.id/api/v1/cardInfo?sort=view=10')
       .then((response) => {
         let { data } = response.data
         this.populer = data
       })
     this.axios
-      .get('https://digitiket.id/api/v1/cardInfo/new/20')
+      .get('https://digitiket.id/api/v1/cardInfo?sort=rand=10')
       .then((response) => {
         let { data } = response.data
         this.terbaru = data
