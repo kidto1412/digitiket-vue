@@ -319,7 +319,7 @@ export default {
     },
   },
   created() {
-    this.axios.get('http://digitiket.id/api/v1/banner').then((response) => {
+    this.axios.get('https://digitiket.id/api/v1/banner').then((response) => {
       let { data } = response.data
       // let { image_url } = data
       this.promo = data
