@@ -314,7 +314,7 @@ export default {
   created() {
     this.axios
       .get(
-        'http://digitiket.id/api/v1/promo/voucher?X-Requested-With=XMLHttpRequest&direction=h',
+        'https://digitiket.id/api/v1/promo/voucher?X-Requested-With=XMLHttpRequest&direction=h',
       )
       .then((response) => {
         let { data } = response.data.content.image_url

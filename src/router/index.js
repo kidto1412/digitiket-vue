@@ -155,7 +155,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/Lokasi.vue'),
   },
   {
-    path: '/detail-wisata',
+    path: '/detail-wisata/:id',
     name: 'DetailWisata',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
