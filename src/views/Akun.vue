@@ -178,7 +178,7 @@ export default {
         },
       }
       this.axios
-        .post('https://digitiket.id/api/v1/logout', {}, config)
+        .post('/logout', {}, config)
         .then(() => {
           this.$router.push({ path: '/masuk' })
           this.setAuth({})
@@ -204,19 +204,15 @@ export default {
         Authorization: 'Bearer ' + this.user.jwt_token,
       },
     }
-    this.axios
-      .get('https://digitiket.id/api/v1/get/point', config)
-      .then((response) => {
-        let { data } = response.data
-        this.point = data.content
-      })
+    this.axios.get('/get/point', config).then((response) => {
+      let { data } = response.data
+      this.point = data.content
+    })
 
-    this.axios
-      .get('https://digitiket.id/api/v1/get/credit', config)
-      .then((response) => {
-        let { data } = response.data
-        this.credit = data.content
-      })
+    this.axios.get('/get/credit', config).then((response) => {
+      let { data } = response.data
+      this.credit = data.content
+    })
   },
 }
 </script>
