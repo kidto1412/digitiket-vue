@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-card
-      class="overflow-hidden d-flex justify-space-between card-radius"
-      style="max-width: 540px;"
-    >
+    <v-card class="overflow-hidden d-flex justify-space-between card-radius">
       <v-row align="center" no-gutters>
         <v-col cols="6">
           <v-img :src="ticket.image" class="card-img"></v-img>
@@ -29,7 +26,7 @@
               v-model="ticket.rate.avarage"
             ></v-rating>
             <div class="text-ulasan ml-2 mt-1">
-              {{ ticket.rate && ticket.rate.user + ' ' + 'Ulasan' }}
+              {{ ticket.rate && ticket.rate.user_count + ' ' + 'Ulasan' }}
             </div>
           </div>
         </v-col>
@@ -82,6 +79,22 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (max-width: 576px) {
+  .v-card {
+    max-width: 540px;
+  }
+  .card-img {
+    position: relative;
+    /* top: 10%; */
+    /* left: 5%; */
+    border-radius: 20px 20px 20px 20px;
+    padding: 10px 0px 10px 10px;
+    margin: 10px;
+    width: 210px;
+    height: 130px;
+  }
+}
+
 .card-img {
   position: relative;
   /* top: 10%; */
@@ -92,6 +105,7 @@ export default {
   width: 210px;
   height: 130px;
 }
+
 .text-title {
   font-family: 'Lato';
   font-style: normal;

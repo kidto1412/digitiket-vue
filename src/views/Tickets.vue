@@ -28,7 +28,7 @@
     </v-container>
     <v-container fluid>
       <div v-for="ticket in tickets" :key="`ticket-` + ticket.id">
-        <list-view :ticket="ticket" />
+        <list-view :ticket="ticket" class="mb-2" />
       </div>
     </v-container>
   </div>
@@ -44,12 +44,10 @@ export default {
     }
   },
   created() {
-    this.axios
-      .get('https://digitiket.id/api/v1/cardInfo?status=all')
-      .then((response) => {
-        let { data } = response.data
-        this.tickets = data
-      })
+    this.axios.get('/cardInfo?status=all').then((response) => {
+      let { data } = response.data
+      this.tickets = data
+    })
   },
 }
 </script>

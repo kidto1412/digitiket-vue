@@ -142,7 +142,7 @@ export default {
 
         if (this.password == this.confirmPassword) {
           this.axios
-            .post('https://digitiket.id/api/v1/registration', formData)
+            .post('/registration', formData)
             .then((response) => {
               let { data } = response.data
               this.setAuth(data)

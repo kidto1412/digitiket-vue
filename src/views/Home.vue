@@ -3,7 +3,7 @@
     <v-app-bar class="d-bg-purple" fixed dark>
       <v-img
         src="../../public/img/logo-digitiket-white.png"
-        style="width: 10px;"
+        style="max-width: 113px;"
       ></v-img>
       <v-spacer></v-spacer>
       <v-btn icon @click="setDialogComponent('search')">
@@ -98,10 +98,10 @@
     <v-container>
       <div class="d-flex justify-space-between mt-3 mb-3 align-center">
         <h3>Promo Terkini</h3>
-        <a href="" class="text-purple">Lihat Semua</a>
+        <a href="/tickets" class="text-purple">Lihat Semua</a>
       </div>
       <v-slide-group class="mr-2">
-        <v-slide-item v-for="itempromo in promo" :key="itempromo">
+        <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
           <v-img :src="itempromo.image_url" class="banner mr-2"></v-img>
           <!-- <v-imgp -->
         </v-slide-item>
@@ -112,14 +112,14 @@
       <div class="my-5">
         <div class="d-flex justify-space-between my-2 align-center">
           <h3>Disarankan Untuk Anda</h3>
-          <a href="" class="text-purple">Lihat Semua</a>
+          <a href="/tickets" class="text-purple">Lihat Semua</a>
         </div>
         <v-slide-group class="mr-2">
-          <v-slide-item v-for="item in rekomendasi" :key="item.id">
+          <v-slide-item v-for="item in rekomendasi" :key="item.slug">
             <v-card
               class="card-shadow card-radius mr-2 mb-2"
               style="width: 15rem;"
-              to="/detail-wisata"
+              :to="'/detail-wisata/' + item.slug"
             >
               <v-img
                 :src="item.image"
@@ -135,13 +135,14 @@
               <div class="d-flex ml-2">
                 <v-icon>mdi-map-marker</v-icon>
                 <div class="text-subtitle-1">
-                  {{ item.venue }}
+                  {{ item.cityprov }}
                 </div>
               </div>
 
               <div class="d-flex justify-space-between align-center mx-4">
                 <div class="my-4 text-subtitle-1 price purple--text">
-                  IDR {{ converter(item.price && item.price.price_ori) }}
+                  IDR
+                  {{ converter(item.price && item.price.price_ori) }}
                 </div>
 
                 <v-rating
@@ -163,7 +164,7 @@
       <div class="mt-5">
         <div class="d-flex justify-space-between my-2 align-center">
           <h3>Wisata Populer</h3>
-          <a href="" class="text-purple">Lihat Semua</a>
+          <a href="/tickets" class="text-purple">Lihat Semua</a>
         </div>
 
         <v-slide-group class="mr-2">
@@ -186,7 +187,7 @@
               <div class="d-flex ml-2">
                 <v-icon>mdi-map-marker</v-icon>
                 <div class="text-subtitle-1">
-                  {{ itemPopuler.venue }}
+                  {{ itemPopuler.cityprov }}
                 </div>
               </div>
 
@@ -217,7 +218,7 @@
       <div class="mt-5">
         <div class="d-flex justify-space-between my-2 align-center">
           <h3>Wisata Terbaru</h3>
-          <a href="" class="text-purple">Lihat Semua</a>
+          <a href="/tickets" class="text-purple">Lihat Semua</a>
         </div>
 
         <v-slide-group class="mr-2">
@@ -240,7 +241,7 @@
               <div class="d-flex ml-2">
                 <v-icon>mdi-map-marker</v-icon>
                 <div class="text-subtitle-1">
-                  {{ itemBaru.venue }}
+                  {{ itemBaru.cityprov }}
                 </div>
               </div>
 
@@ -319,31 +320,24 @@ export default {
     },
   },
   created() {
-    this.axios
-      .get('https://digitiket.id/api/v1/banner')
-      .then((response) => {
-        let { data } = response.data
-        // let { image_url } = data
-        this.promo = data
-        // console.log('data promo' + response.data)
-      })
-      .get('https://digitiket.id/api/v1/cardInfo?status=selling=10')
-      .then((response) => {
-        let { data } = response.data
-        this.rekomendasi = data
-      })
-    this.axios
-      .get('https://digitiket.id/api/v1/cardInfo?sort=view=10')
-      .then((response) => {
-        let { data } = response.data
-        this.populer = data
-      })
-    this.axios
-      .get('https://digitiket.id/api/v1/cardInfo?sort=rand=10')
-      .then((response) => {
-        let { data } = response.data
-        this.terbaru = data
-      })
+    this.axios.get('/banner/info').then((response) => {
+      let { data } = response.data
+      // let { image_url } = data
+      this.promo = data
+      // console.log('data promo' + response.data)
+    })
+    this.axios.get('/cardInfo?status=selling').then((response) => {
+      let { data } = response.data
+      this.rekomendasi = data
+    })
+    this.axios.get('/cardInfo?sort=view=10').then((response) => {
+      let { data } = response.data
+      this.populer = data
+    })
+    this.axios.get('/cardInfo?sort=rand=10').then((response) => {
+      let { data } = response.data
+      this.terbaru = data
+    })
   },
 
   methods: {

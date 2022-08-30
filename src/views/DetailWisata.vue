@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <h3 class="mx-auto">Judul Wisata</h3>
+      <h3 class="mx-auto">{{ ticket.title }}</h3>
       <v-spacer></v-spacer>
       <div></div>
     </v-app-bar>
@@ -16,7 +16,7 @@
       <v-tab>Ulasan</v-tab>
     </v-tabs>
     <div>
-      <v-img src="../assets/img/rinjani.png"></v-img>
+      <v-img :src="ticket.image"></v-img>
       <div class="d-flex">
         <v-img
           src="../assets/img/rinjani1.png"
@@ -41,7 +41,7 @@
     <v-card>
       <v-container>
         <v-list>
-          <h4>Tiket Masuk Anak Rinjani Waterpark</h4>
+          <h4>{{ ticket.title }}</h4>
           <p class="font-weight-light">Usia antara 2 s.d 15 tahun</p>
           <v-list-item style="padding: 0 !important;">
             <v-list-item-content>
@@ -50,7 +50,9 @@
             </v-list-item-content>
             <v-list-item-content>
               <v-list-item-title>1 Hari</v-list-item-title>
-              <v-list-item-title>IDR 22.500</v-list-item-title>
+              <v-list-item-title>
+                IDR {{ ticket.price && ticket.price.price_ori }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -92,14 +94,7 @@
       <v-container>
         <h4 class="mt-2">Informasi Tentang Rinjani Waterpark</h4>
         <p class="mt-5">
-          Rinjani Waterpark Lombok merupakan tempat hiburan keluarga yang
-          terletak di Lombok Timur. Water park ini mengusung konsep resort
-          dengan membangun lebih banyak taman hijau. Dengan begitu pengunjung
-          bisa menikmati pemandangan hijau ketika berenang. Wisata liburan
-          keluarga ini merupakan tempat wisata terbesar di Nusa Tenggara Barat.
-          Dibangun di atas lahan seluas 1,8 hektare juga bisa menjadi lokasi
-          resepsi kecil-kecilan atau acara ulang tahun. Taman yang luas bisa
-          digunakan untuk acara yang mendatangkan banyak orang.
+          {{ ticket.description }}
         </p>
       </v-container>
     </v-card>
@@ -108,8 +103,7 @@
         <h4>Lokasi Rinjani Waterpark</h4>
         <div>
           <p>
-            Selong JI. Pajanggik. Majidi. Selang Lombok Timur - Nusa Tenggara
-            Barat
+            {{ ticket.cityprov }}
           </p>
         </div>
         <div style="height: 170px; width: 100%;">
@@ -216,7 +210,59 @@ export default {
     // LIcon,
     LCircle,
   },
+  data() {
+    return {
+      model: '',
+      ticket: [],
+      rating: 4,
+      zoom: 12,
+      center: latLng(39.903416, 32.8589),
+      url:
+        'https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=b90e089c365242a3a08dbb49a7084a61',
+      attribution: 'Haritamız',
+      coordArray: [
+        { id: 1, lat: 39.749434, long: 30.520655, name: 'Eskişehir' },
+        { id: 2, lat: 39.903416, long: 32.8589, name: 'Ankara' },
+      ],
+      icon: markerimage,
+      iconSize: [20, 20],
+      circle: {
+        center: latLng(39.903416, 32.8589),
+        radius: 100000,
+      },
+    }
+  },
+  created() {
+    // this.axios
+    //   .get('https://digitiket.id/api/v1/cardInfo/id/' + this.$route.params.id)
+    //   .then((response) => {
+    //     this.ticket = response.data
+    //     console.log(response.data)
+    //   })
+    this.go()
+  },
   methods: {
+    // loadTicket(data) {
+    //   this.ticket = data
+    // },
+    go() {
+      let { slug } = this.$route.params
+      let url = '/cardInfo?status=selling&for=slug&of=' + slug
+      // url = url + '?page=' + this.page
+      // url = encodeURI(url)
+      this.axios
+        .get(url)
+        .then((response) => {
+          console.log(url)
+          console.log(response.data)
+          let { data } = response.data
+          this.ticket = data
+        })
+        .catch((error) => {
+          let { responses } = error
+          console.log(responses)
+        })
+    },
     getCoord(a, b) {
       return latLng(a, b)
     },
@@ -236,26 +282,6 @@ export default {
       const { latlng } = item
       console.log('enlem boylam bilgisi', latlng)
     },
-  },
-  data() {
-    return {
-      rating: 4,
-      zoom: 12,
-      center: latLng(39.903416, 32.8589),
-      url:
-        'https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=b90e089c365242a3a08dbb49a7084a61',
-      attribution: 'Haritamız',
-      coordArray: [
-        { id: 1, lat: 39.749434, long: 30.520655, name: 'Eskişehir' },
-        { id: 2, lat: 39.903416, long: 32.8589, name: 'Ankara' },
-      ],
-      icon: markerimage,
-      iconSize: [20, 20],
-      circle: {
-        center: latLng(39.903416, 32.8589),
-        radius: 100000,
-      },
-    }
   },
 }
 </script>
