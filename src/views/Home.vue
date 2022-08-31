@@ -71,19 +71,19 @@
               <h5 class="text-center">Attraction</h5>
             </div>
             <div class="mt-2">
-              <v-btn class="d-bg-purple ma-2" outlined dark>
+              <v-btn class="d-bg-purple ma-2" outlined dark to="evcent">
                 <v-img src="../../public/img/icons/calendar.svg"></v-img>
               </v-btn>
               <h5 class="text-center">Event</h5>
             </div>
             <div class="mt-2">
-              <v-btn class="d-bg-purple ma-2" outlined dark>
+              <v-btn class="d-bg-purple ma-2" outlined dark to="/tour">
                 <v-img src="../../public/img/icons/location.svg"></v-img>
               </v-btn>
               <h5 class="text-center">Tour</h5>
             </div>
             <div class="mt-2">
-              <v-btn class="d-bg-purple ma-2" outlined dark>
+              <v-btn class="d-bg-purple ma-2" outlined dark to="/virtual-tour">
                 <v-img src="../../public/img/icons/Group.svg"></v-img>
               </v-btn>
               <h5 class="text-center align-center">
