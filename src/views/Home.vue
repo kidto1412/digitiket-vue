@@ -102,7 +102,10 @@
       </div>
       <v-slide-group class="mr-2">
         <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
-          <v-img :src="itempromo.image_url" class="banner mr-2"></v-img>
+          <v-card :to="'/detail-promo/' + itempromo.id">
+            <v-img :src="itempromo.image_url" class="banner mr-2"></v-img>
+            <!-- :to="'/detail-wisata/' + item.slug" -->
+          </v-card>
           <!-- <v-imgp -->
         </v-slide-item>
       </v-slide-group>
@@ -134,7 +137,7 @@
               <!-- <v-card-text> -->
               <div class="d-flex ml-2">
                 <v-icon>mdi-map-marker</v-icon>
-                <div class="text-subtitle-1">
+                <div class="text-subtitle-2">
                   {{ item.cityprov }}
                 </div>
               </div>
@@ -297,7 +300,7 @@ export default {
   },
   data() {
     return {
-      promo: '',
+      promo: [],
       rekomendasi: [],
       populer: [],
       terbaru: [],
@@ -320,7 +323,7 @@ export default {
     },
   },
   created() {
-    this.axios.get('/banner/info').then((response) => {
+    this.axios.get('/promo').then((response) => {
       let { data } = response.data
       // let { image_url } = data
       this.promo = data
