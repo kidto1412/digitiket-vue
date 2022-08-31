@@ -45,7 +45,7 @@ export default {
   },
   created() {
     this.axios
-      .get('/cardInfo?for=category&of=21&status=all')
+      .get('/cardInfo?for=category&of=20&status=all')
       .then((response) => {
         console.log(response.data)
         let { data } = response.data

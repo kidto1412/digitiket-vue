@@ -1,25 +1,45 @@
 <template>
-  <v-row class="vrow">
-    <v-col v-for="n in 2" :key="n" class="d-flex child-flex" cols="11">
-      <v-img
-        :src="require(`../../public/img/dor${n}.png`)"
-        :lazy-src="require(`../../public/img/dor${n}.png`)"
-        aspect-ratio="1"
-        class="grey lighten-2 img"
-      >
-        <template v-slot:placeholder>
-          <v-row class="fill-height ma-0">
-            <v-progress-circular
-              indeterminate
-              color="grey lighten-5"
-            ></v-progress-circular>
-          </v-row>
-        </template>
-      </v-img>
-    </v-col>
-  </v-row>
+  <div>
+    <v-app-bar dark class="d-bg-purple" fixed>
+      <v-btn icon dark @click.stop="$router.go(-1)">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <v-spacer></v-spacer>
+      <h3 class="mx-auto">Promo Terkini</h3>
+      <v-spacer></v-spacer>
+      <div></div>
+    </v-app-bar>
+    <v-container class="mt-15">
+      <div v-for="i in promo" :key="i.id" class="mb-2">
+        <v-card :to="'/detail-promo/' + i.id">
+          <v-img :src="i.image_url" :lazy-src="i.image_url" class="img"></v-img>
+        </v-card>
+      </div>
+    </v-container>
+  </div>
 </template>
-
+<script>
+export default {
+  name: 'PromoTerkini',
+  data() {
+    return {
+      promo: [],
+    }
+  },
+  created() {
+    this.axios
+      .get('/promo')
+      .then((response) => {
+        let { data } = response.data
+        this.promo = data
+      })
+      .catch((error) => {
+        let { responses } = error
+        console.log(responses)
+      })
+  },
+}
+</script>
 <style scoped>
 .vrow {
   display: flex;
@@ -32,5 +52,6 @@
 .img {
   border-radius: 10px;
   object-fit: cover;
+  width: 100%;
 }
 </style>
