@@ -27,12 +27,9 @@
       </div>
     </v-container>
     <v-container fluid>
-      <list-view
-        title="Taman Legenda Keong Mas"
-        desc="Ciptakan Kemasan yang mampu menjual"
-        price="35000"
-        ulasan="17"
-      />
+      <div v-for="item in items" :key="`item-` + item.id">
+        <list-view :ticket="item" />
+      </div>
     </v-container>
   </div>
 </template>
@@ -41,6 +38,24 @@ import ListView from '../components/ListView.vue'
 export default {
   components: { ListView },
   name: 'Attraction',
+  data() {
+    return {
+      items: [],
+    }
+  },
+  created() {
+    this.axios
+      .get('/cardInfo?for=category&of=22&status=all')
+      .then((response) => {
+        console.log(response.data)
+        let { data } = response.data
+        this.items = data
+      })
+      .catch((error) => {
+        let { responses } = error
+        console.log(responses)
+      })
+  },
 }
 </script>
 <style scoped>

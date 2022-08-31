@@ -57,9 +57,11 @@
         </v-container> -->
         <h5 class="my-3 white--text">Kategori</h5>
         <div class="kategori">
-          <v-card class="d-flex justify-center">
+          <v-card
+            class="d-flex justify-sm-space-center justify-md-space-around"
+          >
             <div class="mt-2">
-              <v-btn class="d-bg-purple ma-2" outlined dark>
+              <v-btn to="/attraction" class="d-bg-purple ma-2" outlined dark>
                 <v-img
                   src="../../public/img/icons/flying-chairs.svg"
                   width="30"
@@ -98,7 +100,7 @@
     <v-container>
       <div class="d-flex justify-space-between mt-3 mb-3 align-center">
         <h3>Promo Terkini</h3>
-        <a href="/tickets" class="text-purple">Lihat Semua</a>
+        <a href="/promo-terkini" class="text-purple">Lihat Semua</a>
       </div>
       <v-slide-group class="mr-2">
         <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
