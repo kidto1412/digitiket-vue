@@ -10,7 +10,7 @@
       <div></div>
     </v-app-bar>
     <v-container class="mt-15">
-      <div v-for="i in promo" :key="i.id" class="mb-2">
+      <div v-for="i in promo" :key="i.id" class="mb-3">
         <v-card :to="'/detail-promo/' + i.id">
           <v-img :src="i.image_url" :lazy-src="i.image_url" class="img"></v-img>
         </v-card>
