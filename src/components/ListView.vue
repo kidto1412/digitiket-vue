@@ -59,6 +59,7 @@
   </div>
 </template>
 <script>
+import converter from '../mixins/converter'
 export default {
   name: 'ListView',
   props: ['ticket'],
@@ -75,6 +76,7 @@ export default {
       return currency.format(nominal).slice(3)
     },
   },
+  mixins: [converter],
 }
 </script>
 

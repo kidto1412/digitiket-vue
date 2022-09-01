@@ -35,6 +35,7 @@
 </template>
 <script>
 import ListView from '../components/ListView.vue'
+
 export default {
   components: { ListView },
   name: 'Tickets',

@@ -281,6 +281,7 @@ import BottomNavigation from '../components/BottomNavigation.vue'
 // import CardItem from '../components/CardItem.vue'
 import { mapActions, mapGetters } from 'vuex'
 import PointKredit from '../components/PointKredit.vue'
+import converter from '../mixins/converter'
 
 // import Kategori from '../components/Kategori.vue'
 
@@ -346,14 +347,6 @@ export default {
   },
 
   methods: {
-    converter(nominal) {
-      const currency = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0,
-      })
-      return currency.format(nominal).slice(3)
-    },
     ...mapActions({
       setDialogStatus: 'dialog/setStatus',
       setDialogComponent: 'dialog/setComponent',
@@ -363,6 +356,7 @@ export default {
       this.dialog = value
     },
   },
+  mixins: [converter],
 }
 </script>
 

@@ -51,7 +51,7 @@
             <v-list-item-content>
               <v-list-item-title>1 Hari</v-list-item-title>
               <v-list-item-title>
-                IDR {{ ticket.price && ticket.price.price_ori }}
+                IDR {{ converter(ticket.price && ticket.price.price_ori) }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -181,7 +181,7 @@
           <v-container>
             <p class="text-purple">Total Harga</p>
             <p class="text-purple">
-              IDR {{ ticket.price && ticket.price.price_ori }}
+              IDR {{ converter(ticket.price && ticket.price.price_ori) }}
             </p>
           </v-container>
           <v-btn color="my-auto mx-5" class="btn-purple text-white">
@@ -194,7 +194,7 @@
 </template>
 <script>
 import { latLng, Icon } from 'leaflet'
-
+import converter from '../mixins/converter'
 import { LMap, LTileLayer, LMarker, LPopup, LCircle } from 'vue2-leaflet'
 import markerimage from './../assets/img/marketimage.png'
 delete Icon.Default.prototype._getIconUrl
@@ -286,6 +286,7 @@ export default {
       console.log('enlem boylam bilgisi', latlng)
     },
   },
+  mixins: [converter],
 }
 </script>
 <style scoped>
