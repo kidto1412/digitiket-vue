@@ -53,6 +53,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import converter from '../mixins/converter'
 export default {
   name: 'DetailPromo',
   data() {
@@ -70,14 +71,6 @@ export default {
       setAlert: 'alert/set',
     }),
 
-    converter(nominal) {
-      const currency = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0,
-      })
-      return currency.format(nominal).slice(3)
-    },
     copy() {
       this.$refs.clone.focus()
       document.execCommand('copy')
@@ -105,6 +98,7 @@ export default {
         })
     },
   },
+  mixins: [converter],
 }
 </script>
 <style scoped>
