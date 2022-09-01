@@ -180,7 +180,9 @@
         <div class="d-flex justify-space-between" style="line-height: 12px;">
           <v-container>
             <p class="text-purple">Total Harga</p>
-            <p class="text-purple">IDR 40.000</p>
+            <p class="text-purple">
+              IDR {{ ticket.price && ticket.price.price_ori }}
+            </p>
           </v-container>
           <v-btn color="my-auto mx-5" class="btn-purple text-white">
             Beli Sekarang
@@ -192,6 +194,7 @@
 </template>
 <script>
 import { latLng, Icon } from 'leaflet'
+
 import { LMap, LTileLayer, LMarker, LPopup, LCircle } from 'vue2-leaflet'
 import markerimage from './../assets/img/marketimage.png'
 delete Icon.Default.prototype._getIconUrl
