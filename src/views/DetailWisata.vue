@@ -184,7 +184,11 @@
               IDR {{ converter(ticket.price && ticket.price.price_ori) }}
             </p>
           </v-container>
-          <v-btn color="my-auto mx-5" class="btn-purple text-white">
+          <v-btn
+            color="my-auto mx-5"
+            class="btn-purple text-white"
+            to="/pilih-tanggal"
+          >
             Beli Sekarang
           </v-btn>
         </div>

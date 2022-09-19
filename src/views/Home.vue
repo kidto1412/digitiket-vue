@@ -1,9 +1,9 @@
 <template>
-  <div style="overflow: hidden;">
+  <div style="overflow: hidden">
     <v-app-bar class="d-bg-purple" fixed dark>
       <v-img
         src="../../public/img/logo-digitiket-white.png"
-        style="max-width: 113px;"
+        style="max-width: 113px"
       ></v-img>
       <v-spacer></v-spacer>
       <v-btn icon @click="setDialogComponent('search')">
@@ -42,7 +42,7 @@
             <v-icon dark>mdi-account</v-icon>
           </v-avatar>
           <p class="ms-2 mt-4 white--text">
-            {{ user.firstname + ' ' + user.lastname }}
+            {{ user.firstname + " " + user.lastname }}
           </p>
         </div>
         <div class="d-flex align-center mt-15 mb-4" v-else>
@@ -57,21 +57,19 @@
         </v-container> -->
         <h5 class="my-3 white--text">Kategori</h5>
         <div class="kategori">
-          <v-card
-            class="d-flex justify-sm-space-center justify-md-space-around"
-          >
+          <v-card class="d-flex justify-space-around">
             <div class="mt-2">
               <v-btn to="/attraction" class="d-bg-purple ma-2" outlined dark>
                 <v-img
                   src="../../public/img/icons/flying-chairs.svg"
                   width="30"
-                  style="margin: 10px;"
+                  style="margin: 10px"
                 ></v-img>
               </v-btn>
               <h5 class="text-center">Attraction</h5>
             </div>
             <div class="mt-2">
-              <v-btn class="d-bg-purple ma-2" outlined dark to="evcent">
+              <v-btn class="d-bg-purple ma-2" outlined dark to="event">
                 <v-img src="../../public/img/icons/calendar.svg"></v-img>
               </v-btn>
               <h5 class="text-center">Event</h5>
@@ -102,15 +100,17 @@
         <h3>Promo Terkini</h3>
         <a href="/promo-terkini" class="text-purple">Lihat Semua</a>
       </div>
-      <v-slide-group class="mr-2">
-        <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
-          <v-card :to="'/detail-promo/' + itempromo.id">
-            <v-img :src="itempromo.image_url" class="banner mr-2"></v-img>
-            <!-- :to="'/detail-wisata/' + item.slug" -->
-          </v-card>
-          <!-- <v-imgp -->
-        </v-slide-item>
-      </v-slide-group>
+      <keep-alive>
+        <v-slide-group class="mr-2">
+          <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
+            <v-card :to="'/detail-promo/' + itempromo.id">
+              <v-img :src="itempromo.image_url" class="banner mr-2"></v-img>
+              <!-- :to="'/detail-wisata/' + item.slug" -->
+            </v-card>
+            <!-- <v-imgp -->
+          </v-slide-item>
+        </v-slide-group>
+      </keep-alive>
     </v-container>
     <hr class="mt-5" />
     <v-container>
@@ -123,7 +123,7 @@
           <v-slide-item v-for="item in rekomendasi" :key="item.slug">
             <v-card
               class="card-shadow card-radius mr-2 mb-2"
-              style="width: 15rem;"
+              style="width: 15rem"
               :to="'/detail-wisata/' + item.slug"
             >
               <v-img
@@ -176,7 +176,8 @@
           <v-slide-item v-for="itemPopuler in populer" :key="itemPopuler.id">
             <v-card
               class="card-shadow card-radius mr-2 mb-2"
-              style="width: 15rem;"
+              style="width: 15rem"
+              :to="'/detail-wisata/' + itemPopuler.slug"
             >
               <v-img
                 :src="itemPopuler.image"
@@ -230,7 +231,8 @@
           <v-slide-item v-for="itemBaru in terbaru" :key="itemBaru.id">
             <v-card
               class="card-shadow card-radius mr-2 mb-2"
-              style="width: 15rem;"
+              style="width: 15rem"
+              :to="'/detail-wisata/' + itemBaru.slug"
             >
               <v-img
                 :src="itemBaru.image"
@@ -277,27 +279,27 @@
 </template>
 
 <script>
-import BottomNavigation from '../components/BottomNavigation.vue'
+import BottomNavigation from "../components/BottomNavigation.vue";
 // import CardItem from '../components/CardItem.vue'
-import { mapActions, mapGetters } from 'vuex'
-import PointKredit from '../components/PointKredit.vue'
-import converter from '../mixins/converter'
+import { mapActions, mapGetters } from "vuex";
+import PointKredit from "../components/PointKredit.vue";
+import converter from "../mixins/converter";
 
 // import Kategori from '../components/Kategori.vue'
 
 // import CardItem from '../components/CardItem.vue'
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     // CardItem,
     BottomNavigation,
 
     Search: () =>
-      import(/* webpackChunkName: "search" */ '@/components/Search.vue'),
+      import(/* webpackChunkName: "search" */ "@/components/Search.vue"),
     Notification: () =>
       import(
-        /* webpackChunkName: "Notification" */ '@/components/Notification.vue'
+        /* webpackChunkName: "Notification" */ "@/components/Notification.vue"
       ),
     PointKredit,
   },
@@ -307,57 +309,59 @@ export default {
       rekomendasi: [],
       populer: [],
       terbaru: [],
-    }
+      keyword: "",
+    };
   },
   computed: {
     ...mapGetters({
-      dialogStatus: 'dialog/status',
-      currentComponent: 'dialog/component',
-      guest: 'auth/guest',
-      user: 'auth/user',
+      dialogStatus: "dialog/status",
+      currentComponent: "dialog/component",
+      guest: "auth/guest",
+      user: "auth/user",
     }),
     dialog: {
       set(value) {
-        return this.setDialogStatus(value)
+        return this.setDialogStatus(value);
       },
       get() {
-        return this.dialogStatus
+        return this.dialogStatus;
       },
     },
   },
   created() {
-    this.axios.get('/promo').then((response) => {
-      let { data } = response.data
+    this.axios.get("/promo").then((response) => {
+      let { data } = response.data;
       // let { image_url } = data
-      this.promo = data
+      this.promo = data;
       // console.log('data promo' + response.data)
-    })
-    this.axios.get('/cardInfo?status=selling').then((response) => {
-      let { data } = response.data
-      this.rekomendasi = data
-    })
-    this.axios.get('/cardInfo?sort=view=10').then((response) => {
-      let { data } = response.data
-      this.populer = data
-    })
-    this.axios.get('/cardInfo?sort=rand=10').then((response) => {
-      let { data } = response.data
-      this.terbaru = data
-    })
+    });
+    this.axios.get("/cardInfo?status=selling").then((response) => {
+      let { data } = response.data;
+      this.rekomendasi = data;
+    });
+    this.axios.get("/cardInfo?sort=view=10").then((response) => {
+      let { data } = response.data;
+      this.populer = data;
+    });
+    this.axios.get("/cardInfo?sort=rand=10").then((response) => {
+      let { data } = response.data;
+      this.terbaru = data;
+    });
   },
 
   methods: {
     ...mapActions({
-      setDialogStatus: 'dialog/setStatus',
-      setDialogComponent: 'dialog/setComponent',
-      setAuth: 'auth/set',
+      setDialogStatus: "dialog/setStatus",
+      setDialogComponent: "dialog/setComponent",
+      setAuth: "auth/set",
     }),
     closeDialog(value) {
-      this.dialog = value
+      this.dialog = value;
     },
   },
+
   mixins: [converter],
-}
+};
 </script>
 
 <style scoped>
@@ -376,7 +380,7 @@ export default {
   position: relative;
 }
 .hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 20px;
@@ -389,6 +393,8 @@ export default {
 
 .banner {
   border-radius: 10px;
+  width: 328px;
+  height: 121.5px;
 }
 
 .card-radius {
