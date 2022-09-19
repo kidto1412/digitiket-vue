@@ -12,14 +12,14 @@
       </v-btn>
     </v-toolbar>
     <v-card tile>
-      <v-list style="width: 100% !importany;">
+      <v-list style="width: 100% !importany" v-if="!guest">
         <v-list-item>
           <v-list-item-avatar>
             <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title class="text-h6 mb-2">
-              {{ user.firstname + ' ' + user.lastname }}
+              {{ user.firstname + " " + user.lastname }}
             </v-list-item-title>
             <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
             <v-list-item-subtitle>{{ user.cellphone }}</v-list-item-subtitle>
@@ -29,6 +29,7 @@
           <point-kredit />
         </v-container>
       </v-list>
+      <div v-else></div>
     </v-card>
     <v-divider></v-divider>
     <v-card>
@@ -38,10 +39,10 @@
       <v-list nav dense>
         <v-list-item-group v-model="selectedItem" class="d-purple">
           <v-card
-            style="box-shadow: none !important;"
+            style="box-shadow: none !important"
             :to="'/ubah-profil/' + user.id"
           >
-            <v-list-item>
+            <v-list-item v-if="!guest">
               <v-list-item-icon>
                 <v-icon class="d-purple">mdi-account</v-icon>
               </v-list-item-icon>
@@ -52,13 +53,24 @@
 
               <v-icon>mdi-chevron-right</v-icon>
             </v-list-item>
+            <v-list-item v-else>
+              <v-list-item-icon>
+                <v-icon class="d-purple">mdi-account</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Masuk</v-list-item-title>
+              </v-list-item-content>
+
+              <v-icon>mdi-chevron-right</v-icon>
+            </v-list-item>
           </v-card>
           <v-list-item>
             <v-list-item-icon>
               <v-icon class="d-purple">mdi-account-group</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>Undang Teman</v-list-item-title>
+              <v-list-item-title>Daftar</v-list-item-title>
             </v-list-item-content>
             <v-icon>mdi-chevron-right</v-icon>
           </v-list-item>
@@ -88,14 +100,10 @@
       <v-list-item-group v-model="selectedItem" class="d-purple">
         <v-list-item @click="logout">
           <v-list-item-icon>
-            <v-icon class="d-purple">
-              mdi-logout
-            </v-icon>
+            <v-icon class="d-purple"> mdi-logout </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>
-              Keluar
-            </v-list-item-title>
+            <v-list-item-title> Keluar </v-list-item-title>
           </v-list-item-content>
           <v-icon>mdi-chevron-right</v-icon>
         </v-list-item>
@@ -106,114 +114,114 @@
 </template>
 <style scoped></style>
 <script>
-import BottomNavigation from '../components/BottomNavigation.vue'
-import { mapActions, mapGetters } from 'vuex'
-import PointKredit from '../components/PointKredit.vue'
+import BottomNavigation from "../components/BottomNavigation.vue";
+import { mapActions, mapGetters } from "vuex";
+import PointKredit from "../components/PointKredit.vue";
 export default {
   components: {
     BottomNavigation,
     PointKredit,
   },
 
-  name: 'Akun',
+  name: "Akun",
   data: () => ({
     // selectedItem: 0,
     akun: [
-      { text: 'Ubah Profil', icon: 'mdi-account', to: '/ubah-profil' },
-      { text: 'Undang Teman', icon: 'mdi-account-group' },
+      { text: "Ubah Profil", icon: "mdi-account", to: "/ubah-profil" },
+      { text: "Undang Teman", icon: "mdi-account-group" },
     ],
     umum: [
-      { text: 'Syarat dan Ketentuan', icon: 'mdi-note-multiple' },
-      { text: 'Kebijakan Privasi', icon: 'mdi-shield-lock' },
-      { text: 'Pusat Bantuan', icon: 'mdi-help-circle' },
-      { text: 'Berita Rating Aplikasi', icon: 'mdi-star-settings' },
+      { text: "Syarat dan Ketentuan", icon: "mdi-note-multiple" },
+      { text: "Kebijakan Privasi", icon: "mdi-shield-lock" },
+      { text: "Pusat Bantuan", icon: "mdi-help-circle" },
+      { text: "Berita Rating Aplikasi", icon: "mdi-star-settings" },
     ],
   }),
   computed: {
     ...mapGetters({
-      countCart: 'cart/count',
-      guest: 'auth/guest',
-      user: 'auth/user',
-      dialogStatus: 'dialog/status',
-      currentComponent: 'dialog/component',
+      countCart: "cart/count",
+      guest: "auth/guest",
+      user: "auth/user",
+      dialogStatus: "dialog/status",
+      currentComponent: "dialog/component",
     }),
     isHome() {
-      return this.$route.path === '/'
+      return this.$route.path === "/";
     },
     isLogin() {
-      return this.$route.path === '/login'
+      return this.$route.path === "/login";
     },
     isRegister() {
-      return this.$route.path === '/register'
+      return this.$route.path === "/register";
     },
     dialog: {
       get() {
-        return this.dialogStatus
+        return this.dialogStatus;
       },
       set(value) {
-        return this.setDialogStatus(value)
+        return this.setDialogStatus(value);
       },
     },
   },
   methods: {
     ...mapActions({
-      setDialogStatus: 'dialog/setStatus',
-      setDialogComponent: 'dialog/setComponent',
-      setAuth: 'auth/set',
-      setAlert: 'alert/set',
+      setDialogStatus: "dialog/setStatus",
+      setDialogComponent: "dialog/setComponent",
+      setAuth: "auth/set",
+      setAlert: "alert/set",
     }),
 
     ubahProfil(user) {
-      this.$router.push({ name: 'ubahprofil', params: { detail: user } })
+      this.$router.push({ name: "ubahprofil", params: { detail: user } });
     },
 
     closeDialog(value) {
-      this.dialog = value
+      this.dialog = value;
     },
 
     logout() {
       let config = {
         headers: {
-          Authorization: 'Bearer ' + this.user.jwt_token,
+          Authorization: "Bearer " + this.user.jwt_token,
         },
-      }
+      };
       this.axios
-        .post('/logout', {}, config)
+        .post("/logout", {}, config)
         .then(() => {
-          this.$router.push({ path: '/masuk' })
-          this.setAuth({})
+          this.$router.push({ path: "/masuk" });
+          this.setAuth({});
           this.setAlert({
             status: true,
-            color: 'success',
-            text: 'Logout successfully',
-          })
+            color: "success",
+            text: "Logout successfully",
+          });
         })
         .catch((error) => {
-          let { data } = error.response
+          let { data } = error.response;
           this.setAlert({
             status: true,
-            color: 'error',
+            color: "error",
             text: data.message,
-          })
-        })
+          });
+        });
     },
   },
   created() {
     let config = {
       headers: {
-        Authorization: 'Bearer ' + this.user.jwt_token,
+        Authorization: "Bearer " + this.user.jwt_token,
       },
-    }
-    this.axios.get('/get/point', config).then((response) => {
-      let { data } = response.data
-      this.point = data.content
-    })
+    };
+    this.axios.get("/get/point", config).then((response) => {
+      let { data } = response.data;
+      this.point = data.content;
+    });
 
-    this.axios.get('/get/credit', config).then((response) => {
-      let { data } = response.data
-      this.credit = data.content
-    })
+    this.axios.get("/get/credit", config).then((response) => {
+      let { data } = response.data;
+      this.credit = data.content;
+    });
   },
-}
+};
 </script>
 <style scoped></style>

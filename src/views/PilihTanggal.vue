@@ -20,6 +20,11 @@ export default {
       .toISOString()
       .substr(0, 10),
   }),
+  methods:{
+    handleSendDate(){
+      this.date
+    }
+  }
 }
 </script>
 
