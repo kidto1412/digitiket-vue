@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-card class="overflow-hidden d-flex justify-space-between card-radius">
+    <v-card
+      class="overflow-hidden d-flex justify-space-between card-radius"
+      to=""
+    >
       <v-row align="center" no-gutters>
         <v-col cols="6">
           <v-img :src="ticket.image" class="card-img"></v-img>
@@ -17,7 +20,7 @@
           </v-card-subtitle>
           <div class="d-flex align-center ml-2">
             <v-rating
-              style="position: relative; top: -10px;"
+              style="position: relative; top: -10px"
               class="rating-icon"
               color="orange "
               background-color="orange"
@@ -26,7 +29,7 @@
               v-model="ticket.rate.avarage"
             ></v-rating>
             <div class="text-ulasan ml-2 mt-1">
-              {{ ticket.rate && ticket.rate.user_count + ' ' + 'Ulasan' }}
+              {{ ticket.rate && ticket.rate.user_count + " " + "Ulasan" }}
             </div>
           </div>
         </v-col>
@@ -59,25 +62,25 @@
   </div>
 </template>
 <script>
-import converter from '../mixins/converter'
+import converter from "../mixins/converter";
 export default {
-  name: 'ListView',
-  props: ['ticket'],
+  name: "ListView",
+  props: ["ticket", "click"],
   data: () => {
-    return {}
+    return {};
   },
   methods: {
     converter(nominal) {
-      const currency = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
+      const currency = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
         minimumFractionDigits: 0,
-      })
-      return currency.format(nominal).slice(3)
+      });
+      return currency.format(nominal).slice(3);
     },
   },
   mixins: [converter],
-}
+};
 </script>
 
 <style scoped>
@@ -109,7 +112,7 @@ export default {
 }
 
 .text-title {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
@@ -118,7 +121,7 @@ export default {
   color: #000000;
 }
 .text-desc {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: 10px;
@@ -129,7 +132,7 @@ export default {
 }
 
 .text-price {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: 600;
   font-size: 10px;
