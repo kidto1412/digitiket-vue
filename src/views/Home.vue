@@ -310,6 +310,8 @@ export default {
       populer: [],
       terbaru: [],
       keyword: "",
+      limit: 1,
+      busy: false,
     };
   },
   computed: {
@@ -335,15 +337,15 @@ export default {
       this.promo = data;
       // console.log('data promo' + response.data)
     });
-    this.axios.get("/cardInfo?status=selling").then((response) => {
+    this.axios.get("/cardInfo?status=selling&limit=5").then((response) => {
       let { data } = response.data;
       this.rekomendasi = data;
     });
-    this.axios.get("/cardInfo?sort=view=10").then((response) => {
+    this.axios.get("/cardInfo?sort=view=10&limit=5").then((response) => {
       let { data } = response.data;
       this.populer = data;
     });
-    this.axios.get("/cardInfo?sort=rand=10").then((response) => {
+    this.axios.get("/cardInfo?sort=rand=10&limit=5").then((response) => {
       let { data } = response.data;
       this.terbaru = data;
     });
@@ -358,6 +360,31 @@ export default {
     closeDialog(value) {
       this.dialog = value;
     },
+    // loadRekomendasi() {
+    //   this.busy = true;
+    //   this.axios.get("/cardInfo?status=selling").then((response) => {
+    //     let { data } = response.data;
+    //     const append = response.data.slice(
+    //       this.rekomendasi.length,
+    //       this.rekomendasi.length + this.limit
+    //     );
+    //     this.rekomendasi = this.rekomendasi.concat(append);
+    //     this.busy = false;
+    //     this.rekomendasi = data;
+    //   });
+    // },
+    // loadPopuler() {
+    //   this.axios.get("/cardInfo?sort=view=10").then((response) => {
+    //     let { data } = response.data;
+    //     this.populer = data;
+    //   });
+    // },
+    // loadTerbaru() {
+    //   this.axios.get("/cardInfo?sort=rand=10").then((response) => {
+    //     let { data } = response.data;
+    //     this.terbaru = data;
+    //   });
+    // },
   },
 
   mixins: [converter],
