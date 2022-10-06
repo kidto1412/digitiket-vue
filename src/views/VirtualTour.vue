@@ -20,28 +20,43 @@
         <v-icon
           class="align-center align-self-center text-purple"
           size="40"
-          style="position: relative; top: -10px;"
+          style="position: relative; top: -10px"
         >
           mdi-swap-vertical
         </v-icon>
       </div>
     </v-container>
-    <v-container fluid>
-      <list-view
-        title="Taman Legenda Keong Mas"
-        desc="Ciptakan Kemasan yang mampu menjual"
-        price="35000"
-        ulasan="17"
-      />
+    <v-container fluid v-for="item in items" :key="`item-` + item.id">
+      <div>
+        <list-view :ticket="item" />
+      </div>
     </v-container>
   </div>
 </template>
 <script>
-import ListView from '../components/ListView.vue'
+import ListView from "../components/ListView.vue";
 export default {
   components: { ListView },
-  name: 'VirtualTour',
-}
+  name: "VirtualTour",
+  data() {
+    return {
+      items: [],
+    };
+  },
+  created() {
+    this.axios
+      .get("/virtual-tour")
+      .then((response) => {
+        console.log(response.data);
+        let { data } = response.data;
+        this.items = data;
+      })
+      .catch((error) => {
+        let { responses } = error;
+        console.log(responses);
+      });
+  },
+};
 </script>
 <style scoped>
 .v-input__icon--prepend .v-icon {

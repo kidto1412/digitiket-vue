@@ -12,6 +12,10 @@
     <v-card>
       <v-container class="mt-15">
         <h5>Tanggal Kedatangan</h5>
+        <div class="d-flex">
+          <v-icon color="purple">mdi-calendar</v-icon>
+          <p class="mt-4 ml-2">{{ item }}</p>
+        </div>
       </v-container>
     </v-card>
     <v-card>
@@ -32,15 +36,11 @@
 
           <div class="d-flex">
             <v-btn class="" light small>
-              <v-icon dark>
-                mdi-minus
-              </v-icon>
+              <v-icon dark> mdi-minus </v-icon>
             </v-btn>
             <p class="mx-2">1</p>
             <v-btn class="" light small>
-              <v-icon dark>
-                mdi-plus
-              </v-icon>
+              <v-icon dark> mdi-plus </v-icon>
             </v-btn>
           </div>
         </v-list-item>
@@ -64,15 +64,11 @@
 
           <div class="d-flex">
             <v-btn class="" light small>
-              <v-icon dark>
-                mdi-minus
-              </v-icon>
+              <v-icon dark> mdi-minus </v-icon>
             </v-btn>
             <p class="mx-2">1</p>
             <v-btn class="" light small>
-              <v-icon dark>
-                mdi-plus
-              </v-icon>
+              <v-icon dark> mdi-plus </v-icon>
             </v-btn>
           </div>
         </v-list-item>
@@ -96,24 +92,20 @@
 
           <div class="d-flex">
             <v-btn class="" light small>
-              <v-icon dark>
-                mdi-minus
-              </v-icon>
+              <v-icon dark> mdi-minus </v-icon>
             </v-btn>
             <p class="mx-2">1</p>
             <v-btn class="" light small>
-              <v-icon dark>
-                mdi-plus
-              </v-icon>
+              <v-icon dark> mdi-plus </v-icon>
             </v-btn>
           </div>
         </v-list-item>
       </v-list>
     </v-card>
-    <div style="margin-bottom: 23%;"></div>
+    <div style="margin-bottom: 23%"></div>
     <div class="footer">
       <v-card>
-        <div class="d-flex justify-space-between" style="line-height: 12px;">
+        <div class="d-flex justify-space-between" style="line-height: 12px">
           <v-container>
             <p class="text-purple">Total Harga</p>
             <p class="text-purple">IDR 40.000</p>
@@ -128,13 +120,14 @@
 </template>
 <script>
 export default {
-  name: 'PilihTiket',
+  name: "PilihTiket",
+  props: ["item"],
   data: () => ({
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
   }),
-}
+};
 </script>
 
 <style>

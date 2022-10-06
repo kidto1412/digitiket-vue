@@ -7,11 +7,10 @@
       <v-text-field
         autocomplete="off"
         hide-details
-        clearable
         flat
         autofocus
         label="Cari..."
-        v-model="keyword"
+        v-model.trim="keyword"
         @input="doSearch"
         background-color="white"
         light
@@ -25,10 +24,11 @@
         </v-subheader>
         <v-alert
           :value="tickets.length == 0 && keyword.length > 0"
-          color="warning"
+          color="white"
         >
-          Sorry, but no results were found.
+          <!-- Sorry, but no results were found. -->
         </v-alert>
+
         <!-- Hasil pencarian ditampilkan di sini -->
 
         <div v-for="ticket in tickets" :key="ticket.id">
@@ -39,7 +39,9 @@
   </div>
 </template>
 <script>
+// import func from "vue-editor-bridge";
 import ListView from "./ListView.vue";
+import { debounce } from "lodash";
 export default {
   components: { ListView },
   name: "search",
@@ -51,38 +53,43 @@ export default {
       ticketUrl: "",
     };
   },
+  watch: {
+    keyword() {
+      if (!this.keyword) return this.debounceTicket();
+    },
+  },
   methods: {
     doSearch() {
-      let keyword = this.keyword;
-      this.axios.get("/search?s=1&keyword=" + keyword).then((response) => {
-        // let Ticketurl = [];
-        let { data } = response.data;
-        let { items } = data;
-        let [{ url }] = items;
-        this.ticketUrl = url;
-      });
-      if (keyword.length > 0) {
-        this.axios.get(this.ticketUrl).then((response) => {
-          let { data } = response.data;
-          this.tickets = data;
-          // console.log(response.data);
-        });
-      } else {
-        this.tickets = [];
+      // let keyword = this.keyword;
+      if (this.keyword.length > 0) {
+        this.axios
+          .get(`/search?s=1&keyword=${this.keyword}`)
+          .then((response) => {
+            let { data } = response.data;
+            let { items } = data;
+            this.categories = items;
+            items.map((item) => {
+              this.axios.get(item.url + "&limit=5").then((response) => {
+                let { data } = response.data;
+                if (data != []) {
+                  this.tickets = data;
+                  console.log(data);
+                }
+              });
+              // if (item.url != undefined) {
+              //   this.axios.get(item.url + "&limit=5").then((response) => {
+              //     let { data } = response.data;
+              //     this.tickets = data;
+              //   });
+              // } else {
+              //   this.ticketUrl = "";
+              //   this.tickets = [];
+              // }
+            });
+          });
       }
-      //   }},
-      // doSearch() {
-      //   let keyword = this.keyword;
-      //   if (keyword.length > 0) {
-      //     this.axios.get(`/search?s=1&keyword=+${keyword}`).then((response) => {
-      //       let { data } = response.data;
-      //       let { items } = data;
-      //       this.filteredTickets = items;
-      //     });
-      //   } else {
-      //     this.filteredTickets = [];
-      //   }
     },
+    filteredTicket() {},
     hello() {
       alert("hello");
     },
@@ -97,7 +104,7 @@ export default {
     },
   },
   created() {
-    this.doSearch();
+    this.debounceTicket = debounce(this.doSearch, 1000);
   },
 };
 </script>
