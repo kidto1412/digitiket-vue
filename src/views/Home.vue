@@ -340,6 +340,12 @@ export default {
     this.axios.get("/cardInfo?status=selling&limit=5").then((response) => {
       let { data } = response.data;
       this.rekomendasi = data;
+      // const append = data.slice(
+      // this.rekomendasi.length,
+      //   this.rekomendasi.length + this.limit
+      // );
+      // this.rekomendasi = this.rekomendasi.concat(append);
+      // this.busy = false;
     });
     this.axios.get("/cardInfo?sort=view=10&limit=5").then((response) => {
       let { data } = response.data;

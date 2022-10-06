@@ -20,7 +20,7 @@
         <v-icon
           class="align-center align-self-center text-purple"
           size="40"
-          style="position: relative; top: -10px;"
+          style="position: relative; top: -10px"
         >
           mdi-swap-vertical
         </v-icon>
@@ -34,29 +34,29 @@
   </div>
 </template>
 <script>
-import ListView from '../components/ListView.vue'
+import ListView from "../components/ListView.vue";
 export default {
   components: { ListView },
-  name: 'Tour',
+  name: "Tour",
   data() {
     return {
       items: [],
-    }
+    };
   },
   created() {
     this.axios
-      .get('/cardInfo?for=category&of=20&status=all')
+      .get("/tour")
       .then((response) => {
-        console.log(response.data)
-        let { data } = response.data
-        this.items = data
+        console.log(response.data);
+        let { data } = response.data;
+        this.items = data;
       })
       .catch((error) => {
-        let { responses } = error
-        console.log(responses)
-      })
+        let { responses } = error;
+        console.log(responses);
+      });
   },
-}
+};
 </script>
 <style scoped>
 .v-input__icon--prepend .v-icon {

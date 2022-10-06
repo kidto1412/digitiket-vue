@@ -16,14 +16,34 @@
           label="Cari Attraction ..."
           outlined
           class="align-self-center"
+          v-model.trim="keyword"
+          @input="doSearch"
         ></v-text-field>
         <v-icon
           class="align-center align-self-center text-purple"
           size="40"
-          style="position: relative; top: -10px;"
+          style="position: relative; top: -10px"
         >
           mdi-swap-vertical
         </v-icon>
+        <v-card>
+          <v-card-text>
+            <v-subheader v-if="keyword.length > 0">
+              Hasil Pencarian: "{{ keyword }}"
+            </v-subheader>
+            <v-alert
+              :value="tickets.length == 0 && keyword.length > 0"
+              color="white"
+            >
+              <!-- Sorry, but no results were found. -->
+            </v-alert>
+
+            <!-- Hasil pencarian ditampilkan di sini -->
+            <div v-for="ticket in tickets" :key="ticket.id">
+              <list-view :ticket="ticket" />
+            </div>
+          </v-card-text>
+        </v-card>
       </div>
     </v-container>
     <v-container fluid>
@@ -34,29 +54,44 @@
   </div>
 </template>
 <script>
-import ListView from '../components/ListView.vue'
+import ListView from "../components/ListView.vue";
 export default {
   components: { ListView },
-  name: 'Attraction',
+  name: "Attraction",
   data() {
     return {
       items: [],
-    }
+      tickets: [],
+      keyword: "",
+    };
+  },
+  methods: {
+    doSearch() {
+      // let keyword = this.keyword;
+      if (this.keyword.length > 0) {
+        this.axios
+          .get(`/search?s=1&keyword=${this.keyword}`)
+          .then((response) => {
+            let { data } = response.data;
+            this.tickets = data;
+          });
+      }
+    },
   },
   created() {
     this.axios
-      .get('/cardInfo?for=category&of=22&status=all')
+      .get("/attraction")
       .then((response) => {
-        console.log(response.data)
-        let { data } = response.data
-        this.items = data
+        console.log(response.data);
+        let { data } = response.data;
+        this.items = data;
       })
       .catch((error) => {
-        let { responses } = error
-        console.log(responses)
-      })
+        let { responses } = error;
+        console.log(responses);
+      });
   },
-}
+};
 </script>
 <style scoped>
 .v-input__icon--prepend .v-icon {

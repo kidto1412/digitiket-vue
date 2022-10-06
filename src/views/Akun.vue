@@ -36,13 +36,13 @@
       <v-container>
         <h4>Akun</h4>
       </v-container>
-      <v-list nav dense>
+      <v-list nav dense v-if="!guest">
         <v-list-item-group v-model="selectedItem" class="d-purple">
           <v-card
             style="box-shadow: none !important"
             :to="'/ubah-profil/' + user.id"
           >
-            <v-list-item v-if="!guest">
+            <v-list-item>
               <v-list-item-icon>
                 <v-icon class="d-purple">mdi-account</v-icon>
               </v-list-item-icon>
@@ -53,32 +53,40 @@
 
               <v-icon>mdi-chevron-right</v-icon>
             </v-list-item>
-            <v-list-item v-else>
+          </v-card>
+        </v-list-item-group>
+      </v-list>
+      <div v-else>
+        <v-list>
+          <v-card to="/masuk" class="none-shadow">
+            <v-list-item>
               <v-list-item-icon>
                 <v-icon class="d-purple">mdi-account</v-icon>
               </v-list-item-icon>
-
               <v-list-item-content>
                 <v-list-item-title>Masuk</v-list-item-title>
               </v-list-item-content>
-
               <v-icon>mdi-chevron-right</v-icon>
             </v-list-item>
           </v-card>
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon class="d-purple">mdi-account-group</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Daftar</v-list-item-title>
-            </v-list-item-content>
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+        </v-list>
+        <v-list style="margin-top: -20px">
+          <v-card to="/daftar" class="none-shadow">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon class="d-purple">mdi-account-group</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Daftar</v-list-item-title>
+              </v-list-item-content>
+              <v-icon>mdi-chevron-right</v-icon>
+            </v-list-item>
+          </v-card>
+        </v-list>
+      </div>
     </v-card>
     <v-divider></v-divider>
-    <v-card>
+    <v-card class="none-shadow">
       <v-container>
         <h4>Umum</h4>
       </v-container>
@@ -96,7 +104,8 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-    <v-card class="mb-13">
+    <v-divider></v-divider>
+    <v-card class="mb-13" color="none-shadow">
       <v-list-item-group v-model="selectedItem" class="d-purple">
         <v-list-item @click="logout">
           <v-list-item-icon>
@@ -224,4 +233,10 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.none-shadow {
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+</style>
