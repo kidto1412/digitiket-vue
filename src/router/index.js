@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -127,6 +128,7 @@ const routes = [
       import(
         /* webpackChunkName: "about" */ "../views/KonfirmasiPemesanan.vue"
       ),
+    meta: { auth: true },
   },
   {
     path: "/metode-pembayaran",
@@ -225,5 +227,26 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
+// tambahkan ini untuk melakukan pengecekan pada setiap routing
+router.beforeEach((to, from, next) => {
+  // jika routing ada meta auth-nya maka
+  if (to.matched.some((record) => record.meta.auth)) {
+    // jika user adalah guest
+    if (store.getters["auth/guest"]) {
+      // tampilkan pesan bahwa harus login dulu
+      store.dispatch("alert/set", {
+        status: true,
+        text: "Login first",
+        color: "error",
+      });
+      // tampilkan form login
+      store.dispatch("setPrevUrl", to.path);
+      router.push("/masuk");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 export default router;

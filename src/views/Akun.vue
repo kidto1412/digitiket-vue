@@ -11,6 +11,16 @@
         </v-badge>
       </v-btn>
     </v-toolbar>
+    <div v-if="loading">
+      <v-container fill-height fluid>
+        <v-row align="center" justify="center">
+          <v-progress-circular
+            indeterminate
+            color="purple"
+          ></v-progress-circular>
+        </v-row>
+      </v-container>
+    </div>
     <v-card tile>
       <v-list style="width: 100% !importany" v-if="!guest">
         <v-list-item>
@@ -118,6 +128,7 @@
         </v-list-item>
       </v-list-item-group>
     </v-card>
+    <div class="mt-15"></div>
     <bottom-navigation />
   </div>
 </template>
@@ -134,6 +145,7 @@ export default {
 
   name: "Akun",
   data: () => ({
+    loading: false,
     // selectedItem: 0,
     akun: [
       { text: "Ubah Profil", icon: "mdi-account", to: "/ubah-profil" },
@@ -189,6 +201,7 @@ export default {
     },
 
     logout() {
+      this.loading = !false;
       let config = {
         headers: {
           Authorization: "Bearer " + this.user.jwt_token,
@@ -204,6 +217,7 @@ export default {
             color: "success",
             text: "Logout successfully",
           });
+          this.loading = false;
         })
         .catch((error) => {
           let { data } = error.response;
@@ -212,6 +226,7 @@ export default {
             color: "error",
             text: data.message,
           });
+          this.loading = false;
         });
     },
   },
