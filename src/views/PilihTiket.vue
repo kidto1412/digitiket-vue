@@ -110,7 +110,11 @@
             <p class="text-purple">Total Harga</p>
             <p class="text-purple">IDR 40.000</p>
           </v-container>
-          <v-btn color="my-auto mx-5" class="btn-purple text-white">
+          <v-btn
+            color="my-auto mx-5"
+            class="btn-purple text-white"
+            to="/konfirmasi-pemesanan"
+          >
             Konfirmasi
           </v-btn>
         </div>
