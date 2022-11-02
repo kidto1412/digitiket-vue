@@ -1,5 +1,5 @@
 <template>
-  <div>
+   <div>
     <v-app-bar dark class="d-bg-purple" fixed>
       <v-btn icon dark @click.stop="$router.go(-1)">
         <v-icon>mdi-chevron-left</v-icon>

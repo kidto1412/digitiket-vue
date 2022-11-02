@@ -40,6 +40,7 @@ export default {
   name: "Event",
   data() {
     return {
+      loading: false,
       items: [],
     };
   },
@@ -50,6 +51,7 @@ export default {
         console.log(response.data);
         let { data } = response.data;
         this.items = data;
+        this.loading = !false;
       })
       .catch((error) => {
         let { responses } = error;

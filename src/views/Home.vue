@@ -100,7 +100,32 @@
         <h3>Promo Terkini</h3>
         <a href="/promo-terkini" class="text-purple">Lihat Semua</a>
       </div>
-      <keep-alive>
+
+      <div v-if="loading">
+        <v-slide-group class="mr-2" active-class="success">
+          <v-slide-item v-for="n in 15" :key="n" v-slot="{ active, toggle }">
+            <v-card
+              :color="active ? undefined : 'grey lighten-1'"
+              class="ma-1"
+              height="100"
+              width="250"
+              @click="toggle"
+            >
+              <v-row class="fill-height" align="center" justify="center">
+                <v-scale-transition>
+                  <v-icon
+                    v-if="active"
+                    color="white"
+                    size="48"
+                    v-text="'mdi-close-circle-outline'"
+                  ></v-icon>
+                </v-scale-transition>
+              </v-row>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </div>
+      <keep-alive v-else>
         <v-slide-group class="mr-2">
           <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
             <v-card :to="'/detail-promo/' + itempromo.id">
@@ -119,49 +144,58 @@
           <h3>Disarankan Untuk Anda</h3>
           <a href="/tickets" class="text-purple">Lihat Semua</a>
         </div>
-        <v-slide-group class="mr-2">
-          <v-slide-item v-for="item in rekomendasi" :key="item.slug">
-            <v-card
-              class="card-shadow card-radius mr-2 mb-2"
-              style="width: 15rem"
-              :to="'/detail-wisata/' + item.slug"
-            >
-              <v-img
-                :src="item.image"
-                class="card-image card-image-top"
-                aspect-ratio="1.7"
-              ></v-img>
+        <div v-if="loading">
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="n in 5" :key="n">
+              <card-item-skeleton class="mr-2" />
+            </v-slide-item>
+          </v-slide-group>
+        </div>
+        <div v-else>
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="item in rekomendasi" :key="item.slug">
+              <v-card
+                class="card-shadow card-radius mr-2 mb-2"
+                style="width: 15rem"
+                :to="'/detail-wisata/' + item.slug"
+              >
+                <v-img
+                  :src="item.image"
+                  class="card-image card-image-top"
+                  aspect-ratio="1.7"
+                ></v-img>
 
-              <v-card-title>
-                {{ item.title }}
-              </v-card-title>
+                <v-card-title>
+                  {{ item.title }}
+                </v-card-title>
 
-              <!-- <v-card-text> -->
-              <div class="d-flex ml-2">
-                <v-icon>mdi-map-marker</v-icon>
-                <div class="text-subtitle-2">
-                  {{ item.cityprov }}
+                <!-- <v-card-text> -->
+                <div class="d-flex ml-2">
+                  <v-icon>mdi-map-marker</v-icon>
+                  <div class="text-subtitle-2">
+                    {{ item.cityprov }}
+                  </div>
                 </div>
-              </div>
 
-              <div class="d-flex justify-space-between align-center mx-4">
-                <div class="my-4 text-subtitle-1 price purple--text">
-                  IDR
-                  {{ converter(item.price && item.price.price_ori) }}
+                <div class="d-flex justify-space-between align-center mx-4">
+                  <div class="my-4 text-subtitle-1 price purple--text">
+                    IDR
+                    {{ converter(item.price && item.price.price_ori) }}
+                  </div>
+
+                  <v-rating
+                    :value="item.specialrate"
+                    color="amber"
+                    dense
+                    half-increments
+                    readonly
+                    size="14"
+                  ></v-rating>
                 </div>
-
-                <v-rating
-                  :value="item.specialrate"
-                  color="amber"
-                  dense
-                  half-increments
-                  readonly
-                  size="14"
-                ></v-rating>
-              </div>
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </div>
       </div>
     </v-container>
     <hr />
@@ -171,52 +205,62 @@
           <h3>Wisata Populer</h3>
           <a href="/tickets" class="text-purple">Lihat Semua</a>
         </div>
+        <div v-if="loading">
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="n in 5" :key="n">
+              <card-item-skeleton class="mr-2" />
+            </v-slide-item>
+          </v-slide-group>
+        </div>
+        <div v-else>
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="itemPopuler in populer" :key="itemPopuler.id">
+              <v-card
+                class="card-shadow card-radius mr-2 mb-2"
+                style="width: 15rem"
+                :to="'/detail-wisata/' + itemPopuler.slug"
+              >
+                <v-img
+                  :src="itemPopuler.image"
+                  class="card-image card-image-top"
+                  aspect-ratio="1.7"
+                ></v-img>
 
-        <v-slide-group class="mr-2">
-          <v-slide-item v-for="itemPopuler in populer" :key="itemPopuler.id">
-            <v-card
-              class="card-shadow card-radius mr-2 mb-2"
-              style="width: 15rem"
-              :to="'/detail-wisata/' + itemPopuler.slug"
-            >
-              <v-img
-                :src="itemPopuler.image"
-                class="card-image card-image-top"
-                aspect-ratio="1.7"
-              ></v-img>
+                <v-card-title>
+                  {{ itemPopuler.title }}
+                </v-card-title>
 
-              <v-card-title>
-                {{ itemPopuler.title }}
-              </v-card-title>
-
-              <!-- <v-card-text> -->
-              <div class="d-flex ml-2">
-                <v-icon>mdi-map-marker</v-icon>
-                <div class="text-subtitle-1">
-                  {{ itemPopuler.cityprov }}
+                <!-- <v-card-text> -->
+                <div class="d-flex ml-2">
+                  <v-icon>mdi-map-marker</v-icon>
+                  <div class="text-subtitle-1">
+                    {{ itemPopuler.cityprov }}
+                  </div>
                 </div>
-              </div>
 
-              <div class="d-flex justify-space-between align-center mx-4">
-                <div class="my-4 text-subtitle-1 price purple--text">
-                  IDR
-                  {{
-                    converter(itemPopuler.price && itemPopuler.price.price_ori)
-                  }}
+                <div class="d-flex justify-space-between align-center mx-4">
+                  <div class="my-4 text-subtitle-1 price purple--text">
+                    IDR
+                    {{
+                      converter(
+                        itemPopuler.price && itemPopuler.price.price_ori
+                      )
+                    }}
+                  </div>
+
+                  <v-rating
+                    :value="itemPopuler.specialrate"
+                    color="amber"
+                    dense
+                    half-increments
+                    readonly
+                    size="14"
+                  ></v-rating>
                 </div>
-
-                <v-rating
-                  :value="itemPopuler.specialrate"
-                  color="amber"
-                  dense
-                  half-increments
-                  readonly
-                  size="14"
-                ></v-rating>
-              </div>
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </div>
       </div>
     </v-container>
     <hr class="mt-5" />
@@ -226,50 +270,58 @@
           <h3>Wisata Terbaru</h3>
           <a href="/tickets" class="text-purple">Lihat Semua</a>
         </div>
+        <div v-if="loading">
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="n in 5" :key="n">
+              <card-item-skeleton class="mr-2" />
+            </v-slide-item>
+          </v-slide-group>
+        </div>
+        <div v-else>
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="itemBaru in terbaru" :key="itemBaru.id">
+              <v-card
+                class="card-shadow card-radius mr-2 mb-2"
+                style="width: 15rem"
+                :to="'/detail-wisata/' + itemBaru.slug"
+              >
+                <v-img
+                  :src="itemBaru.image"
+                  class="card-image card-image-top"
+                  aspect-ratio="1.7"
+                ></v-img>
 
-        <v-slide-group class="mr-2">
-          <v-slide-item v-for="itemBaru in terbaru" :key="itemBaru.id">
-            <v-card
-              class="card-shadow card-radius mr-2 mb-2"
-              style="width: 15rem"
-              :to="'/detail-wisata/' + itemBaru.slug"
-            >
-              <v-img
-                :src="itemBaru.image"
-                class="card-image card-image-top"
-                aspect-ratio="1.7"
-              ></v-img>
+                <v-card-title>
+                  {{ itemBaru.title }}
+                </v-card-title>
 
-              <v-card-title>
-                {{ itemBaru.title }}
-              </v-card-title>
-
-              <!-- <v-card-text> -->
-              <div class="d-flex ml-2">
-                <v-icon>mdi-map-marker</v-icon>
-                <div class="text-subtitle-1">
-                  {{ itemBaru.cityprov }}
+                <!-- <v-card-text> -->
+                <div class="d-flex ml-2">
+                  <v-icon>mdi-map-marker</v-icon>
+                  <div class="text-subtitle-1">
+                    {{ itemBaru.cityprov }}
+                  </div>
                 </div>
-              </div>
 
-              <div class="d-flex justify-space-between align-center mx-4">
-                <div class="my-4 text-subtitle-1 price purple--text">
-                  IDR
-                  {{ converter(itemBaru.price && itemBaru.price.price_ori) }}
+                <div class="d-flex justify-space-between align-center mx-4">
+                  <div class="my-4 text-subtitle-1 price purple--text">
+                    IDR
+                    {{ converter(itemBaru.price && itemBaru.price.price_ori) }}
+                  </div>
+
+                  <v-rating
+                    :value="itemBaru.specialrate"
+                    color="amber"
+                    dense
+                    half-increments
+                    readonly
+                    size="14"
+                  ></v-rating>
                 </div>
-
-                <v-rating
-                  :value="itemBaru.specialrate"
-                  color="amber"
-                  dense
-                  half-increments
-                  readonly
-                  size="14"
-                ></v-rating>
-              </div>
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </div>
       </div>
     </v-container>
 
@@ -284,6 +336,7 @@ import BottomNavigation from "../components/BottomNavigation.vue";
 import { mapActions, mapGetters } from "vuex";
 import PointKredit from "../components/PointKredit.vue";
 import converter from "../mixins/converter";
+import CardItemSkeleton from "../components/CardItemSkeleton.vue";
 
 // import Kategori from '../components/Kategori.vue'
 
@@ -302,6 +355,7 @@ export default {
         /* webpackChunkName: "Notification" */ "@/components/Notification.vue"
       ),
     PointKredit,
+    CardItemSkeleton,
   },
   data() {
     return {
@@ -312,6 +366,7 @@ export default {
       keyword: "",
       limit: 1,
       busy: false,
+      loading: false,
     };
   },
   computed: {
@@ -331,15 +386,19 @@ export default {
     },
   },
   created() {
+    this.loading = !false;
     this.axios.get("/promo").then((response) => {
       let { data } = response.data;
       // let { image_url } = data
       this.promo = data;
+      this.loading = false;
       // console.log('data promo' + response.data)
     });
+    this.loading = !false;
     this.axios.get("/cardInfo?status=selling&limit=5").then((response) => {
       let { data } = response.data;
       this.rekomendasi = data;
+      this.loading = false;
       // const append = data.slice(
       // this.rekomendasi.length,
       //   this.rekomendasi.length + this.limit
@@ -347,13 +406,17 @@ export default {
       // this.rekomendasi = this.rekomendasi.concat(append);
       // this.busy = false;
     });
+    this.loading = !false;
     this.axios.get("/cardInfo?sort=view=10&limit=5").then((response) => {
       let { data } = response.data;
       this.populer = data;
+      this.loading = false;
     });
+    this.loading = !false;
     this.axios.get("/cardInfo?sort=rand=10&limit=5").then((response) => {
       let { data } = response.data;
       this.terbaru = data;
+      this.loading = false;
     });
   },
 

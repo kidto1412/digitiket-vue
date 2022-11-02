@@ -20,21 +20,19 @@
       <div class="d-flex">
         <v-img
           src="../assets/img/rinjani1.png"
-          style="max-width: 146px !important;"
+          style="max-width: 146px !important"
         ></v-img>
         <v-img
           src="../assets/img/rinjani2.png"
-          style="max-width: 146px !important;"
+          style="max-width: 146px !important"
         ></v-img>
         <div class="thumbnail">
           <v-img
             src="../assets/img/rinjani3.png"
-            style="max-width: 146px !important;"
+            style="max-width: 146px !important"
             class="image-text"
           ></v-img>
-          <div class="middle">
-            Lihat Semua
-          </div>
+          <div class="middle">Lihat Semua</div>
         </div>
       </div>
     </div>
@@ -43,7 +41,7 @@
         <v-list>
           <h4>{{ ticket.title }}</h4>
           <p class="font-weight-light">Usia antara 2 s.d 15 tahun</p>
-          <v-list-item style="padding: 0 !important;">
+          <v-list-item style="padding: 0 !important">
             <v-list-item-content>
               <v-list-item-title>Masa Aktif :</v-list-item-title>
               <v-list-item-title>Harga :</v-list-item-title>
@@ -58,9 +56,7 @@
         </v-list>
         <h4>Ketentuan</h4>
         <div class="d-flex">
-          <v-icon class="text-purple">
-            mdi-ticket-confirmation
-          </v-icon>
+          <v-icon class="text-purple"> mdi-ticket-confirmation </v-icon>
           <p class="mt-3 ml-2">Maksimal jumlah tiket per transaksi 15</p>
         </div>
         <div class="d-flex align-center">
@@ -74,9 +70,7 @@
           </p>
         </div>
         <div class="d-flex">
-          <v-icon class="text-purple">
-            mdi-printer
-          </v-icon>
+          <v-icon class="text-purple"> mdi-printer </v-icon>
           <p class="mt-4 ml-2">Maksimal jumlah tiket per transaksi 15</p>
         </div>
         <div class="d-flex align-center">
@@ -93,7 +87,7 @@
     <v-card>
       <v-container>
         <h4 class="mt-2">Informasi Tentang Rinjani Waterpark</h4>
-        <p class="mt-5">
+        <p class="mt-5" style="text-align: justify; text-justify: inter-word">
           {{ ticket.description }}
         </p>
       </v-container>
@@ -106,14 +100,14 @@
             {{ ticket.cityprov }}
           </p>
         </div>
-        <div style="height: 170px; width: 100%;">
+        <div style="height: 170px; width: 100%">
           <l-map
             @click="onCustomClick"
             @update:zoom="updateZoom"
             @update:center="updateCenter"
             :zoom="zoom"
             :center="center"
-            style="height: 100%;"
+            style="height: 100%"
           >
             <l-circle
               :lat-lng="circle.center"
@@ -141,13 +135,15 @@
       </v-container>
     </v-card>
 
-    <div style="margin-bottom: 25%;">
+    <div style="margin-bottom: 25%">
       <v-card>
         <v-container>
           <div class="d-flex mb-3 mt-3">
             <h5>Ulasan Pengunjung Rinajani Waterpark</h5>
             <v-spacer></v-spacer>
-            <a href="" class="text-purple">Lihat semua</a>
+            <a href="" class="text-purple" style="font-size: 11px"
+              >Lihat semua</a
+            >
           </div>
           <v-slide-group v-model="model">
             <v-slide-item v-for="n in 15" :key="n" class="mr-2">
@@ -175,9 +171,9 @@
       </v-card>
     </div>
     <!-- </v-card> -->
-    <div class="footer" style="z-index: 9999 !important; margin-top: 22%;">
-      <v-card style="z-index: 9999 !important;">
-        <div class="d-flex justify-space-between" style="line-height: 12px;">
+    <div class="footer" style="z-index: 9999 !important; margin-top: 22%">
+      <v-card style="z-index: 9999 !important">
+        <div class="d-flex justify-space-between" style="line-height: 12px">
           <v-container>
             <p class="text-purple">Total Harga</p>
             <p class="text-purple">
@@ -197,18 +193,18 @@
   </div>
 </template>
 <script>
-import { latLng, Icon } from 'leaflet'
-import converter from '../mixins/converter'
-import { LMap, LTileLayer, LMarker, LPopup, LCircle } from 'vue2-leaflet'
-import markerimage from './../assets/img/marketimage.png'
-delete Icon.Default.prototype._getIconUrl
+import { latLng, Icon } from "leaflet";
+import converter from "../mixins/converter";
+import { LMap, LTileLayer, LMarker, LPopup, LCircle } from "vue2-leaflet";
+import markerimage from "./../assets/img/marketimage.png";
+delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-})
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 export default {
-  name: 'DetailRinjani',
+  name: "DetailRinjani",
   components: {
     LMap,
     LTileLayer,
@@ -219,17 +215,16 @@ export default {
   },
   data() {
     return {
-      model: '',
+      model: "",
       ticket: [],
       rating: 4,
       zoom: 12,
       center: latLng(39.903416, 32.8589),
-      url:
-        'https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=b90e089c365242a3a08dbb49a7084a61',
-      attribution: 'Haritamız',
+      url: "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=b90e089c365242a3a08dbb49a7084a61",
+      attribution: "Haritamız",
       coordArray: [
-        { id: 1, lat: 39.749434, long: 30.520655, name: 'Eskişehir' },
-        { id: 2, lat: 39.903416, long: 32.8589, name: 'Ankara' },
+        { id: 1, lat: 39.749434, long: 30.520655, name: "Eskişehir" },
+        { id: 2, lat: 39.903416, long: 32.8589, name: "Ankara" },
       ],
       icon: markerimage,
       iconSize: [20, 20],
@@ -237,7 +232,7 @@ export default {
         center: latLng(39.903416, 32.8589),
         radius: 100000,
       },
-    }
+    };
   },
   created() {
     // this.axios
@@ -246,52 +241,52 @@ export default {
     //     this.ticket = response.data
     //     console.log(response.data)
     //   })
-    this.go()
+    this.go();
   },
   methods: {
     // loadTicket(data) {
     //   this.ticket = data
     // },
     go() {
-      let { slug } = this.$route.params
-      let url = '/cardInfo?status=selling&for=slug&of=' + slug
+      let { slug } = this.$route.params;
+      let url = "/cardInfo?status=selling&for=slug&of=" + slug;
       // url = url + '?page=' + this.page
       // url = encodeURI(url)
       this.axios
         .get(url)
         .then((response) => {
-          console.log(url)
-          console.log(response.data)
-          let { data } = response.data
-          this.ticket = data
+          console.log(url);
+          console.log(response.data);
+          let { data } = response.data;
+          this.ticket = data;
         })
         .catch((error) => {
-          let { responses } = error
-          console.log(responses)
-        })
+          let { responses } = error;
+          console.log(responses);
+        });
     },
     getCoord(a, b) {
-      return latLng(a, b)
+      return latLng(a, b);
     },
     updateZoom(zoom) {
-      console.log('zoom', zoom)
+      console.log("zoom", zoom);
     },
     updateCenter(center) {
-      console.log('center', center)
+      console.log("center", center);
     },
     onDrag({ lat, lng }) {
-      console.log('Sürüklenen enlem ve boylam bilgisi', lat, lng)
+      console.log("Sürüklenen enlem ve boylam bilgisi", lat, lng);
     },
     onLogMarker(item) {
-      console.log('item', item)
+      console.log("item", item);
     },
     onCustomClick(item) {
-      const { latlng } = item
-      console.log('enlem boylam bilgisi', latlng)
+      const { latlng } = item;
+      console.log("enlem boylam bilgisi", latlng);
     },
   },
   mixins: [converter],
-}
+};
 </script>
 <style scoped>
 .lihat-galeri {

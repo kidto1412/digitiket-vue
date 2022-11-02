@@ -63,6 +63,7 @@ export default {
       items: [],
       tickets: [],
       keyword: "",
+      loading: false,
     };
   },
   methods: {
@@ -74,6 +75,7 @@ export default {
           .then((response) => {
             let { data } = response.data;
             this.tickets = data;
+            this.loading = !false;
           });
       }
     },
