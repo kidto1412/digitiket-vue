@@ -125,7 +125,7 @@
           </v-slide-item>
         </v-slide-group>
       </div>
-      <keep-alive v-else>
+      <keep-alive>
         <v-slide-group class="mr-2">
           <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
             <v-card :to="'/detail-promo/' + itempromo.id">
@@ -151,51 +151,50 @@
             </v-slide-item>
           </v-slide-group>
         </div>
-        <div v-else>
-          <v-slide-group class="mr-2">
-            <v-slide-item v-for="item in rekomendasi" :key="item.slug">
-              <v-card
-                class="card-shadow card-radius mr-2 mb-2"
-                style="width: 15rem"
-                :to="'/detail-wisata/' + item.slug"
-              >
-                <v-img
-                  :src="item.image"
-                  class="card-image card-image-top"
-                  aspect-ratio="1.7"
-                ></v-img>
 
-                <v-card-title>
-                  {{ item.title }}
-                </v-card-title>
+        <v-slide-group class="mr-2">
+          <v-slide-item v-for="item in rekomendasi" :key="item.slug">
+            <v-card
+              class="card-shadow card-radius mr-2 mb-2"
+              style="width: 15rem"
+              :to="'/detail-wisata/' + item.slug"
+            >
+              <v-img
+                :src="item.image"
+                class="card-image card-image-top"
+                aspect-ratio="1.7"
+              ></v-img>
 
-                <!-- <v-card-text> -->
-                <div class="d-flex ml-2">
-                  <v-icon>mdi-map-marker</v-icon>
-                  <div class="text-subtitle-2">
-                    {{ item.cityprov }}
-                  </div>
+              <v-card-title>
+                {{ item.title }}
+              </v-card-title>
+
+              <!-- <v-card-text> -->
+              <div class="d-flex ml-2">
+                <v-icon>mdi-map-marker</v-icon>
+                <div class="text-subtitle-2">
+                  {{ item.cityprov }}
+                </div>
+              </div>
+
+              <div class="d-flex justify-space-between align-center mx-4">
+                <div class="my-4 text-subtitle-1 price purple--text">
+                  IDR
+                  {{ converter(item.price && item.price.price_ori) }}
                 </div>
 
-                <div class="d-flex justify-space-between align-center mx-4">
-                  <div class="my-4 text-subtitle-1 price purple--text">
-                    IDR
-                    {{ converter(item.price && item.price.price_ori) }}
-                  </div>
-
-                  <v-rating
-                    :value="item.specialrate"
-                    color="amber"
-                    dense
-                    half-increments
-                    readonly
-                    size="14"
-                  ></v-rating>
-                </div>
-              </v-card>
-            </v-slide-item>
-          </v-slide-group>
-        </div>
+                <v-rating
+                  :value="item.specialrate"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+              </div>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
       </div>
     </v-container>
     <hr />
@@ -212,55 +211,52 @@
             </v-slide-item>
           </v-slide-group>
         </div>
-        <div v-else>
-          <v-slide-group class="mr-2">
-            <v-slide-item v-for="itemPopuler in populer" :key="itemPopuler.id">
-              <v-card
-                class="card-shadow card-radius mr-2 mb-2"
-                style="width: 15rem"
-                :to="'/detail-wisata/' + itemPopuler.slug"
-              >
-                <v-img
-                  :src="itemPopuler.image"
-                  class="card-image card-image-top"
-                  aspect-ratio="1.7"
-                ></v-img>
 
-                <v-card-title>
-                  {{ itemPopuler.title }}
-                </v-card-title>
+        <v-slide-group class="mr-2">
+          <v-slide-item v-for="itemPopuler in populer" :key="itemPopuler.id">
+            <v-card
+              class="card-shadow card-radius mr-2 mb-2"
+              style="width: 15rem"
+              :to="'/detail-wisata/' + itemPopuler.slug"
+            >
+              <v-img
+                :src="itemPopuler.image"
+                class="card-image card-image-top"
+                aspect-ratio="1.7"
+              ></v-img>
 
-                <!-- <v-card-text> -->
-                <div class="d-flex ml-2">
-                  <v-icon>mdi-map-marker</v-icon>
-                  <div class="text-subtitle-1">
-                    {{ itemPopuler.cityprov }}
-                  </div>
+              <v-card-title>
+                {{ itemPopuler.title }}
+              </v-card-title>
+
+              <!-- <v-card-text> -->
+              <div class="d-flex ml-2">
+                <v-icon>mdi-map-marker</v-icon>
+                <div class="text-subtitle-1">
+                  {{ itemPopuler.cityprov }}
+                </div>
+              </div>
+
+              <div class="d-flex justify-space-between align-center mx-4">
+                <div class="my-4 text-subtitle-1 price purple--text">
+                  IDR
+                  {{
+                    converter(itemPopuler.price && itemPopuler.price.price_ori)
+                  }}
                 </div>
 
-                <div class="d-flex justify-space-between align-center mx-4">
-                  <div class="my-4 text-subtitle-1 price purple--text">
-                    IDR
-                    {{
-                      converter(
-                        itemPopuler.price && itemPopuler.price.price_ori
-                      )
-                    }}
-                  </div>
-
-                  <v-rating
-                    :value="itemPopuler.specialrate"
-                    color="amber"
-                    dense
-                    half-increments
-                    readonly
-                    size="14"
-                  ></v-rating>
-                </div>
-              </v-card>
-            </v-slide-item>
-          </v-slide-group>
-        </div>
+                <v-rating
+                  :value="itemPopuler.specialrate"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+              </div>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
       </div>
     </v-container>
     <hr class="mt-5" />
@@ -277,51 +273,50 @@
             </v-slide-item>
           </v-slide-group>
         </div>
-        <div v-else>
-          <v-slide-group class="mr-2">
-            <v-slide-item v-for="itemBaru in terbaru" :key="itemBaru.id">
-              <v-card
-                class="card-shadow card-radius mr-2 mb-2"
-                style="width: 15rem"
-                :to="'/detail-wisata/' + itemBaru.slug"
-              >
-                <v-img
-                  :src="itemBaru.image"
-                  class="card-image card-image-top"
-                  aspect-ratio="1.7"
-                ></v-img>
 
-                <v-card-title>
-                  {{ itemBaru.title }}
-                </v-card-title>
+        <v-slide-group class="mr-2">
+          <v-slide-item v-for="itemBaru in terbaru" :key="itemBaru.id">
+            <v-card
+              class="card-shadow card-radius mr-2 mb-2"
+              style="width: 15rem"
+              :to="'/detail-wisata/' + itemBaru.slug"
+            >
+              <v-img
+                :src="itemBaru.image"
+                class="card-image card-image-top"
+                aspect-ratio="1.7"
+              ></v-img>
 
-                <!-- <v-card-text> -->
-                <div class="d-flex ml-2">
-                  <v-icon>mdi-map-marker</v-icon>
-                  <div class="text-subtitle-1">
-                    {{ itemBaru.cityprov }}
-                  </div>
+              <v-card-title>
+                {{ itemBaru.title }}
+              </v-card-title>
+
+              <!-- <v-card-text> -->
+              <div class="d-flex ml-2">
+                <v-icon>mdi-map-marker</v-icon>
+                <div class="text-subtitle-1">
+                  {{ itemBaru.cityprov }}
+                </div>
+              </div>
+
+              <div class="d-flex justify-space-between align-center mx-4">
+                <div class="my-4 text-subtitle-1 price purple--text">
+                  IDR
+                  {{ converter(itemBaru.price && itemBaru.price.price_ori) }}
                 </div>
 
-                <div class="d-flex justify-space-between align-center mx-4">
-                  <div class="my-4 text-subtitle-1 price purple--text">
-                    IDR
-                    {{ converter(itemBaru.price && itemBaru.price.price_ori) }}
-                  </div>
-
-                  <v-rating
-                    :value="itemBaru.specialrate"
-                    color="amber"
-                    dense
-                    half-increments
-                    readonly
-                    size="14"
-                  ></v-rating>
-                </div>
-              </v-card>
-            </v-slide-item>
-          </v-slide-group>
-        </div>
+                <v-rating
+                  :value="itemBaru.specialrate"
+                  color="amber"
+                  dense
+                  half-increments
+                  readonly
+                  size="14"
+                ></v-rating>
+              </div>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
       </div>
     </v-container>
 

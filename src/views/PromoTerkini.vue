@@ -13,7 +13,7 @@
       <div v-if="loading">
         <promo-skeleton />
       </div>
-      <div v-for="i in promo" :key="i.id" class="mb-3" v-else>
+      <div v-for="i in promo" :key="i.id" class="mb-3">
         <v-card :to="'/detail-promo/' + i.id">
           <v-img :src="i.image_url" :lazy-src="i.image_url" class="img"></v-img>
         </v-card>

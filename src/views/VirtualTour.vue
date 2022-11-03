@@ -26,8 +26,9 @@
         </v-icon>
       </div>
     </v-container>
-    <v-container fluid v-for="item in items" :key="`item-` + item.id">
-      <div>
+    <v-container fluid>
+      <div v-if="loading"><lisv-view-skeleton /></div>
+      <div v-for="item in items" :key="`item-` + item.id">
         <list-view :ticket="item" />
       </div>
     </v-container>
@@ -35,8 +36,9 @@
 </template>
 <script>
 import ListView from "../components/ListView.vue";
+import LisvViewSkeleton from "../components/LisvViewSkeleton.vue";
 export default {
-  components: { ListView },
+  components: { ListView, LisvViewSkeleton },
   name: "VirtualTour",
   data() {
     return {
