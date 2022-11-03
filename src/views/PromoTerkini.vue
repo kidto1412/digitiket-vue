@@ -10,7 +10,10 @@
       <div></div>
     </v-app-bar>
     <v-container class="mt-15">
-      <div v-for="i in promo" :key="i.id" class="mb-3">
+      <div v-if="loading">
+        <promo-skeleton />
+      </div>
+      <div v-for="i in promo" :key="i.id" class="mb-3" v-else>
         <v-card :to="'/detail-promo/' + i.id">
           <v-img :src="i.image_url" :lazy-src="i.image_url" class="img"></v-img>
         </v-card>
@@ -19,26 +22,34 @@
   </div>
 </template>
 <script>
+import PromoSkeleton from "../components/PromoSkeleton.vue";
 export default {
-  name: 'PromoTerkini',
+  name: "PromoTerkini",
+  components: {
+    PromoSkeleton,
+  },
   data() {
+    PromoSkeleton;
     return {
       promo: [],
-    }
+      loading: false,
+    };
   },
   created() {
+    this.loading = !false;
     this.axios
-      .get('/promo')
+      .get("/promo")
       .then((response) => {
-        let { data } = response.data
-        this.promo = data
+        let { data } = response.data;
+        this.promo = data;
+        this.loading = false;
       })
       .catch((error) => {
-        let { responses } = error
-        console.log(responses)
-      })
+        let { responses } = error;
+        console.log(responses);
+      });
   },
-}
+};
 </script>
 <style scoped>
 .vrow {

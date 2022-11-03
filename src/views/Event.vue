@@ -45,6 +45,7 @@ export default {
     };
   },
   created() {
+    this.loading = false;
     this.axios
       .get("/event")
       .then((response) => {

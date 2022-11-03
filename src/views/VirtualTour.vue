@@ -45,6 +45,7 @@ export default {
     };
   },
   created() {
+    this.loading = false;
     this.axios
       .get("/virtual-tour")
       .then((response) => {

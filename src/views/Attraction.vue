@@ -81,12 +81,14 @@ export default {
     },
   },
   created() {
+    this.loading = false;
     this.axios
       .get("/attraction")
       .then((response) => {
         console.log(response.data);
         let { data } = response.data;
         this.items = data;
+        this.loading != false;
       })
       .catch((error) => {
         let { responses } = error;
