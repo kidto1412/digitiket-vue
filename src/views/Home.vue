@@ -100,6 +100,31 @@
         <h3>Promo Terkini</h3>
         <a href="/promo-terkini" class="text-purple">Lihat Semua</a>
       </div>
+
+      <div v-if="loading">
+        <v-slide-group class="mr-2" active-class="success">
+          <v-slide-item v-for="n in 15" :key="n" v-slot="{ active, toggle }">
+            <v-card
+              :color="active ? undefined : 'grey lighten-1'"
+              class="ma-1"
+              height="100"
+              width="250"
+              @click="toggle"
+            >
+              <v-row class="fill-height" align="center" justify="center">
+                <v-scale-transition>
+                  <v-icon
+                    v-if="active"
+                    color="white"
+                    size="48"
+                    v-text="'mdi-close-circle-outline'"
+                  ></v-icon>
+                </v-scale-transition>
+              </v-row>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </div>
       <keep-alive>
         <v-slide-group class="mr-2">
           <v-slide-item v-for="itempromo in promo" :key="itempromo.index">
@@ -119,6 +144,14 @@
           <h3>Disarankan Untuk Anda</h3>
           <a href="/tickets" class="text-purple">Lihat Semua</a>
         </div>
+        <div v-if="loading">
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="n in 5" :key="n">
+              <card-item-skeleton class="mr-2" />
+            </v-slide-item>
+          </v-slide-group>
+        </div>
+
         <v-slide-group class="mr-2">
           <v-slide-item v-for="item in rekomendasi" :key="item.slug">
             <v-card
@@ -170,6 +203,13 @@
         <div class="d-flex justify-space-between my-2 align-center">
           <h3>Wisata Populer</h3>
           <a href="/tickets" class="text-purple">Lihat Semua</a>
+        </div>
+        <div v-if="loading">
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="n in 5" :key="n">
+              <card-item-skeleton class="mr-2" />
+            </v-slide-item>
+          </v-slide-group>
         </div>
 
         <v-slide-group class="mr-2">
@@ -225,6 +265,13 @@
         <div class="d-flex justify-space-between my-2 align-center">
           <h3>Wisata Terbaru</h3>
           <a href="/tickets" class="text-purple">Lihat Semua</a>
+        </div>
+        <div v-if="loading">
+          <v-slide-group class="mr-2">
+            <v-slide-item v-for="n in 5" :key="n">
+              <card-item-skeleton class="mr-2" />
+            </v-slide-item>
+          </v-slide-group>
         </div>
 
         <v-slide-group class="mr-2">
@@ -284,6 +331,7 @@ import BottomNavigation from "../components/BottomNavigation.vue";
 import { mapActions, mapGetters } from "vuex";
 import PointKredit from "../components/PointKredit.vue";
 import converter from "../mixins/converter";
+import CardItemSkeleton from "../components/CardItemSkeleton.vue";
 
 // import Kategori from '../components/Kategori.vue'
 
@@ -302,6 +350,7 @@ export default {
         /* webpackChunkName: "Notification" */ "@/components/Notification.vue"
       ),
     PointKredit,
+    CardItemSkeleton,
   },
   data() {
     return {
@@ -312,6 +361,7 @@ export default {
       keyword: "",
       limit: 1,
       busy: false,
+      loading: false,
     };
   },
   computed: {
@@ -331,15 +381,19 @@ export default {
     },
   },
   created() {
+    this.loading = !false;
     this.axios.get("/promo").then((response) => {
       let { data } = response.data;
       // let { image_url } = data
       this.promo = data;
+      this.loading = false;
       // console.log('data promo' + response.data)
     });
+    this.loading = !false;
     this.axios.get("/cardInfo?status=selling&limit=5").then((response) => {
       let { data } = response.data;
       this.rekomendasi = data;
+      this.loading = false;
       // const append = data.slice(
       // this.rekomendasi.length,
       //   this.rekomendasi.length + this.limit
@@ -347,13 +401,17 @@ export default {
       // this.rekomendasi = this.rekomendasi.concat(append);
       // this.busy = false;
     });
+    this.loading = !false;
     this.axios.get("/cardInfo?sort=view=10&limit=5").then((response) => {
       let { data } = response.data;
       this.populer = data;
+      this.loading = false;
     });
+    this.loading = !false;
     this.axios.get("/cardInfo?sort=rand=10&limit=5").then((response) => {
       let { data } = response.data;
       this.terbaru = data;
+      this.loading = false;
     });
   },
 

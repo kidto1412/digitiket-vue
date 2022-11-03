@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar dark class="d-bg-purple" fixed>
-      <v-btn icon dark @click.stop="$router.go(-1)">
+      <v-btn icon dark @click.stop="$router.go(-2)">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
@@ -61,10 +61,10 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-    <div style="margin-bottom: 23%;"></div>
+    <div style="margin-bottom: 23%"></div>
     <div class="footer">
       <v-card>
-        <div class="d-flex justify-space-between" style="line-height: 12px;">
+        <div class="d-flex justify-space-between" style="line-height: 12px">
           <v-container>
             <p class="text-purple">Total Harga</p>
             <p class="text-purple">IDR 40.000</p>
@@ -79,15 +79,15 @@
 </template>
 <script>
 export default {
-  name: 'KonfirmasiPemesanan',
+  name: "KonfirmasiPemesanan",
   data: () => ({
     items: [
-      { text: 'Tiket Masuk Anak Rinjani Waterpark', price: 'IDR 17.500' },
-      { text: 'Tiket Masuk Dewasa Rinjani Waterpark', price: 'IDR 17.500' },
-      { text: 'Diskon', price: 'IDR 17.500' },
-      { text: 'Biaya Layanan', price: 'IDR 17.500' },
-      { text: 'Penggunaan Kredit', price: 'IDR 17.500' },
+      { text: "Tiket Masuk Anak Rinjani Waterpark", price: "IDR 17.500" },
+      { text: "Tiket Masuk Dewasa Rinjani Waterpark", price: "IDR 17.500" },
+      { text: "Diskon", price: "IDR 17.500" },
+      { text: "Biaya Layanan", price: "IDR 17.500" },
+      { text: "Penggunaan Kredit", price: "IDR 17.500" },
     ],
   }),
-}
+};
 </script>

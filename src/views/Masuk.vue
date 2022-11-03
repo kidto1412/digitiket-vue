@@ -122,9 +122,12 @@ export default {
                 text: "Login success",
               });
               this.loading = false;
-              if (this.prevUrl.length > 0) this.$router.push(this.prevUrl);
+              if (this.prevUrl.length > 0) {
+                this.$router.push(this.prevUrl);
+              } else {
+                this.$router.push({ name: "Home" });
+              }
               // this.close();
-              this.$router.push({ name: "Home" });
             } else {
               this.loading = false;
               this.setAlert({

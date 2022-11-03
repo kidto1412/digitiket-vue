@@ -10,6 +10,10 @@
       <div></div>
     </v-app-bar>
     <v-container class="mt-16">
+      <div v-if="loading">
+        <lisv-view-skeleton />
+      </div>
+
       <div class="d-flex align-center align-self-center">
         <v-text-field
           prepend-inner-icon="mdi-magnify"
@@ -55,14 +59,16 @@
 </template>
 <script>
 import ListView from "../components/ListView.vue";
+import LisvViewSkeleton from "../components/LisvViewSkeleton.vue";
 export default {
-  components: { ListView },
+  components: { ListView, LisvViewSkeleton },
   name: "Attraction",
   data() {
     return {
       items: [],
       tickets: [],
       keyword: "",
+      loading: false,
     };
   },
   methods: {
@@ -74,17 +80,20 @@ export default {
           .then((response) => {
             let { data } = response.data;
             this.tickets = data;
+            this.loading = !false;
           });
       }
     },
   },
   created() {
+    this.loading = !false;
     this.axios
       .get("/attraction")
       .then((response) => {
         console.log(response.data);
         let { data } = response.data;
         this.items = data;
+        this.loading = false;
       })
       .catch((error) => {
         let { responses } = error;

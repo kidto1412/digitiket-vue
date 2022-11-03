@@ -23,7 +23,7 @@
           Hasil Pencarian: "{{ keyword }}"
         </v-subheader>
         <v-alert
-          :value="tickets.length == 0 && keyword.length > 0"
+          :value="tickets.length == 0 && keyword.length > 0 && tickets !== []"
           color="white"
         >
           <!-- Sorry, but no results were found. -->
@@ -60,34 +60,57 @@ export default {
   },
   methods: {
     doSearch() {
-      // let keyword = this.keyword;
       if (this.keyword.length > 0) {
         this.axios
           .get(`/search?s=1&keyword=${this.keyword}`)
           .then((response) => {
-            let { data } = response.data;
-            let { items } = data;
-            this.categories = items;
-            items.map((item) => {
-              this.axios.get(item.url + "&limit=5").then((response) => {
-                let { data } = response.data;
-                if (data != []) {
-                  this.tickets = data;
-                  console.log(data);
-                }
+            if (response.data.success == true) {
+              let { data } = response.data;
+              let { items } = data;
+              this.categories = items;
+              items.map((item) => {
+                this.axios.get(item.url).then((response) => {
+                  console.log(response.data.success);
+                  if (response.data.success === false) {
+                    this.tickets = [];
+                  } else {
+                    let { data } = response.data;
+                    this.tickets = data;
+                  }
+                });
               });
-              // if (item.url != undefined) {
-              //   this.axios.get(item.url + "&limit=5").then((response) => {
-              //     let { data } = response.data;
-              //     this.tickets = data;
-              //   });
-              // } else {
-              //   this.ticketUrl = "";
-              //   this.tickets = [];
-              // }
-            });
+            } else {
+              this.categories = [];
+            }
+
+            //   if (this.categories > 0) {
+            //     this.axios
+            //       .get(items.url + this.categories.id)
+            //       .then((response) => {
+            //         let { data } = response.data;
+            //         this.tickets = data;
+            //       });
+            //   }
           });
       }
+
+      // let keyword = this.keyword;
+      // if (this.keyword.length > 0) {
+      //   this.axios
+      //     .get(`/search?s=1&keyword=${this.keyword}`)
+      //     .then((response) => {
+      //       let { data } = response.data;
+      //       let { items } = data;
+      //       this.categories = items;
+      //       items.map((item) => {
+      //         this.axios.get(item.url + this.categories.id).then((response) => {
+      //           let { data } = response.data;
+      //           console.log(data);
+      //           this.tickets = data;
+      //         });
+      //       });
+      //     });
+      // }
     },
     filteredTicket() {},
     hello() {
