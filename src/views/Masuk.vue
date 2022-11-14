@@ -114,6 +114,7 @@ export default {
           .then((response) => {
             let { data } = response.data;
             console.log(response.data);
+            localStorage.setItem("jwt_token", data.jwt_token);
             this.setAuth(data);
             if (this.user.id > 0) {
               this.setAlert({

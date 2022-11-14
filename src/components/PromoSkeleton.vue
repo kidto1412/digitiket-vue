@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="ma-1 mb-3 card" v-for="n in 5" :key="n"> </v-card>
+    <v-card class="card"> </v-card>
   </div>
 </template>
 <script>
@@ -10,9 +10,25 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.card:empty {
   width: 100%;
   height: 100px;
-  background-color: #eee;
+  display: block;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 100% 0;
+  }
 }
 </style>

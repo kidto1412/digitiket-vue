@@ -102,26 +102,13 @@
       </div>
 
       <div v-if="loading">
-        <v-slide-group class="mr-2" active-class="success">
-          <v-slide-item v-for="n in 15" :key="n" v-slot="{ active, toggle }">
-            <v-card
-              :color="active ? undefined : 'grey lighten-1'"
-              class="ma-1"
-              height="100"
-              width="250"
+        <v-slide-group class="mr-2">
+          <v-slide-item v-for="n in 15" :key="n" v-slot="{ toggle }">
+            <promo-skeleton
+              class="mr-2"
+              style="width: 40vh; height: 100px"
               @click="toggle"
-            >
-              <v-row class="fill-height" align="center" justify="center">
-                <v-scale-transition>
-                  <v-icon
-                    v-if="active"
-                    color="white"
-                    size="48"
-                    v-text="'mdi-close-circle-outline'"
-                  ></v-icon>
-                </v-scale-transition>
-              </v-row>
-            </v-card>
+            />
           </v-slide-item>
         </v-slide-group>
       </div>
@@ -332,6 +319,7 @@ import { mapActions, mapGetters } from "vuex";
 import PointKredit from "../components/PointKredit.vue";
 import converter from "../mixins/converter";
 import CardItemSkeleton from "../components/CardItemSkeleton.vue";
+import PromoSkeleton from "../components/PromoSkeleton.vue";
 
 // import Kategori from '../components/Kategori.vue'
 
@@ -351,6 +339,7 @@ export default {
       ),
     PointKredit,
     CardItemSkeleton,
+    PromoSkeleton,
   },
   data() {
     return {

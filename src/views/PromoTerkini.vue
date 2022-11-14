@@ -11,7 +11,7 @@
     </v-app-bar>
     <v-container class="mt-15">
       <div v-if="loading">
-        <promo-skeleton />
+        <promo-skeleton class="ma-1 mb-3" v-for="n in 2" :key="n" />
       </div>
       <div v-for="i in promo" :key="i.id" class="mb-3">
         <v-card :to="'/detail-promo/' + i.id">

@@ -48,7 +48,7 @@ export default {
     };
   },
   created() {
-    this.loading != false;
+    this.loading = !false;
     this.axios.get("/cardInfo?status=all").then((response) => {
       let { data } = response.data;
       this.tickets = data;

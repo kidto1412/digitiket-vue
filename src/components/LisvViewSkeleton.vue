@@ -32,12 +32,24 @@
     position: relative;
     /* top: 10%; */
     /* left: 5%; */
+
     border-radius: 20px 20px 20px 20px;
     padding: 10px 0px 10px 10px;
     margin: 10px;
     width: 210px;
     height: 130px;
-    background-color: #d8d8d8;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 80%
+      ),
+      lightgray;
+    background-repeat: repeat-y;
+    background-size: 50px 500px;
+    background-position: 0 0;
+    animation: shine 1s infinite;
+    display: block;
   }
 }
 .card {
@@ -58,12 +70,34 @@
 .text-title {
   width: 100px;
   height: 14px;
-  background-color: #d8d8d8;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+  display: block;
 }
 .text-desc {
   width: 100px;
   height: 14px;
-  background-color: #d8d8d8;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+  display: block;
   position: relative;
   top: -10px;
 }
@@ -71,16 +105,43 @@
 .text-price {
   width: 100px;
   height: 14px;
-  background-color: #d8d8d8;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+  display: block;
 }
 .text-ulasan {
   width: 100px;
   height: 14px;
-  background-color: #d8d8d8;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
+  display: block;
 }
 
 .card-radius {
   border-radius: 10px;
+}
+@keyframes shine {
+  to {
+    background-position: 100% 0;
+  }
 }
 </style>
 
