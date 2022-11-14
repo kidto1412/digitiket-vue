@@ -42,7 +42,18 @@ export default {
 .ticket-image {
   width: 100%;
   height: 100px;
-  background-color: #d8d8d8 !important;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  display: block;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
   margin: 0 auto;
 }
 /* .v-card__title {
@@ -51,12 +62,34 @@ export default {
   height: 9px;
 } */
 .card-title {
-  background-color: #d8d8d8 !important;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  display: block;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
   width: 120px;
   height: 9px;
 }
 .text-subtitle-1 {
-  background-color: #d8d8d8 !important;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  display: block;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
   width: 180px;
   height: 9px;
 }
@@ -64,12 +97,34 @@ export default {
 .price {
   width: 100px;
   height: 14px;
-  background-color: #d8d8d8;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  display: block;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
 }
 p {
   width: 100px;
   height: 14px;
-  background-color: #d8d8d8;
+  background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 80%
+    ),
+    lightgray;
+  display: block;
+  background-repeat: repeat-y;
+  background-size: 50px 500px;
+  background-position: 0 0;
+  animation: shine 1s infinite;
 }
 .card-img,
 .card-img-top {
@@ -82,5 +137,10 @@ p {
 }
 .card-shadow {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+@keyframes shine {
+  to {
+    background-position: 100% 0;
+  }
 }
 </style>

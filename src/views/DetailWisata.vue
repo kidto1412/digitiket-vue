@@ -15,8 +15,9 @@
       <v-tab>Lokasi</v-tab>
       <v-tab>Ulasan</v-tab>
     </v-tabs>
-    <div>
-      <v-img :src="ticket.image"></v-img>
+    <v-img :src="ticket.image"></v-img>
+    <!-- <div>
+     
       <div class="d-flex">
         <v-img
           src="../assets/img/rinjani1.png"
@@ -35,7 +36,7 @@
           <div class="middle">Lihat Semua</div>
         </div>
       </div>
-    </div>
+    </div> -->
     <v-card>
       <v-container>
         <v-list>
@@ -241,6 +242,7 @@ export default {
     //     this.ticket = response.data
     //     console.log(response.data)
     //   })
+    window.scroll(0, 0);
     this.go();
   },
   methods: {
