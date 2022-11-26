@@ -6,13 +6,13 @@ export default {
 
   mutations: {
     set: (state, payload) => {
-      state.user = payload
+      state.user = payload;
     },
   },
   actions: {
     //   set data user yang login pada state user
     set: ({ commit }, payload) => {
-      commit('set', payload)
+      commit("set", payload);
     },
   },
   getters: {
@@ -21,4 +21,4 @@ export default {
     user: (state) => state.user,
     guest: (state) => Object.keys(state.user).length === 0,
   },
-}
+};
