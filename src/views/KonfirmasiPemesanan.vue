@@ -81,6 +81,8 @@
 export default {
   name: "KonfirmasiPemesanan",
   data: () => ({
+    promo: [],
+    inputPromo: "",
     items: [
       { text: "Tiket Masuk Anak Rinjani Waterpark", price: "IDR 17.500" },
       { text: "Tiket Masuk Dewasa Rinjani Waterpark", price: "IDR 17.500" },
@@ -89,5 +91,14 @@ export default {
       { text: "Penggunaan Kredit", price: "IDR 17.500" },
     ],
   }),
+  created() {
+    this.axios.get("/promo").then((response) => {
+      let { data } = response.data;
+      // let { image_url } = data
+      this.promo = data;
+      this.loading = false;
+      // console.log('data promo' + response.data)
+    });
+  },
 };
 </script>

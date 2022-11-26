@@ -10,7 +10,7 @@
       <v-icon>mdi-map-marker</v-icon>
     </v-btn>
 
-    <v-btn to="/tickets">
+    <v-btn to="/tiket">
       <span>Tiket</span>
       <v-icon>mdi-ticket-confirmation</v-icon>
     </v-btn>
@@ -24,9 +24,9 @@
 </template>
 <script>
 export default {
-  name: 'BottomNavigation',
+  name: "BottomNavigation",
   data: () => ({ value: 0 }),
-}
+};
 </script>
 <style scoped>
 .v-item-group.v-bottom-navigation {
