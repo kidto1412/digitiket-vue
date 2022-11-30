@@ -9,9 +9,14 @@ import vuetify from "./plugins/vuetify";
 import "./plugins/helper";
 import "./assets/style.css";
 import "leaflet/dist/leaflet.css";
+import moment from "moment";
 
 Vue.config.productionTip = false;
-
+Vue.filter("formatDate", function (value) {
+  if (value) {
+    return moment(String(value)).format("dddd, MMMM YYYY ");
+  }
+});
 new Vue({
   router,
   store,

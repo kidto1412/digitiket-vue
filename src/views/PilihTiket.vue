@@ -14,7 +14,7 @@
         <h5>Tanggal Kedatangan</h5>
         <div class="d-flex">
           <v-icon color="purple">mdi-calendar</v-icon>
-          <p class="mt-4 ml-2">{{ item }}</p>
+          <p class="mt-4 ml-2">{{ item | formatDate }}</p>
         </div>
       </v-container>
     </v-card>

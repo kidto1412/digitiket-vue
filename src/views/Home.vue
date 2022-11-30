@@ -360,6 +360,7 @@ export default {
       guest: "auth/guest",
       user: "auth/user",
     }),
+
     dialog: {
       set(value) {
         return this.setDialogStatus(value);
@@ -391,17 +392,20 @@ export default {
       // this.busy = false;
     });
     this.loading = !false;
-    this.axios.get("/cardInfo?sort=view=10&limit=5").then((response) => {
-      let { data } = response.data;
-      this.populer = data;
-      this.loading = false;
-    });
+    this.axios
+      .get("/cardInfo?for=related&of={id_event}status=selling&limit=5")
+      .then((response) => {
+        let { data } = response.data;
+        this.populer = data;
+        this.loading = false;
+      });
     this.loading = !false;
-    this.axios.get("/cardInfo?sort=rand=10&limit=5").then((response) => {
+    this.axios.get("/cardInfo?status=selling&limit=5").then((response) => {
       let { data } = response.data;
       this.terbaru = data;
       this.loading = false;
     });
+    this.fetchUser();
   },
 
   methods: {
@@ -409,6 +413,7 @@ export default {
       setDialogStatus: "dialog/setStatus",
       setDialogComponent: "dialog/setComponent",
       setAuth: "auth/set",
+      fetchUser: "auth/fetchUser",
     }),
     closeDialog(value) {
       this.dialog = value;

@@ -47,7 +47,7 @@
         <h4>Akun</h4>
       </v-container>
       <v-list nav dense v-if="!guest">
-        <v-list-item-group v-model="selectedItem" class="d-purple">
+        <v-list-item-group class="d-purple">
           <v-card
             style="box-shadow: none !important"
             :to="'/ubah-profil/' + user.id"
@@ -101,7 +101,7 @@
         <h4>Umum</h4>
       </v-container>
       <v-list nav dense>
-        <v-list-item-group v-model="selectedItem" class="d-purple">
+        <v-list-item-group class="d-purple">
           <v-list-item v-for="(item, i) in umum" :key="i">
             <v-list-item-icon>
               <v-icon class="d-purple" v-text="item.icon"></v-icon>
@@ -116,7 +116,7 @@
     </v-card>
     <v-divider></v-divider>
     <v-card class="mb-13" color="none-shadow">
-      <v-list-item-group v-model="selectedItem" class="d-purple">
+      <v-list-item-group class="d-purple">
         <v-list-item @click="logout">
           <v-list-item-icon>
             <v-icon class="d-purple"> mdi-logout </v-icon>
@@ -190,6 +190,7 @@ export default {
       setDialogComponent: "dialog/setComponent",
       setAuth: "auth/set",
       setAlert: "alert/set",
+      fetchUser: "auth/fetchUser",
     }),
 
     ubahProfil(user) {
@@ -210,6 +211,7 @@ export default {
       this.axios
         .post("/logout", {}, config)
         .then(() => {
+          localStorage.removeItem("jwt_token");
           this.$router.push({ path: "/masuk" });
           this.setAuth({});
           this.setAlert({
@@ -231,6 +233,7 @@ export default {
     },
   },
   created() {
+    this.fetchUser();
     let config = {
       headers: {
         Authorization: "Bearer " + this.user.jwt_token,
