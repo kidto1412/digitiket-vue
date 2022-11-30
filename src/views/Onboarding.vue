@@ -1,9 +1,7 @@
 <template>
   <div>
     <splash-screen />
-    <a href="/home" class="btn-skip mx-5 mt-5">
-      Skip
-    </a>
+    <a href="/home" class="btn-skip mx-5 mt-5"> Skip </a>
     <v-img src="../assets/img/onboarding.png"></v-img>
 
     <v-container>
@@ -17,7 +15,7 @@
         <v-btn
           class="btn-purple"
           color="white--text"
-          style="z-index: 1;"
+          style="z-index: 1"
           to="/masuk"
         >
           Masuk
@@ -34,11 +32,51 @@
 </template>
 
 <script>
-import SplashScreen from './SplashScreen.vue'
+import SplashScreen from "./SplashScreen.vue";
+// import { mapGetters } from "vuex";
+import store from "../store";
+
 export default {
   components: { SplashScreen },
-  name: 'Onboarding',
-}
+  name: "Onboarding",
+  methods: {
+    beforeRouteEnter() {
+      this.axios
+        .get("/get/user/user-profile", {
+          Authorization: "Bearer " + localStorage.getItem("jwt_token"),
+        })
+        .then((response) => {
+          let { data } = response.data;
+          console.log(response.data);
+          localStorage.setItem("jwt_token", data.jwt_token);
+          if (store.getters["auth/guest"]) {
+            this.$router.push("/");
+          } else if (store.getters["auth/user"]) {
+            this.$router.push({ name: "Home" });
+          }
+        });
+    },
+  },
+  // created() {
+  //   this.beforeRouteEnter();
+  // },
+  mounted() {
+    this.beforeRouteEnter();
+  },
+  // computed: {
+  //   ...mapGetters({
+  //     guest: "auth/guest",
+  //     user: "auth/user",
+  //   }),
+  // },
+  // mounted() {
+  //   if (this.guest) {
+  //     return this.$route.path === "/";
+  //   } else {
+  //     this.$router.push({ name: "Home" });
+  //   }
+  // },
+};
 </script>
 
 <style scoped>

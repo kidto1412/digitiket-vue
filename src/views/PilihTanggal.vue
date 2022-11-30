@@ -18,14 +18,32 @@
   </div>
 </template>
 <script>
+// import moment from "moment";
+// import { format, parseISO } from "date-fns";
 export default {
   name: "PilihTanggal",
   data: () => ({
+    // date: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+    // date: format(
+    //   new Date(
+    //     Date.now() - new Date().getTimezoneOffset() * 60000
+    //   ).toISOString(),
+    //   "MM/dd/yyyy"
+    // ),
+    // date: moment().format(new Date().toISOString(), "yyyy-MM-dd"),
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
     done: [false, false, false],
   }),
+  // computed: {
+  // computedDateFormattedMomentjs() {
+  //   return this.date ? moment(this.date).format("dddd, MMMM Do YYYY") : "";
+  // },
+  //   computedDateFormattedDatefns() {
+  //     return this.date ? format(parseISO(this.date), "EEEE, MMMM do yyyy") : "";
+  //   },
+  // },
   methods: {
     isDate(date) {
       // this.$set(this.done, 0, true);

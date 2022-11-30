@@ -101,6 +101,7 @@ export default {
     ...mapActions({
       setAlert: "alert/set",
       setAuth: "auth/set",
+      fetchUser: "auth/fetchUser",
     }),
     submit() {
       if (this.$refs.form.validate()) {
@@ -115,6 +116,8 @@ export default {
             let { data } = response.data;
             console.log(response.data);
             localStorage.setItem("jwt_token", data.jwt_token);
+
+            this.fetchUser();
             this.setAuth(data);
             if (this.user.id > 0) {
               this.setAlert({
