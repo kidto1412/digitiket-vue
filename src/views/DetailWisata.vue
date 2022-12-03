@@ -184,7 +184,7 @@
           <v-btn
             color="my-auto mx-5"
             class="btn-purple text-white"
-            to="/pilih-tanggal"
+            @click="buy"
           >
             Beli Sekarang
           </v-btn>
@@ -194,6 +194,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
 import { latLng, Icon } from "leaflet";
 import converter from "../mixins/converter";
 import { LMap, LTileLayer, LMarker, LPopup, LCircle } from "vue2-leaflet";
@@ -217,7 +218,8 @@ export default {
   data() {
     return {
       model: "",
-      ticket: [],
+      ticket: {},
+      id_event: "",
       rating: 4,
       zoom: 12,
       center: latLng(39.903416, 32.8589),
@@ -245,10 +247,19 @@ export default {
     window.scroll(0, 0);
     this.go();
   },
+  computed: {
+    ...mapGetters({
+      idEvent: "idEvent",
+    }),
+  },
   methods: {
     // loadTicket(data) {
     //   this.ticket = data
     // },
+    ...mapActions({
+      setEvent: "setEvent",
+    }),
+
     go() {
       let { slug } = this.$route.params;
       let url = "/cardInfo?status=selling&for=slug&of=" + slug;
@@ -261,11 +272,16 @@ export default {
           console.log(response.data);
           let { data } = response.data;
           this.ticket = data;
+          this.id_event = data.id;
         })
         .catch((error) => {
           let { responses } = error;
           console.log(responses);
         });
+    },
+    buy() {
+      this.setEvent(this.id_event);
+      this.$router.push("/pilih-tanggal");
     },
     getCoord(a, b) {
       return latLng(a, b);

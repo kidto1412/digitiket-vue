@@ -117,6 +117,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/PilihTiket.vue"),
     props: true,
+    // meta: { auth: true },
   },
   {
     path: "/konfirmasi-pemesanan",
