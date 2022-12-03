@@ -20,35 +20,28 @@
 <script>
 // import moment from "moment";
 // import { format, parseISO } from "date-fns";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "PilihTanggal",
   data: () => ({
-    // date: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
-    // date: format(
-    //   new Date(
-    //     Date.now() - new Date().getTimezoneOffset() * 60000
-    //   ).toISOString(),
-    //   "MM/dd/yyyy"
-    // ),
-    // date: moment().format(new Date().toISOString(), "yyyy-MM-dd"),
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
     done: [false, false, false],
   }),
-  // computed: {
-  // computedDateFormattedMomentjs() {
-  //   return this.date ? moment(this.date).format("dddd, MMMM Do YYYY") : "";
-  // },
-  //   computedDateFormattedDatefns() {
-  //     return this.date ? format(parseISO(this.date), "EEEE, MMMM do yyyy") : "";
-  //   },
-  // },
+  computed: {
+    ...mapGetters({
+      arrivalDate: "arrivalDate",
+    }),
+  },
   methods: {
+    ...mapActions({
+      setArrivalDate: "setArrivalDate",
+    }),
     isDate(date) {
-      // this.$set(this.done, 0, true);
-      this.$router.push({ name: "PilihTiket", params: { item: date } });
-      console.log(date);
+      this.setArrivalDate(date);
+      console.log(this.setArrivalDate);
+      this.$router.push({ name: "PilihTiket" });
       // alert(`You have just double clicked the following date: ${date}`);
     },
   },

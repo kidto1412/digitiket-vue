@@ -14,15 +14,16 @@
         <h5>Tanggal Kedatangan</h5>
         <div class="d-flex">
           <v-icon color="purple">mdi-calendar</v-icon>
-          <p class="mt-4 ml-2">{{ item | formatDate }}</p>
+          <p class="mt-4 ml-2">{{ arrivalDate | formatDate }}</p>
         </div>
       </v-container>
     </v-card>
     <v-card>
-      <v-list>
+      <v-list v-for="ticket in tickets" :key="ticket.id">
         <v-container>
-          <h5>Tiket Masuk Anak Rinjani Waterpak</h5>
-          <p class="font-weight-light">Usia antara 2 s.d 15 tahun</p>
+          <h5>{{ ticket.ticket_name }}</h5>
+
+          <p class="font-weight-light"></p>
         </v-container>
         <v-list-item two-line>
           <v-list-item-content>
@@ -30,72 +31,37 @@
             <v-list-item-title>Harga :</v-list-item-title>
           </v-list-item-content>
           <v-list-item-content>
-            <v-list-item-title>: asd</v-list-item-title>
-            <v-list-item-title>: asdsa</v-list-item-title>
+            <v-list-item-title
+              >: {{ ticket.info["Masa Aktif"] }}</v-list-item-title
+            >
+            <v-list-item-title
+              >:
+              {{
+                arrivalDate == date ? ticket.price_today_ori : ticket.price_ori
+              }}</v-list-item-title
+            >
           </v-list-item-content>
-
-          <div class="d-flex">
-            <v-btn class="" light small>
-              <v-icon dark> mdi-minus </v-icon>
-            </v-btn>
-            <p class="mx-2">1</p>
-            <v-btn class="" light small>
-              <v-icon dark> mdi-plus </v-icon>
-            </v-btn>
-          </div>
         </v-list-item>
-      </v-list>
-    </v-card>
-    <v-card>
-      <v-list>
-        <v-container>
-          <h5>Tiket Masuk Anak Rinjani Waterpak</h5>
-          <p class="font-weight-light">Usia antara 2 s.d 15 tahun</p>
-        </v-container>
-        <v-list-item two-line>
-          <v-list-item-content>
-            <v-list-item-title>Masa Aktif :</v-list-item-title>
-            <v-list-item-title>Harga :</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>: asd</v-list-item-title>
-            <v-list-item-title>: asdsa</v-list-item-title>
-          </v-list-item-content>
-
+        <v-list-item>
           <div class="d-flex">
-            <v-btn class="" light small>
+            <v-btn
+              class=""
+              light
+              small
+              @click="removeQty(ticket.id, ticket.qty)"
+              id="dec"
+            >
               <v-icon dark> mdi-minus </v-icon>
             </v-btn>
-            <p class="mx-2">1</p>
-            <v-btn class="" light small>
-              <v-icon dark> mdi-plus </v-icon>
-            </v-btn>
-          </div>
-        </v-list-item>
-      </v-list>
-    </v-card>
-    <v-card>
-      <v-list>
-        <v-container>
-          <h5>Tiket Masuk Anak Rinjani Waterpak</h5>
-          <p class="font-weight-light">Usia antara 2 s.d 15 tahun</p>
-        </v-container>
-        <v-list-item two-line>
-          <v-list-item-content>
-            <v-list-item-title>Masa Aktif :</v-list-item-title>
-            <v-list-item-title>Harga :</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content>
-            <v-list-item-title>: asd</v-list-item-title>
-            <v-list-item-title>: asdsa</v-list-item-title>
-          </v-list-item-content>
 
-          <div class="d-flex">
-            <v-btn class="" light small>
-              <v-icon dark> mdi-minus </v-icon>
-            </v-btn>
-            <p class="mx-2">1</p>
-            <v-btn class="" light small>
+            <p class="mx-5">{{ ticket.qty }}</p>
+            <v-btn
+              class="inc"
+              light
+              small
+              @click="addQty(ticket.id, ticket.qty)"
+              id="inc"
+            >
               <v-icon dark> mdi-plus </v-icon>
             </v-btn>
           </div>
@@ -108,7 +74,7 @@
         <div class="d-flex justify-space-between" style="line-height: 12px">
           <v-container>
             <p class="text-purple">Total Harga</p>
-            <p class="text-purple">IDR 40.000</p>
+            <p class="text-purple">{{ price || totalHarga }}</p>
           </v-container>
           <v-btn
             color="my-auto mx-5"
@@ -123,6 +89,9 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
+// let incrementButton = document.getElementsByClassName("inc");
+// let decrementButton = document.getElementById("dec");
 export default {
   name: "PilihTiket",
   props: ["item"],
@@ -130,7 +99,68 @@ export default {
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(0, 10),
+    tickets: [],
+    ticketInfo: {},
+    price: 0,
+    i: 0,
   }),
+  computed: {
+    ...mapGetters({
+      arrivalDate: "arrivalDate",
+      idEvent: "idEvent",
+      user: "auth/user",
+    }),
+    totalHarga() {
+      return this.tickets.reduce((sum, i) => {
+        return sum + i.price_ori * i.qty;
+      }, 0);
+    },
+  },
+  methods: {
+    ...mapActions({
+      fetchUser: "auth/fetchUser",
+      setOrder: "setOrder",
+    }),
+    addQty(id, qty) {
+      this.tickets.forEach((obj) => {
+        if (id == obj.id) {
+          obj.qty = qty + 1;
+        }
+      });
+    },
+    removeQty(id, qty) {
+      this.tickets.forEach((obj) => {
+        if (id == obj.id) {
+          obj.qty = qty - 1;
+        }
+      });
+    },
+  },
+  mounted() {
+    this.fetchUser();
+  },
+  created() {
+    this.axios
+      .get(
+        `/payment/order/tiket?event_id=${this.idEvent}&date=${
+          this.arrivalDate
+        }&dateFix=${this.arrivalDate == this.date ? 1 : 0}`,
+        {
+          headers: {
+            Authorization: "Bearer" + localStorage.getItem("jwt_token"),
+          },
+        }
+      )
+      .then((response) => {
+        let { data } = response.data;
+        this.tickets = data;
+        this.tickets.forEach((obj, idx) => {
+          this.$set(this.tickets[idx], "qty", 0);
+        });
+        console.log(this.tickets);
+      });
+    // console.log(this.item);
+  },
 };
 </script>
 
