@@ -194,7 +194,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import { latLng, Icon } from "leaflet";
 import converter from "../mixins/converter";
 import { LMap, LTileLayer, LMarker, LPopup, LCircle } from "vue2-leaflet";
@@ -220,6 +220,10 @@ export default {
       model: "",
       ticket: {},
       id_event: "",
+      event: {
+        id: "",
+        title: "",
+      },
       rating: 4,
       zoom: 12,
       center: latLng(39.903416, 32.8589),
@@ -247,17 +251,18 @@ export default {
     window.scroll(0, 0);
     this.go();
   },
-  computed: {
-    ...mapGetters({
-      idEvent: "idEvent",
-    }),
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     idEvent: "idEvent",
+  //     name_event: "name_event",
+  //   }),
+  // },
   methods: {
     // loadTicket(data) {
     //   this.ticket = data
     // },
     ...mapActions({
-      setEvent: "setEvent",
+      setEvent: "order/setEvent",
     }),
 
     go() {
@@ -272,7 +277,6 @@ export default {
           console.log(response.data);
           let { data } = response.data;
           this.ticket = data;
-          this.id_event = data.id;
         })
         .catch((error) => {
           let { responses } = error;
@@ -280,7 +284,7 @@ export default {
         });
     },
     buy() {
-      this.setEvent(this.id_event);
+      this.setEvent(this.ticket);
       this.$router.push("/pilih-tanggal");
     },
     getCoord(a, b) {

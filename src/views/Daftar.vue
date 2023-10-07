@@ -8,7 +8,7 @@
     <v-img
       src="../assets/img/circle-purple.svg"
       width="50"
-      style="position: absolute; right: 0; top: 0;"
+      style="position: absolute; right: 0; top: 0"
     ></v-img>
     <v-container class="mb-8">
       <h3 class="text-purple ml-2 mt-8">Buat Akun</h3>
@@ -76,9 +76,7 @@
           <div class="separator">Atau</div>
           <v-card-actions class="justify-center">
             <v-btn class="btn-purple" color="white--text">
-              <v-icon left dark>
-                mdi-google
-              </v-icon>
+              <v-icon left dark> mdi-google </v-icon>
               Daftar Dengan Google
             </v-btn>
           </v-card-actions>
@@ -87,95 +85,97 @@
     </v-container>
     <v-img
       src="../assets/img/circle-pink.svg"
-      style="position: absolute; bottom: 0;"
+      style="position: absolute; bottom: 0"
       width="70"
     ></v-img>
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: 'Daftar',
+  name: "Daftar",
   data: () => ({
     valid: true,
-    firstname: '',
-    lastname: '',
+    firstname: "",
+    lastname: "",
     nameRules: [
-      (v) => !!v || 'Name is required',
-      (v) => v.length <= 10 || 'Name must be less than 10 characters',
+      (v) => !!v || "Name is required",
+      (v) => v.length <= 10 || "Name must be less than 10 characters",
     ],
-    email: '',
+    email: "",
     emailRules: [
-      (v) => !!v || 'E-mail is required',
-      (v) => /.+@.+/.test(v) || 'E-mail must be valid',
+      (v) => !!v || "E-mail is required",
+      (v) => /.+@.+/.test(v) || "E-mail must be valid",
     ],
-    phoneNumber: '',
+    phoneNumber: "",
     showPassword: false,
     showConfirmPassword: false,
-    password: '',
-    confirmPassword: '',
+    password: "",
+    confirmPassword: "",
     passwordRules: [
-      (v) => !!v || 'Password is required',
-      (v) => (v && v.length >= 6) || 'Min 6 Characters',
+      (v) => !!v || "Password is required",
+      (v) => (v && v.length >= 6) || "Min 6 Characters",
     ],
   }),
   computed: {
     ...mapGetters({
-      user: 'auth/user',
+      user: "auth/user",
     }),
   },
   methods: {
     ...mapActions({
-      setAlert: 'alert/set',
-      setAuth: 'auth/set',
+      setAlert: "alert/set",
+      setAuth: "auth/set",
+      fetchUser: "auth/fetchUser",
     }),
     submit() {
       if (this.$refs.form.validate()) {
-        let formData = new FormData()
-        formData.set('firstname', this.firstname)
-        formData.set('lastname', this.lastname)
-        formData.set('email', this.email)
-        formData.set('password', this.password)
-        formData.set('cellphone', this.phoneNumber)
-        formData.set('password', this.password)
+        let formData = new FormData();
+        formData.set("firstname", this.firstname);
+        formData.set("lastname", this.lastname);
+        formData.set("email", this.email);
+        formData.set("password", this.password);
+        formData.set("cellphone", this.phoneNumber);
+        formData.set("password", this.password);
 
         if (this.password == this.confirmPassword) {
           this.axios
-            .post('/registration', formData)
+            .post("/registration", formData)
             .then((response) => {
-              let { data } = response.data
-              this.setAuth(data)
+              let { data } = response.data;
+              this.setAuth(data);
+              this.fetchUser();
               this.setAlert({
                 status: true,
-                color: 'success',
-                text: 'Register success',
-              })
+                color: "success",
+                text: "Register success",
+              });
               // this.close()
-              this.$router.push({ name: 'Home' })
+              this.$router.push({ name: "Home" });
             })
             .catch((error) => {
-              let { data } = error.response.data
+              let { data } = error.response.data;
               this.setAlert({
                 status: true,
-                color: 'error',
+                color: "error",
                 text: data.message,
-              })
-            })
+              });
+            });
         } else {
           this.setAlert({
             status: true,
-            color: 'error',
-            text: 'Kata Sandi Tidak Sama',
-          })
+            color: "error",
+            text: "Kata Sandi Tidak Sama",
+          });
         }
       }
     },
     clear() {
-      this.$refs.form.reset()
+      this.$refs.form.reset();
     },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -188,7 +188,7 @@ export default {
 
 .separator::before,
 .separator::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 1px solid #b9b9b9;
 }

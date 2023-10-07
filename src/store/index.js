@@ -10,7 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     prevUrl: "",
-    idEvent: "",
+    event: {},
     arrival_date: "",
   },
   mutations: {
@@ -18,7 +18,7 @@ export default new Vuex.Store({
       state.prevUrl = value;
     },
     setEvent: (state, payload) => {
-      state.idEvent = payload;
+      state.event = payload;
     },
     setArrivalDate: (state, payload) => {
       state.arrival_date = payload;
@@ -37,7 +37,7 @@ export default new Vuex.Store({
   },
   getters: {
     prevUrl: (state) => state.prevUrl,
-    idEvent: (state) => state.idEvent,
+    event: (state) => state.event,
     arrivalDate: (state) => state.arrival_date,
   },
   modules: {

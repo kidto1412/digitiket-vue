@@ -117,7 +117,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/PilihTiket.vue"),
     props: true,
-    // meta: { auth: true },
+    meta: { auth: true },
   },
   {
     path: "/konfirmasi-pemesanan",
@@ -129,7 +129,7 @@ const routes = [
       import(
         /* webpackChunkName: "about" */ "../views/KonfirmasiPemesanan.vue"
       ),
-    meta: { auth: true },
+    // meta: { auth: true },
   },
   {
     path: "/metode-pembayaran",

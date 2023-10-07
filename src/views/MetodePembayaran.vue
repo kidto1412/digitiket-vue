@@ -71,15 +71,19 @@
         </template>
       </v-list-item-group>
     </v-list>
-    <div style="margin-top: 22%;"></div>
+    <div style="margin-top: 22%"></div>
     <div class="footer">
       <v-card>
-        <div class="d-flex justify-space-between" style="line-height: 12px;">
+        <div class="d-flex justify-space-between" style="line-height: 12px">
           <v-container>
             <p class="text-purple">Total Harga</p>
             <p class="text-purple">IDR 40.000</p>
           </v-container>
-          <v-btn color="my-auto mx-5" class="btn-purple text-white">
+          <v-btn
+            color="my-auto mx-5"
+            class="btn-purple text-white"
+            to="/pembayaran"
+          >
             Bayar
           </v-btn>
         </div>
@@ -89,41 +93,41 @@
 </template>
 <script>
 export default {
-  name: 'MetodePembayaran',
+  name: "MetodePembayaran",
   data: () => ({
     selected: [],
     items: [
       {
-        title: 'Mandiri Bill',
-        image_url: '../assets/img/bank-mandiri.svg',
+        title: "Mandiri Bill",
+        image_url: "../assets/img/bank-mandiri.svg",
       },
       {
-        title: 'Mandiri Bill',
-        image_url: '../assets/img/bank-mandiri.svg',
+        title: "Mandiri Bill",
+        image_url: "../assets/img/bank-mandiri.svg",
       },
       {
-        title: 'Mandiri Bill',
-        image_url: '../assets/img/bank-mandiri.svg',
+        title: "Mandiri Bill",
+        image_url: "../assets/img/bank-mandiri.svg",
       },
       {
-        title: 'Mandiri Bill',
-        image_url: '../assets/img/bank-mandiri.svg',
+        title: "Mandiri Bill",
+        image_url: "../assets/img/bank-mandiri.svg",
       },
       {
-        title: 'Mandiri Bill',
-        image_url: '../assets/img/bank-mandiri.svg',
+        title: "Mandiri Bill",
+        image_url: "../assets/img/bank-mandiri.svg",
       },
     ],
     directs: [
       {
-        title: 'GO PAY',
-        image_url: '../assets/img/gopay.svg',
+        title: "GO PAY",
+        image_url: "../assets/img/gopay.svg",
       },
       {
-        title: 'GO PAY',
-        image_url: '../assets/img/gopay.svg',
+        title: "GO PAY",
+        image_url: "../assets/img/gopay.svg",
       },
     ],
   }),
-}
+};
 </script>

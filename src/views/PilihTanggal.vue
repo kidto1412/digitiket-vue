@@ -31,12 +31,12 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      arrivalDate: "arrivalDate",
+      arrivalDate: "order/arrivalDate",
     }),
   },
   methods: {
     ...mapActions({
-      setArrivalDate: "setArrivalDate",
+      setArrivalDate: "order/setArrivalDate",
     }),
     isDate(date) {
       this.setArrivalDate(date);

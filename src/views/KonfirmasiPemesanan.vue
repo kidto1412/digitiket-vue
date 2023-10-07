@@ -13,21 +13,17 @@
       <v-container>
         <h5 class="text-purple">Silahkan periksa kembali pesanan anda</h5>
         <h4 class="mt-5">Tanggal kedatangan</h4>
-        <p class="font-weight-light mt-2">Senin, 18 Oktober 2020</p>
+        <p class="font-weight-light mt-2">{{ arrivalDate | formatDate }}</p>
+        <p>{{ order.id_event }}</p>
       </v-container>
     </v-card>
     <v-card>
       <v-container>
         <h4>Pemesanan</h4>
-        <h5 class="mt-3">Tiket Masuk Anak Rinjani Waterpark</h5>
+        <h5 class="mt-3">{{ order.ticket_name + " " + event.title }}</h5>
         <div class="d-flex justify-space-between">
           <p class="font-weight-light">1 Tiket</p>
-          <p>IDR 17.500</p>
-        </div>
-        <h5 class="mt-3">Tiket Masuk Anak Rinjani Waterpark</h5>
-        <div class="d-flex justify-space-between">
-          <p>1 Tiket</p>
-          <p>IDR 17.500</p>
+          <p>{{ order.total_price }}</p>
         </div>
       </v-container>
     </v-card>
@@ -46,19 +42,23 @@
       </v-container>
       <v-list>
         <v-list-item-group multiple>
-          <v-list-item v-for="(item, i) in items" :key="i">
+          <v-list-item>
             <v-list-item-content>
-              <v-list-item-subtitle v-text="item.text"></v-list-item-subtitle>
+              <v-list-item-subtitle
+                v-text="event.title"
+                class=""
+              ></v-list-item-subtitle>
             </v-list-item-content>
             <v-spacer></v-spacer>
             <v-list-item-content>
               <v-list-item-title
                 class="text-purple"
-                v-text="item.price"
+                v-text="order.total_price"
               ></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
+        p
       </v-list>
     </v-card>
     <div style="margin-bottom: 23%"></div>
@@ -67,9 +67,13 @@
         <div class="d-flex justify-space-between" style="line-height: 12px">
           <v-container>
             <p class="text-purple">Total Harga</p>
-            <p class="text-purple">IDR 40.000</p>
+            <p class="text-purple">{{ order.total_price }}</p>
           </v-container>
-          <v-btn color="my-auto mx-5" class="btn-purple text-white">
+          <v-btn
+            color="my-auto mx-5"
+            class="btn-purple text-white"
+            @click="buy"
+          >
             Bayar
           </v-btn>
         </div>
@@ -78,9 +82,13 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "KonfirmasiPemesanan",
   data: () => ({
+    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 10),
     promo: [],
     inputPromo: "",
     items: [
@@ -91,7 +99,53 @@ export default {
       { text: "Penggunaan Kredit", price: "IDR 17.500" },
     ],
   }),
+  computed: {
+    ...mapGetters({
+      arrivalDate: "order/arrivalDate",
+      event: "order/event",
+      order: "order/orderEvent",
+      user: "auth/user",
+    }),
+  },
+  mounted() {
+    this.fetchUser();
+  },
+  methods: {
+    ...mapActions({
+      fetchUser: "auth/fetchUser",
+    }),
+    buy() {
+      console.log(this.user.jwt_token);
+      this.axios
+        .post(
+          `/payment/order/create-order`,
+          {
+            event_id: this.order.id_event,
+            date: this.arrivalDate.toString(),
+            ticket_id: this.order.id.toString(),
+            qty: this.order.qty.toString(),
+            dateFix: this.arrivalDate == this.date ? 1 : 0,
+            total: this.order.total_price,
+            checkout: 1,
+          },
+          {
+            headers: {
+              Authorization: "Bearer" + localStorage.getItem("jwt_token"),
+            },
+          }
+        )
+        .then((res) => {
+          let { data } = res.data;
+          let { midtrans } = data;
+          let { url } = midtrans;
+          window.location.href = url;
+        });
+    },
+  },
+
   created() {
+    console.log(this.arrivalDate);
+    console.log(this.arrivalDate.toString());
     this.axios.get("/promo").then((response) => {
       let { data } = response.data;
       // let { image_url } = data

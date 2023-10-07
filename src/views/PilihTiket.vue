@@ -37,7 +37,7 @@
             <v-list-item-title
               >:
               {{
-                arrivalDate == date ? ticket.price_today_ori : ticket.price_ori
+                arrivalDate == date ? ticket.price_today : ticket.price_ori
               }}</v-list-item-title
             >
           </v-list-item-content>
@@ -49,19 +49,12 @@
               light
               small
               @click="removeQty(ticket.id, ticket.qty)"
-              id="dec"
             >
               <v-icon dark> mdi-minus </v-icon>
             </v-btn>
 
             <p class="mx-5">{{ ticket.qty }}</p>
-            <v-btn
-              class="inc"
-              light
-              small
-              @click="addQty(ticket.id, ticket.qty)"
-              id="inc"
-            >
+            <v-btn light small @click="addQty(ticket.id, ticket.qty)">
               <v-icon dark> mdi-plus </v-icon>
             </v-btn>
           </div>
@@ -74,12 +67,12 @@
         <div class="d-flex justify-space-between" style="line-height: 12px">
           <v-container>
             <p class="text-purple">Total Harga</p>
-            <p class="text-purple">{{ price || totalHarga }}</p>
+            <p class="text-purple">{{ totalPrice || totalHarga }}</p>
           </v-container>
           <v-btn
             color="my-auto mx-5"
             class="btn-purple text-white"
-            to="/konfirmasi-pemesanan"
+            @click="handleConfirmation()"
           >
             Konfirmasi
           </v-btn>
@@ -101,30 +94,54 @@ export default {
       .substr(0, 10),
     tickets: [],
     ticketInfo: {},
-    price: 0,
+    ticketOrder: [],
+    totalPrice: 0,
     i: 0,
   }),
   computed: {
     ...mapGetters({
-      arrivalDate: "arrivalDate",
-      idEvent: "idEvent",
+      arrivalDate: "order/arrivalDate",
+      event: "order/event",
+      order: "order/oder",
       user: "auth/user",
     }),
     totalHarga() {
       return this.tickets.reduce((sum, i) => {
-        return sum + i.price_ori * i.qty;
+        return this.date == this.arrivalDate
+          ? sum + i.price_today * i.qty
+          : sum + i.price_ori * i.qty;
       }, 0);
     },
   },
   methods: {
     ...mapActions({
       fetchUser: "auth/fetchUser",
-      setOrder: "setOrder",
+      setOrder: "order/setOrder",
+      // insertListTiket: "order/insertListTiket",
+      // add: "order/add",
     }),
     addQty(id, qty) {
       this.tickets.forEach((obj) => {
         if (id == obj.id) {
           obj.qty = qty + 1;
+          this.totalPrice = this.totalHarga;
+          // console.log(
+          //   obj.id,
+          //   obj.id_event,
+          //   obj.qty,
+          //   obj.ticket_name,
+          //   this.totalPrice
+          // );
+          this.ticketOrder = {
+            id: obj.id,
+            id_event: obj.id_event,
+            title: this.event.title,
+            qty: obj.qty,
+            ticket_name: obj.ticket_name,
+            total_price: this.totalPrice,
+          };
+          // obj = this.ticketOrder;
+          console.log(this.ticketOrder);
         }
       });
     },
@@ -132,8 +149,15 @@ export default {
       this.tickets.forEach((obj) => {
         if (id == obj.id) {
           obj.qty = qty - 1;
+          // obj = this.ticketOrder;
+          // console.log(this.ticketOrder);
         }
       });
+    },
+    handleConfirmation() {
+      this.setOrder(this.ticketOrder);
+      // this.insertListTiket(this.ticketOrder);
+      this.$router.push("/konfirmasi-pemesanan");
     },
   },
   mounted() {
@@ -142,7 +166,7 @@ export default {
   created() {
     this.axios
       .get(
-        `/payment/order/tiket?event_id=${this.idEvent}&date=${
+        `/payment/order/tiket?event_id=${this.event.id}&date=${
           this.arrivalDate
         }&dateFix=${this.arrivalDate == this.date ? 1 : 0}`,
         {

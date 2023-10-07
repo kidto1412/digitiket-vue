@@ -9,12 +9,12 @@
       <v-spacer></v-spacer>
       <div></div>
     </v-app-bar>
-    <v-tabs class="mt-14" v-model="tab" background-color="white" light>
+    <!-- <v-tabs class="mt-14" v-model="tab" background-color="white" light>
       <v-tab v-for="item in items" :key="item.tab">
         {{ item.tab }}
       </v-tab>
-    </v-tabs>
-    <div v-if="guest">
+    </v-tabs> -->
+    <div v-if="guest" class="mt-14">
       <div class="text-center mt-5">
         <h3 class="d-purple">Ayo Jalan Jalan</h3>
         <p class="text-center px-10">
@@ -31,7 +31,7 @@
         </v-btn-toggle>
       </div>
     </div>
-    <div v-else>
+    <div v-else class="mt-14">
       <div v-if="ticketItem.length == 0">
         <v-tabs-items v-model="tab">
           <v-tab-item v-for="item in items" :key="item.tab">
@@ -42,7 +42,8 @@
         </v-tabs-items>
       </div>
       <div v-else>
-        <v-container class="mt-5">
+        <v-container class="mt-14">
+          <Tiket />
           <list-view :ticket="ticket" />
         </v-container>
       </div>
@@ -51,9 +52,10 @@
 </template>
 <script>
 import ListView from "../components/ListView.vue";
+import Tiket from "../components/Tiket.vue";
 import { mapGetters } from "vuex";
 export default {
-  components: { ListView },
+  components: { ListView, Tiket },
   name: "Ticket",
   data() {
     return {
@@ -79,7 +81,7 @@ export default {
           imageUrl: "",
         },
       ],
-      ticketItem: [],
+      ticketItem: [1],
     };
   },
   computed: {
